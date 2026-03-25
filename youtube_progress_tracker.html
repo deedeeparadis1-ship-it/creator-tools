@@ -1,15 +1,536 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Creator Tools</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube Progress Tracker — Dee Dee Paradis</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #FAF7F2;
+  --warm-white: #FDF9F5;
+  --taupe: #8B7355;
+  --taupe-light: #C4A882;
+  --taupe-dark: #5A4A35;
+  --sage: #7A9E7A;
+  --sage-light: #E8F0E8;
+  --dusty-rose: #C4909A;
+  --rose-light: #F5EAE8;
+  --text-dark: #2C2520;
+  --text-mid: #6B5D52;
+  --text-light: #9B8D82;
+  --border: #E8E0D5;
+  --border-focus: #8B7355;
+  --success: #5A9E7A;
+  --success-light: #E8F5EE;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text-dark); min-height: 100vh; font-weight: 300; }
+
+.page-header { background: var(--taupe-dark); padding: 1.75rem 1.5rem 1.5rem; text-align: center; }
+.header-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: .18em; color: var(--taupe-light); text-transform: uppercase; margin-bottom: .5rem; }
+.header-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 5vw, 38px); font-weight: 400; color: #FAF7F2; line-height: 1.15; margin-bottom: .4rem; }
+.header-title em { font-style: italic; color: var(--taupe-light); }
+.header-sub { font-size: 12px; color: rgba(250,247,242,0.6); font-weight: 300; }
+.floral { text-align: center; color: var(--taupe-light); font-size: 14px; letter-spacing: .3em; margin: .6rem 0 0; opacity: .6; }
+
+.tab-nav { display: flex; background: var(--taupe-dark); border-top: 1px solid rgba(255,255,255,.1); }
+.tab-btn { flex: 1; padding: .75rem 1rem; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: rgba(250,247,242,0.55); background: transparent; border: none; cursor: pointer; border-bottom: 2px solid transparent; transition: all .2s; }
+.tab-btn:hover { color: rgba(250,247,242,0.85); }
+.tab-btn.active { color: #FAF7F2; border-bottom-color: var(--taupe-light); }
+
+.container { max-width: 740px; margin: 0 auto; padding: 1.75rem 1.25rem 4rem; }
+.tab-panel { display: none; }
+.tab-panel.visible { display: block; }
+
+.section-intro { text-align: center; margin-bottom: 1.75rem; }
+.section-intro h2 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: var(--text-dark); margin-bottom: .4rem; }
+.section-intro p { font-size: 13.5px; color: var(--text-mid); line-height: 1.65; max-width: 500px; margin: 0 auto; }
+
+.day-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 1rem; overflow: hidden; transition: border-color .2s; }
+.day-card.completed { border-color: var(--success); }
+.day-header { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; cursor: pointer; user-select: none; }
+.day-num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 500; flex-shrink: 0; background: var(--cream); border: 1px solid var(--border); color: var(--taupe); transition: all .2s; }
+.day-card.completed .day-num { background: var(--success); border-color: var(--success); color: #fff; }
+.day-info { flex: 1; }
+.day-label { font-size: 10px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--taupe-light); margin-bottom: 2px; }
+.day-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500; color: var(--text-dark); }
+.day-flower { font-size: 12px; color: var(--text-light); font-style: italic; margin-top: 1px; }
+.day-chevron { font-size: 12px; color: var(--text-light); transition: transform .2s; }
+.day-card.open .day-chevron { transform: rotate(180deg); }
+.completion-check { display: flex; align-items: center; gap: 6px; }
+.check-circle { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 10px; color: transparent; transition: all .2s; cursor: pointer; flex-shrink: 0; }
+.check-circle.checked { background: var(--success); border-color: var(--success); color: #fff; }
+
+.day-body { display: none; padding: 0 1.25rem 1.25rem; border-top: 1px solid var(--border); }
+.day-card.open .day-body { display: block; }
+.day-action-box { background: var(--cream); border-radius: 8px; padding: .85rem 1rem; margin: 1rem 0; }
+.action-label { font-size: 10px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--taupe); margin-bottom: .35rem; }
+.action-text { font-size: 13.5px; color: var(--text-mid); line-height: 1.6; }
+
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: .85rem; }
+@media(max-width:480px){ .field-row { grid-template-columns: 1fr; } }
+.field-group { margin-bottom: .85rem; }
+label { display: block; font-size: 11px; font-weight: 500; letter-spacing: .05em; color: var(--text-mid); margin-bottom: 5px; }
+textarea, input[type=text] { width: 100%; font-family: 'Jost', sans-serif; font-size: 13.5px; font-weight: 300; color: var(--text-dark); background: var(--cream); border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; outline: none; line-height: 1.6; transition: border-color .2s; }
+textarea:focus, input[type=text]:focus { border-color: var(--border-focus); background: #fff; }
+textarea { resize: vertical; min-height: 72px; }
+
+.confidence-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.conf-btn { padding: 6px 14px; border-radius: 99px; border: 1px solid var(--border); font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 400; color: var(--text-mid); background: transparent; cursor: pointer; transition: all .18s; }
+.conf-btn:hover { border-color: var(--taupe-light); color: var(--taupe); }
+.conf-btn.selected { background: var(--taupe-dark); border-color: var(--taupe-dark); color: #FAF7F2; }
+
+.save-btn { width: 100%; padding: 10px; border-radius: 8px; border: none; background: var(--taupe-dark); color: #FAF7F2; font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: .04em; cursor: pointer; margin-top: .5rem; transition: background .18s; }
+.save-btn:hover { background: var(--taupe); }
+
+.challenge-progress { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem; }
+.progress-title { font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--taupe); margin-bottom: .85rem; }
+.progress-dots { display: flex; gap: 8px; }
+.prog-dot { flex: 1; height: 6px; border-radius: 3px; background: var(--border); transition: background .3s; }
+.prog-dot.done { background: var(--success); }
+.prog-dot.current { background: var(--taupe-light); }
+.progress-label { font-size: 12px; color: var(--text-light); margin-top: .5rem; }
+.progress-label span { color: var(--success); font-weight: 500; }
+
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 1rem; }
+@media(max-width:400px){ .stats-row { grid-template-columns: 1fr 1fr; } }
+.stat-card { background: var(--cream); border-radius: 8px; padding: .75rem; text-align: center; }
+.stat-val { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 500; color: var(--taupe-dark); line-height: 1; margin-bottom: 2px; }
+.stat-lbl { font-size: 10px; color: var(--text-light); letter-spacing: .06em; text-transform: uppercase; }
+
+.add-week-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.25rem; }
+.card-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.card-heading { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: var(--text-dark); }
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: .85rem; }
+@media(max-width:480px){ .field-grid { grid-template-columns: 1fr; } }
+.field-grid3 { grid-template-columns: 1fr 1fr 1fr; }
+@media(max-width:540px){ .field-grid3 { grid-template-columns: 1fr 1fr; } }
+
+.weeks-list { margin-top: 1.5rem; }
+.week-heading { font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--taupe); margin-bottom: .85rem; }
+.week-row { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: .75rem; }
+.week-row-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: .6rem; }
+.week-date { font-size: 12px; font-weight: 500; color: var(--taupe); }
+.week-stats { display: flex; gap: 16px; flex-wrap: wrap; }
+.wstat { text-align: center; }
+.wstat-val { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: var(--text-dark); line-height: 1; }
+.wstat-lbl { font-size: 10px; color: var(--text-light); text-transform: uppercase; letter-spacing: .06em; }
+.week-delta { font-size: 11px; font-weight: 500; }
+.delta-up { color: var(--success); }
+.delta-down { color: #C4504A; }
+.delta-same { color: var(--text-light); }
+.week-note { font-size: 12.5px; color: var(--text-mid); font-style: italic; line-height: 1.5; margin-top: .5rem; padding-top: .5rem; border-top: 1px solid var(--border); }
+.delete-btn { font-size: 11px; color: var(--text-light); background: none; border: none; cursor: pointer; padding: 2px 6px; border-radius: 4px; }
+.delete-btn:hover { color: #C4504A; background: #FEF0F0; }
+
+.empty-state { text-align: center; padding: 2rem 1rem; color: var(--text-light); }
+.empty-state p { font-size: 13px; line-height: 1.6; }
+
+.chart-wrap { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.25rem; }
+.chart-title { font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--taupe); margin-bottom: 1rem; }
+.chart-select { font-family: 'Jost', sans-serif; font-size: 12px; color: var(--text-mid); background: var(--cream); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; outline: none; }
+.chart-area { position: relative; height: 160px; margin-top: .5rem; }
+.bar-group { display: flex; align-items: flex-end; gap: 4px; height: 140px; padding: 0 2px; }
+.bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; }
+.bar { width: 100%; border-radius: 4px 4px 0 0; background: var(--taupe-light); transition: height .4s ease; min-height: 3px; }
+.bar-lbl { font-size: 9px; color: var(--text-light); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.bar-val { font-size: 9px; color: var(--taupe); font-weight: 500; }
+.no-chart { text-align: center; font-size: 12px; color: var(--text-light); padding: 2rem 0; }
+
+.footer-brand { text-align: center; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.footer-brand p { font-size: 11px; color: var(--text-light); letter-spacing: .03em; }
+.footer-brand strong { font-weight: 500; color: var(--taupe); }
+
+input[type=number] { width: 100%; font-family: 'Jost', sans-serif; font-size: 13.5px; font-weight: 300; color: var(--text-dark); background: var(--cream); border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; outline: none; transition: border-color .2s; }
+input[type=number]:focus { border-color: var(--border-focus); background: #fff; }
+
+button.add-btn { font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500; padding: 9px 20px; border-radius: 8px; border: none; background: var(--taupe-dark); color: #FAF7F2; cursor: pointer; transition: background .18s; }
+button.add-btn:hover { background: var(--taupe); }
+</style>
 </head>
-<body style="font-family: Arial; text-align: center; margin-top: 50px;">
+<body>
 
-    <h1>My Creator Tools</h1>
+<div class="page-header">
+  <div class="header-eyebrow">Dee Dee Paradis · @deedeeparadis</div>
+  <div class="header-title">Your <em>Progress Tracker</em></div>
+  <div class="header-sub">7-Day Challenge + Ongoing YouTube Analytics</div>
+  <div class="floral">— ✦ —</div>
+</div>
 
-    <p><a href="youtube_script_builder.html">Script Builder</a></p>
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('challenge')">7-Day Challenge</button>
+  <button class="tab-btn" onclick="switchTab('analytics')">Weekly Analytics</button>
+</div>
 
-    <p><a href="youtube_progress_tracker.html">Progress Tracker</a></p>
+<div class="container">
 
+  <!-- ══════════════════════════════════════ -->
+  <!-- CHALLENGE TAB -->
+  <!-- ══════════════════════════════════════ -->
+  <div id="tab-challenge" class="tab-panel visible">
+
+    <div class="section-intro">
+      <h2>Open Your Flower Shop</h2>
+      <p>Track your daily progress through the challenge. Check off each day, celebrate your wins, and keep moving forward — one bloom at a time.</p>
+    </div>
+
+    <div class="challenge-progress">
+      <div class="progress-title">Challenge progress</div>
+      <div class="progress-dots" id="prog-dots"></div>
+      <div class="progress-label" id="prog-label">0 of 7 days complete</div>
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-val" id="stat-days">0</div><div class="stat-lbl">Days done</div></div>
+        <div class="stat-card"><div class="stat-val" id="stat-conf">—</div><div class="stat-lbl">Avg confidence</div></div>
+        <div class="stat-card"><div class="stat-val" id="stat-wins">0</div><div class="stat-lbl">Wins logged</div></div>
+      </div>
+    </div>
+
+    <div id="days-list"></div>
+
+    <div class="footer-brand">
+      <p>Created by <strong>Dee Dee Paradis</strong> · @deedeeparadis · 7-Day YouTube Challenge</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- ANALYTICS TAB -->
+  <!-- ══════════════════════════════════════ -->
+  <div id="tab-analytics" class="tab-panel">
+
+    <div class="section-intro">
+      <h2>Your channel growth</h2>
+      <p>Log your YouTube analytics every week. Watch your numbers grow and celebrate how far you've come — one entry at a time.</p>
+    </div>
+
+    <div class="add-week-card">
+      <div class="card-title-row">
+        <div class="card-heading">Log this week</div>
+      </div>
+      <div class="field-group">
+        <label>Week of (date)</label>
+        <input type="text" id="w-date" placeholder="e.g. March 24, 2026">
+      </div>
+      <div class="field-grid field-grid3">
+        <div>
+          <label>Subscribers</label>
+          <input type="number" id="w-subs" placeholder="e.g. 247" min="0">
+        </div>
+        <div>
+          <label>Total views</label>
+          <input type="number" id="w-views" placeholder="e.g. 1840" min="0">
+        </div>
+        <div>
+          <label>Watch time (hrs)</label>
+          <input type="number" id="w-watch" placeholder="e.g. 62" min="0">
+        </div>
+      </div>
+      <div class="field-grid">
+        <div>
+          <label>Videos posted this week</label>
+          <input type="number" id="w-videos" placeholder="e.g. 1" min="0" max="20">
+        </div>
+        <div>
+          <label>Revenue earned ($)</label>
+          <input type="number" id="w-revenue" placeholder="e.g. 12.50" min="0" step="0.01">
+        </div>
+      </div>
+      <div class="field-group">
+        <label>One thing I learned this week</label>
+        <textarea id="w-learn" placeholder="e.g. My audience responds much better to videos under 10 minutes..."></textarea>
+      </div>
+      <div class="field-group">
+        <label>One thing I'll do differently next week</label>
+        <textarea id="w-next" placeholder="e.g. I'm going to film my intro separately so it's more polished..."></textarea>
+      </div>
+      <button class="add-btn" onclick="addWeek()">Save this week →</button>
+      <div id="week-saved" style="font-size:12px;color:var(--success);margin-top:8px;display:none;font-weight:500">Week saved!</div>
+    </div>
+
+    <div class="chart-wrap" id="chart-wrap" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">
+        <div class="chart-title" style="margin-bottom:0">Growth over time</div>
+        <select class="chart-select" id="chart-metric" onchange="renderChart()">
+          <option value="subs">Subscribers</option>
+          <option value="views">Views</option>
+          <option value="watch">Watch time</option>
+          <option value="revenue">Revenue</option>
+        </select>
+      </div>
+      <div class="chart-area"><div class="bar-group" id="bar-chart"></div></div>
+    </div>
+
+    <div class="weeks-list" id="weeks-list" style="display:none">
+      <div class="week-heading">All entries</div>
+      <div id="weeks-entries"></div>
+    </div>
+
+    <div class="empty-state" id="analytics-empty">
+      <p>No entries yet. Log your first week above and your progress chart will appear here.</p>
+    </div>
+
+    <div class="footer-brand">
+      <p>Created by <strong>Dee Dee Paradis</strong> · @deedeeparadis · 7-Day YouTube Challenge</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const DAYS = [
+  { num:1, title:'Your why, mindset & niche', flower:'Choosing the flowers your shop will be known for', action:'Write down your top 3 reasons for starting. Define your niche in one sentence: I help [who] do [what] so they can [outcome]. Choose your channel name.' },
+  { num:2, title:'Set up your channel', flower:'Hanging your sign and opening the front door', action:'Create your YouTube account, upload your channel banner and profile photo, and write your channel description.' },
+  { num:3, title:'Ideas & scripting', flower:'Deciding what arrangements you will offer', action:'Brainstorm 10 video ideas. Choose one. Write your complete script or outline using the Script Builder tool.' },
+  { num:4, title:'Filming & equipment', flower:'A morning at the flower market — gathering your stems', action:'Set up your filming space, gather your equipment, do a test video, and film your first YouTube video.' },
+  { num:5, title:'Editing your video', flower:'At the arranging table — trimming and bringing it all together', action:'Edit your footage. Cut mistakes, balance audio, add text where needed. Export in 1080p.' },
+  { num:6, title:'Titles & thumbnails', flower:'Designing your window display — what makes someone stop and look', action:'Write 3 title options and pick the strongest. Design your thumbnail in Canva using your brand colors.' },
+  { num:7, title:'Upload, optimize & celebrate', flower:'Flipping the sign — Open for Business', action:'Upload your video, optimize your title, description, and tags. Set visibility to Public. Hit publish. Celebrate.' },
+];
+
+let challengeData = JSON.parse(localStorage.getItem('ddp_challenge') || '{}');
+let weeksData = JSON.parse(localStorage.getItem('ddp_weeks') || '[]');
+
+function saveChallenge() { localStorage.setItem('ddp_challenge', JSON.stringify(challengeData)); }
+function saveWeeks() { localStorage.setItem('ddp_weeks', JSON.stringify(weeksData)); }
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('visible'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('visible');
+  event.target.classList.add('active');
+}
+
+function renderDays() {
+  const list = document.getElementById('days-list');
+  list.innerHTML = '';
+  DAYS.forEach(day => {
+    const d = challengeData['day' + day.num] || {};
+    const completed = d.completed || false;
+    const conf = d.confidence || '';
+    const card = document.createElement('div');
+    card.className = 'day-card' + (completed ? ' completed' : '') + (d.open ? ' open' : '');
+    card.id = 'day-card-' + day.num;
+    card.innerHTML = `
+      <div class="day-header" onclick="toggleDay(${day.num})">
+        <div class="day-num">${completed ? '✓' : day.num}</div>
+        <div class="day-info">
+          <div class="day-label">Day ${day.num}</div>
+          <div class="day-title">${day.title}</div>
+          <div class="day-flower">${day.flower}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="check-circle ${completed ? 'checked' : ''}" onclick="event.stopPropagation();toggleComplete(${day.num})" title="Mark complete">✓</div>
+          <div class="day-chevron">▼</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-action-box">
+          <div class="action-label">Today's action</div>
+          <div class="action-text">${day.action}</div>
+        </div>
+        <div class="field-row">
+          <div>
+            <label>One win from today</label>
+            <textarea id="win-${day.num}" placeholder="Something you're proud of, no matter how small..." oninput="autoSaveDay(${day.num})">${d.win || ''}</textarea>
+          </div>
+          <div>
+            <label>One thing that felt hard</label>
+            <textarea id="hard-${day.num}" placeholder="It's okay — naming it makes it smaller..." oninput="autoSaveDay(${day.num})">${d.hard || ''}</textarea>
+          </div>
+        </div>
+        <div class="field-group">
+          <label>Confidence today (1 = rough, 5 = crushing it)</label>
+          <div class="confidence-row" id="conf-row-${day.num}">
+            ${[1,2,3,4,5].map(n => `<button class="conf-btn ${conf == n ? 'selected' : ''}" onclick="setConf(${day.num},${n})">${n} ${'★'.repeat(n)}</button>`).join('')}
+          </div>
+        </div>
+        <div class="field-group">
+          <label>Notes (optional)</label>
+          <textarea id="notes-${day.num}" placeholder="Anything else you want to remember about today..." oninput="autoSaveDay(${day.num})">${d.notes || ''}</textarea>
+        </div>
+        <button class="save-btn" onclick="saveDay(${day.num})">Save Day ${day.num}</button>
+        <div id="saved-${day.num}" style="font-size:11px;color:var(--success);margin-top:6px;display:none;text-align:center;font-weight:500">Saved!</div>
+      </div>
+    `;
+    list.appendChild(card);
+  });
+  updateChallengeStats();
+}
+
+function toggleDay(num) {
+  challengeData['day' + num] = challengeData['day' + num] || {};
+  challengeData['day' + num].open = !challengeData['day' + num].open;
+  saveChallenge();
+  renderDays();
+}
+
+function toggleComplete(num) {
+  challengeData['day' + num] = challengeData['day' + num] || {};
+  challengeData['day' + num].completed = !challengeData['day' + num].completed;
+  saveChallenge();
+  renderDays();
+}
+
+function setConf(num, val) {
+  challengeData['day' + num] = challengeData['day' + num] || {};
+  challengeData['day' + num].confidence = val;
+  document.querySelectorAll('#conf-row-' + num + ' .conf-btn').forEach((b,i) => {
+    b.classList.toggle('selected', i + 1 === val);
+  });
+  autoSaveDay(num);
+}
+
+function autoSaveDay(num) {
+  challengeData['day' + num] = challengeData['day' + num] || {};
+  const win = document.getElementById('win-' + num);
+  const hard = document.getElementById('hard-' + num);
+  const notes = document.getElementById('notes-' + num);
+  if (win) challengeData['day' + num].win = win.value;
+  if (hard) challengeData['day' + num].hard = hard.value;
+  if (notes) challengeData['day' + num].notes = notes.value;
+  saveChallenge();
+}
+
+function saveDay(num) {
+  autoSaveDay(num);
+  const el = document.getElementById('saved-' + num);
+  if (el) { el.style.display = 'block'; setTimeout(() => el.style.display = 'none', 2000); }
+  updateChallengeStats();
+}
+
+function updateChallengeStats() {
+  let done = 0, confTotal = 0, confCount = 0, wins = 0;
+  for (let i = 1; i <= 7; i++) {
+    const d = challengeData['day' + i] || {};
+    if (d.completed) done++;
+    if (d.confidence) { confTotal += parseInt(d.confidence); confCount++; }
+    if (d.win && d.win.trim().length > 2) wins++;
+  }
+  document.getElementById('stat-days').textContent = done;
+  document.getElementById('stat-conf').textContent = confCount > 0 ? (confTotal / confCount).toFixed(1) : '—';
+  document.getElementById('stat-wins').textContent = wins;
+  document.getElementById('prog-label').innerHTML = `<span>${done} of 7</span> days complete`;
+
+  const dots = document.getElementById('prog-dots');
+  dots.innerHTML = '';
+  for (let i = 1; i <= 7; i++) {
+    const d = challengeData['day' + i] || {};
+    const dot = document.createElement('div');
+    dot.className = 'prog-dot' + (d.completed ? ' done' : i === done + 1 ? ' current' : '');
+    dot.title = 'Day ' + i;
+    dots.appendChild(dot);
+  }
+}
+
+function addWeek() {
+  const date = document.getElementById('w-date').value.trim();
+  const subs = parseInt(document.getElementById('w-subs').value) || 0;
+  const views = parseInt(document.getElementById('w-views').value) || 0;
+  const watch = parseInt(document.getElementById('w-watch').value) || 0;
+  const videos = parseInt(document.getElementById('w-videos').value) || 0;
+  const revenue = parseFloat(document.getElementById('w-revenue').value) || 0;
+  const learn = document.getElementById('w-learn').value.trim();
+  const next = document.getElementById('w-next').value.trim();
+  if (!date) { alert('Please add the week date before saving.'); return; }
+  weeksData.push({ date, subs, views, watch, videos, revenue, learn, next, id: Date.now() });
+  saveWeeks();
+  ['w-date','w-subs','w-views','w-watch','w-videos','w-revenue'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+  ['w-learn','w-next'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+  const saved = document.getElementById('week-saved');
+  saved.style.display = 'block';
+  setTimeout(() => saved.style.display = 'none', 2000);
+  renderWeeks();
+}
+
+function deleteWeek(id) {
+  weeksData = weeksData.filter(w => w.id !== id);
+  saveWeeks();
+  renderWeeks();
+}
+
+function renderWeeks() {
+  const empty = document.getElementById('analytics-empty');
+  const chartWrap = document.getElementById('chart-wrap');
+  const weeksList = document.getElementById('weeks-list');
+  const entries = document.getElementById('weeks-entries');
+
+  if (weeksData.length === 0) {
+    empty.style.display = 'block';
+    chartWrap.style.display = 'none';
+    weeksList.style.display = 'none';
+    return;
+  }
+
+  empty.style.display = 'none';
+  chartWrap.style.display = 'block';
+  weeksList.style.display = 'block';
+  entries.innerHTML = '';
+
+  const sorted = [...weeksData].reverse();
+  sorted.forEach((w, i) => {
+    const prev = sorted[i + 1];
+    const subDelta = prev ? w.subs - prev.subs : null;
+    const viewDelta = prev ? w.views - prev.views : null;
+    const deltaStr = (val, label) => {
+      if (val === null) return '';
+      const cls = val > 0 ? 'delta-up' : val < 0 ? 'delta-down' : 'delta-same';
+      const sign = val > 0 ? '+' : '';
+      return `<span class="week-delta ${cls}">${sign}${val} ${label}</span>`;
+    };
+    const row = document.createElement('div');
+    row.className = 'week-row';
+    row.innerHTML = `
+      <div class="week-row-top">
+        <div class="week-date">Week of ${w.date}</div>
+        <button class="delete-btn" onclick="deleteWeek(${w.id})">remove</button>
+      </div>
+      <div class="week-stats">
+        <div class="wstat"><div class="wstat-val">${w.subs.toLocaleString()}</div><div class="wstat-lbl">Subscribers</div>${deltaStr(subDelta,'subs')}</div>
+        <div class="wstat"><div class="wstat-val">${w.views.toLocaleString()}</div><div class="wstat-lbl">Views</div>${deltaStr(viewDelta,'views')}</div>
+        <div class="wstat"><div class="wstat-val">${w.watch}</div><div class="wstat-lbl">Watch hrs</div></div>
+        <div class="wstat"><div class="wstat-val">${w.videos}</div><div class="wstat-lbl">Videos</div></div>
+        <div class="wstat"><div class="wstat-val">$${w.revenue.toFixed(2)}</div><div class="wstat-lbl">Revenue</div></div>
+      </div>
+      ${w.learn || w.next ? `<div class="week-note">${w.learn ? '<strong>Learned:</strong> ' + w.learn : ''}${w.learn && w.next ? ' · ' : ''}${w.next ? '<strong>Next week:</strong> ' + w.next : ''}</div>` : ''}
+    `;
+    entries.appendChild(row);
+  });
+
+  renderChart();
+}
+
+function renderChart() {
+  const metric = document.getElementById('chart-metric').value;
+  const chart = document.getElementById('bar-chart');
+  chart.innerHTML = '';
+  if (weeksData.length < 2) { chart.innerHTML = '<div class="no-chart">Add at least 2 weeks to see your chart</div>'; return; }
+  const last8 = weeksData.slice(-8);
+  const vals = last8.map(w => w[metric] || 0);
+  const max = Math.max(...vals, 1);
+  last8.forEach((w, i) => {
+    const val = vals[i];
+    const pct = Math.round((val / max) * 100);
+    const wrap = document.createElement('div');
+    wrap.className = 'bar-wrap';
+    const valEl = document.createElement('div');
+    valEl.className = 'bar-val';
+    valEl.textContent = metric === 'revenue' ? '$' + val.toFixed(0) : val.toLocaleString();
+    const bar = document.createElement('div');
+    bar.className = 'bar';
+    bar.style.height = Math.max(pct, 3) + '%';
+    bar.style.background = i === last8.length - 1 ? 'var(--taupe)' : 'var(--taupe-light)';
+    const lbl = document.createElement('div');
+    lbl.className = 'bar-lbl';
+    lbl.textContent = w.date.replace(/,.*/, '').replace(/\b\w+\s/, '').trim();
+    wrap.appendChild(valEl);
+    wrap.appendChild(bar);
+    wrap.appendChild(lbl);
+    chart.appendChild(wrap);
+  });
+}
+
+renderDays();
+renderWeeks();
+</script>
 </body>
 </html>
