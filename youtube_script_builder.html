@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube Script Builder — Dee Dee Paradis</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --warm-white: #FDF9F5;
+    --taupe: #8B7355;
+    --taupe-light: #C4A882;
+    --taupe-dark: #5A4A35;
+    --sage: #7A9E7A;
+    --sage-light: #E8F0E8;
+    --dusty-rose: #C4909A;
+    --text-dark: #2C2520;
+    --text-mid: #6B5D52;
+    --text-light: #9B8D82;
+    --border: #E8E0D5;
+    --border-focus: #8B7355;
+    --success: #5A9E7A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    min-height: 100vh;
+    font-weight: 300;
+  }
+
+  .page-header {
+    background: var(--taupe-dark);
+    padding: 2rem 1.5rem 1.75rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: radial-gradient(circle at 20% 50%, rgba(196,168,130,0.15) 0%, transparent 50%),
+                      radial-circle at 80% 50%, rgba(122,158,122,0.1) 0%, transparent 40%);
+  }
+
+  .header-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .18em;
+    color: var(--taupe-light);
+    text-transform: uppercase;
+    margin-bottom: .6rem;
+  }
+
+  .header-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 400;
+    color: #FAF7F2;
+    line-height: 1.15;
+    margin-bottom: .5rem;
+  }
+
+  .header-title em {
+    font-style: italic;
+    color: var(--taupe-light);
+  }
+
+  .header-sub {
+    font-size: 13px;
+    color: rgba(250,247,242,0.65);
+    font-weight: 300;
+    letter-spacing: .02em;
+  }
+
+  .floral-divider {
+    text-align: center;
+    color: var(--taupe-light);
+    font-size: 18px;
+    letter-spacing: .4em;
+    margin: .75rem 0 0;
+    opacity: .6;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+
+  .progress-wrap {
+    margin-bottom: 2rem;
+  }
+
+  .progress-labels {
+    display: flex;
+    gap: 4px;
+    margin-bottom: .5rem;
+  }
+
+  .prog-label {
+    flex: 1;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    text-align: center;
+    transition: color .3s;
+  }
+
+  .prog-label.active { color: var(--taupe); }
+  .prog-label.done { color: var(--success); }
+
+  .progress-bar {
+    display: flex;
+    gap: 4px;
+  }
+
+  .prog-seg {
+    flex: 1;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--border);
+    transition: background .3s;
+  }
+
+  .prog-seg.active { background: var(--taupe); }
+  .prog-seg.done { background: var(--success); }
+
+  .step-panel { display: none; animation: fadeIn .25s ease; }
+  .step-panel.visible { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  .tip-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--taupe-light);
+    border-radius: 0 10px 10px 0;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .tip-eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin-bottom: .4rem;
+  }
+
+  .tip-text {
+    font-size: 13.5px;
+    color: var(--text-mid);
+    line-height: 1.65;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .card-eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--taupe-light);
+    margin-bottom: .35rem;
+  }
+
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: .4rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  .done-pill {
+    display: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    background: #E8F5EE;
+    color: #2A6B4A;
+    border-radius: 99px;
+    padding: 2px 10px;
+    letter-spacing: .04em;
+  }
+
+  .card-hint {
+    font-size: 12.5px;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-mid);
+    letter-spacing: .04em;
+    margin-bottom: 6px;
+  }
+
+  input[type="text"], select, textarea {
+    width: 100%;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-dark);
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    transition: border-color .2s;
+    outline: none;
+    line-height: 1.6;
+  }
+
+  input[type="text"]:focus, select:focus, textarea:focus {
+    border-color: var(--border-focus);
+    background: #fff;
+  }
+
+  textarea { resize: vertical; min-height: 90px; }
+  textarea.tall { min-height: 200px; }
+
+  .field-group { margin-bottom: 1rem; }
+
+  .grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 500px) { .grid2 { grid-template-columns: 1fr; } }
+
+  .char-row {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 11px;
+    color: var(--text-light);
+    margin-top: 5px;
+  }
+
+  .char-warn { color: #B87D2A; }
+  .char-ok { color: var(--success); }
+
+  .example-box {
+    background: var(--sage-light);
+    border: 1px solid #B5CEB5;
+    border-radius: 8px;
+    padding: .75rem 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .example-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #4A7A4A;
+    margin-bottom: .3rem;
+  }
+
+  .example-text {
+    font-size: 13px;
+    color: #3A5A3A;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  button {
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: .04em;
+    padding: 10px 22px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-mid);
+    cursor: pointer;
+    transition: all .18s;
+  }
+
+  button:hover { background: var(--cream); border-color: var(--taupe-light); color: var(--taupe-dark); }
+
+  button.primary {
+    background: var(--taupe-dark);
+    color: #FAF7F2;
+    border-color: var(--taupe-dark);
+  }
+
+  button.primary:hover { background: var(--taupe); border-color: var(--taupe); }
+
+  button.success-btn {
+    background: var(--success);
+    color: #fff;
+    border-color: var(--success);
+  }
+
+  button.success-btn:hover { background: #4A8A6A; }
+
+  .script-output {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+  }
+
+  .script-section {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .script-section:last-child { border-bottom: none; }
+
+  .script-section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin-bottom: .5rem;
+  }
+
+  .script-section-text {
+    font-size: 14px;
+    color: var(--text-dark);
+    line-height: 1.8;
+    white-space: pre-wrap;
+    font-weight: 300;
+  }
+
+  .script-header {
+    background: var(--taupe-dark);
+    padding: 1.25rem 1.5rem;
+    color: #FAF7F2;
+  }
+
+  .script-header h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: .2rem;
+  }
+
+  .script-header p {
+    font-size: 12px;
+    opacity: .65;
+    font-weight: 300;
+  }
+
+  .copy-confirm {
+    display: none;
+    font-size: 12px;
+    color: var(--success);
+    margin-top: 8px;
+    font-weight: 500;
+  }
+
+  .footer-brand {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-brand p {
+    font-size: 12px;
+    color: var(--text-light);
+    letter-spacing: .04em;
+  }
+
+  .footer-brand strong {
+    font-weight: 500;
+    color: var(--taupe);
+  }
+
+  .setup-intro {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .setup-intro h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--text-dark);
+    margin-bottom: .5rem;
+  }
+
+  .setup-intro p {
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .step-counter {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-bottom: 1.25rem;
+    font-weight: 400;
+  }
+
+  .step-counter span { color: var(--taupe); font-weight: 500; }
+
+  .celebration {
+    text-align: center;
+    padding: 2rem 1rem;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 1.25rem;
+  }
+
+  .celebration h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--taupe-dark);
+    margin-bottom: .5rem;
+  }
+
+  .celebration p {
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .floral-icon {
+    font-size: 32px;
+    margin-bottom: .75rem;
+    display: block;
+    opacity: .8;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-eyebrow">7-Day YouTube Challenge</div>
+  <div class="header-title">Your <em>Script Builder</em></div>
+  <div class="header-sub">Build a complete, ready-to-film script — section by section</div>
+  <div class="floral-divider">— ✦ —</div>
+</div>
+
+<div class="container">
+
+  <div class="progress-wrap">
+    <div class="progress-labels" id="prog-labels"></div>
+    <div class="progress-bar" id="prog-bar"></div>
+  </div>
+
+  <div id="panel-0" class="step-panel visible">
+    <div class="setup-intro">
+      <h2>Let's build your script</h2>
+      <p>A great script is the difference between a confident video and a stumbling one. Work through each section and your complete script will be ready to film at the end.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-eyebrow">Before you begin</div>
+      <div class="tip-text">Every great YouTube video starts with one clear promise to your viewer. Fill in the basics below — these details will shape every section of your script.</div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow">Setup</div>
+      <div class="card-title" style="font-size:20px">Video basics</div>
+      <div class="card-hint">Answer these four questions before you write a single word of your script.</div>
+      <div class="field-group">
+        <label>Video topic / working title</label>
+        <input type="text" id="topic" placeholder="e.g. How I grew my YouTube channel to 1,000 subscribers after 40">
+      </div>
+      <div class="grid2">
+        <div>
+          <label>Who is this video for?</label>
+          <input type="text" id="viewer" placeholder="e.g. Women over 40 starting YouTube">
+        </div>
+        <div>
+          <label>Target video length</label>
+          <select id="length">
+            <option value="5–8">5–8 minutes</option>
+            <option value="8–12" selected>8–12 minutes</option>
+            <option value="12–20">12–20 minutes</option>
+            <option value="20+">20+ minutes</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-group">
+        <label>What will the viewer learn or be able to do after watching?</label>
+        <input type="text" id="outcome" placeholder="e.g. They'll know exactly how to set up their channel and film their first video">
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="primary" onclick="goTo(1)">Start building my script →</button>
+    </div>
+  </div>
+
+  <div id="panel-1" class="step-panel">
+    <div class="step-counter">Section <span>1 of 6</span></div>
+    <div class="tip-card">
+      <div class="tip-eyebrow">The hook</div>
+      <div class="tip-text">You have 30 seconds. Your hook is the one thing that makes your viewer decide to stay. It should create curiosity, make a promise, or call out your viewer so directly they feel like you're talking to them alone.</div>
+    </div>
+    <div class="example-box">
+      <div class="example-label">Example</div>
+      <div class="example-text">"If you've been posting for months and still have under 500 subscribers, I need you to hear this — it's not your content that's the problem. Stay with me, because what I'm about to share changed everything for me."</div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow">Section 1</div>
+      <div class="card-title">Your hook <span class="done-pill" id="pill-1">Done</span></div>
+      <div class="card-hint">Start with a bold statement, a surprising fact, or a direct callout. Aim for 2–4 sentences. Write it like you're talking to one specific person.</div>
+      <textarea id="hook" placeholder="Write your hook here..." oninput="countChars('hook','cc-hook',350)"></textarea>
+      <div class="char-row"><span id="cc-hook">0 / 350</span></div>
+    </div>
+    <div class="btn-row">
+      <button onclick="goTo(0)">← Back</button>
+      <button class="primary" onclick="save(1,'hook','pill-1') || goTo(2)">Save and continue →</button>
+    </div>
+  </div>
+
+  <div id="panel-2" class="step-panel">
+    <div class="step-counter">Section <span>2 of 6</span></div>
+    <div class="tip-card">
+      <div class="tip-eyebrow">The intro</div>
+      <div class="tip-text">After your hook, briefly introduce yourself and tell viewers exactly what this video covers. Keep it under 60 seconds when spoken aloud. Don't spend 3 minutes on your intro — viewers leave before the good stuff.</div>
+    </div>
+    <div class="example-box">
+      <div class="example-label">Example</div>
+      <div class="example-text">"I'm Dee Dee — I help women over 40 build YouTube businesses without the tech overwhelm. In today's video I'm going to share the 5 things I wish I'd known before I started, so you don't have to learn the hard way."</div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow">Section 2</div>
+      <div class="card-title">Your intro <span class="done-pill" id="pill-2">Done</span></div>
+      <div class="card-hint">Who are you, what is this video, and what will they walk away with? Keep it warm and specific. This is where you earn the next few minutes of their attention.</div>
+      <textarea id="intro" placeholder="Write your intro here..." oninput="countChars('intro','cc-intro',500)"></textarea>
+      <div class="char-row"><span id="cc-intro">0 / 500</span></div>
+    </div>
+    <div class="btn-row">
+      <button onclick="goTo(1)">← Back</button>
+      <button class="primary" onclick="save(2,'intro','pill-2') || goTo(3)">Save and continue →</button>
+    </div>
+  </div>
+
+  <div id="panel-3" class="step-panel">
+    <div class="step-counter">Section <span>3 of 6</span></div>
+    <div class="tip-card">
+      <div class="tip-eyebrow">Main content</div>
+      <div class="tip-text">This is the heart of your video. Use 3–5 clear points, tips, or steps. Each point should have its own clear label so viewers can follow along. You don't need to script every word — detailed bullet points work perfectly here.</div>
+    </div>
+    <div class="example-box">
+      <div class="example-label">Structure guide</div>
+      <div class="example-text">Point 1: [Clear heading] — What I'll say and any story or example I'll share here...<br><br>Point 2: [Clear heading] — What I'll say...<br><br>Point 3: [Clear heading] — What I'll say...</div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow">Section 3</div>
+      <div class="card-title">Main content — your key points <span class="done-pill" id="pill-3">Done</span></div>
+      <div class="card-hint">Write each point with a heading, then what you'll say. Include any stories, examples, screen recordings, or B-roll you plan to use. This section will be the longest.</div>
+      <textarea id="main" class="tall" placeholder="Point 1: [Heading]&#10;What I'll say: ...&#10;&#10;Point 2: [Heading]&#10;What I'll say: ...&#10;&#10;Point 3: [Heading]&#10;What I'll say: ..." oninput="countChars('main','cc-main',3000)"></textarea>
+      <div class="char-row"><span id="cc-main">0 / 3000</span></div>
+    </div>
+    <div class="btn-row">
+      <button onclick="goTo(2)">← Back</button>
+      <button class="primary" onclick="save(3,'main','pill-3') || goTo(4)">Save and continue →</button>
+    </div>
+  </div>
+
+  <div id="panel-4" class="step-panel">
+    <div class="step-counter">Section <span>4 of 6</span></div>
+    <div class="tip-card">
+      <div class="tip-eyebrow">The bridge</div>
+      <div class="tip-text">The bridge is a short transition before your call to action. It wraps up what you just covered, reminds your viewer of the promise you made in the hook, and signals that you delivered. It earns the right to ask them for something next.</div>
+    </div>
+    <div class="example-box">
+      <div class="example-label">Example</div>
+      <div class="example-text">"So there you have it — 5 things I wish I'd known before starting YouTube. If you take even one of these and put it into practice today, you'll be miles ahead of where I was when I first started."</div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow">Section 4</div>
+      <div class="card-title">Bridge and summary <span class="done-pill" id="pill-4">Done</span></div>
+      <div class="card-hint">1–3 sentences wrapping up your main content. Refer back to your hook promise. This is a natural landing moment before your ask.</div>
+      <textarea id="bridge" placeholder="Write your bridge here..." oninput="countChars('bridge','cc-bridge',400)"></textarea>
+      <div class="char-row"><span id="cc-bridge">0 / 400</span></div>
+    </div>
+    <div class="btn-row">
+      <button onclick="goTo(3)">← Back</button>
+      <button class="primary" onclick="save(4,'bridge','pill-4') || goTo(5)">Save and continue →</button>
+    </div>
+  </div>
+
+  <div id="panel-5" class="step-panel">
+    <div class="step-counter">Section <span>5 of 6</span></div>
+    <div class="tip-card">
+      <div class="tip-eyebrow">Call to action</div>
+      <div class="tip-text">Every video needs one clear CTA. Not five — one. Ask your viewer to do the single most important next step. Be specific and tell them exactly why it matters. A vague CTA gets ignored every time.</div>
+    </div>
+    <div class="example-box">
+      <div class="example-label">Example</div>
+      <div class="example-text">"If this was helpful, come join my free community — the link is in the description. We're a group of women over 40 building YouTube businesses together and I'd love to see you in there. It takes 30 seconds to join."</div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow">Section 5</div>
+      <div class="card-title">Your call to action <span class="done-pill" id="pill-5">Done</span></div>
+      <div class="card-hint">What is the ONE thing you want them to do? Subscribe, comment, join your community, download a resource, or watch another video. Pick one and make it feel easy and worthwhile.</div>
+      <textarea id="cta" placeholder="Write your CTA here..." oninput="countChars('cta','cc-cta',400)"></textarea>
+      <div class="char-row"><span id="cc-cta">0 / 400</span></div>
+    </div>
+    <div class="btn-row">
+      <button onclick="goTo(4)">← Back</button>
+      <button class="primary" onclick="save(5,'cta','pill-5') || goTo(6)">Save and continue →</button>
+    </div>
+  </div>
+
+  <div id="panel-6" class="step-panel">
+    <div class="step-counter">Section <span>6 of 6</span></div>
+    <div class="tip-card">
+      <div class="tip-eyebrow">The outro</div>
+      <div class="tip-text">End on a warm, encouraging note. This is the last thing your viewer hears — make it feel like you. A genuine sign-off, a teaser for what's coming next, and a reminder to subscribe. Keep it under 30 seconds when spoken aloud.</div>
+    </div>
+    <div class="example-box">
+      <div class="example-label">Example</div>
+      <div class="example-text">"Thank you so much for being here today — it genuinely means the world to me. I'll see you in the next one. And remember — you don't have to have it all figured out. You just have to begin."</div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow">Section 6</div>
+      <div class="card-title">Your outro <span class="done-pill" id="pill-6">Done</span></div>
+      <div class="card-hint">Warm, personal, brief. Leave your viewer feeling good about having spent time with you. That feeling is what brings them back.</div>
+      <textarea id="outro" placeholder="Write your outro here..." oninput="countChars('outro','cc-outro',350)"></textarea>
+      <div class="char-row"><span id="cc-outro">0 / 350</span></div>
+    </div>
+    <div class="btn-row">
+      <button onclick="goTo(5)">← Back</button>
+      <button class="primary" onclick="buildScript()">Build my complete script →</button>
+    </div>
+  </div>
+
+  <div id="panel-final" class="step-panel">
+    <div class="celebration">
+      <span class="floral-icon">✦</span>
+      <h2>Your script is ready</h2>
+      <p>Copy it into a Google Doc, paste it into your teleprompter app, or print it and keep it nearby while you film. You did the work — now go hit record.</p>
+    </div>
+    <div class="script-output" id="script-output"></div>
+    <div class="btn-row">
+      <button class="success-btn" onclick="copyScript()">Copy complete script</button>
+      <button onclick="printScript()">Print script</button>
+      <button onclick="resetTool()">Start a new script</button>
+    </div>
+    <div class="copy-confirm" id="copy-confirm">Copied to clipboard — paste it anywhere you need it.</div>
+
+    <div class="footer-brand" style="margin-top:2rem">
+      <p>Created by <strong>Dee Dee Paradis</strong> · @deedeeparadis</p>
+      <p style="margin-top:4px">Part of the 7-Day YouTube Challenge — Open Your Flower Shop</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const LABELS = ['Setup','Hook','Intro','Content','Bridge','CTA','Outro'];
+  const MAXCHARS = { hook:350, intro:500, main:3000, bridge:400, cta:400, outro:350 };
+  let current = 0;
+  const data = {};
+
+  function buildProgress() {
+    const labelsEl = document.getElementById('prog-labels');
+    const barEl = document.getElementById('prog-bar');
+    labelsEl.innerHTML = '';
+    barEl.innerHTML = '';
+    LABELS.forEach((l,i) => {
+      const ld = document.createElement('div');
+      ld.className = 'prog-label' + (i === current ? ' active' : i < current ? ' done' : '');
+      ld.textContent = l;
+      labelsEl.appendChild(ld);
+      const seg = document.createElement('div');
+      seg.className = 'prog-seg' + (i === current ? ' active' : i < current ? ' done' : '');
+      barEl.appendChild(seg);
+    });
+  }
+
+  function goTo(n) {
+    document.getElementById('panel-' + (current === 7 ? 'final' : current)).classList.remove('visible');
+    current = n;
+    const id = n === 7 ? 'panel-final' : 'panel-' + n;
+    document.getElementById(id).classList.add('visible');
+    buildProgress();
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function save(step, fieldId, pillId) {
+    const val = document.getElementById(fieldId) ? document.getElementById(fieldId).value.trim() : '';
+    data[fieldId] = val;
+    if (pillId && val.length > 10) {
+      document.getElementById(pillId).style.display = 'inline';
+    }
+  }
+
+  function countChars(fieldId, countId, max) {
+    const field = document.getElementById(fieldId);
+    const counter = document.getElementById(countId);
+    if (!field || !counter) return;
+    const len = field.value.length;
+    counter.textContent = len + ' / ' + max;
+    counter.className = len > max * 0.92 ? 'char-warn' : len > max * 0.5 ? 'char-ok' : '';
+  }
+
+  function buildScript() {
+    save(6, 'outro', 'pill-6');
+    const topic = document.getElementById('topic').value || 'My Video';
+    const viewer = document.getElementById('viewer').value || '—';
+    const length = document.getElementById('length').value || '—';
+    const outcome = document.getElementById('outcome').value || '—';
+
+    const out = document.getElementById('script-output');
+    out.innerHTML = '';
+
+    const header = document.createElement('div');
+    header.className = 'script-header';
+    header.innerHTML = `<h3>${topic}</h3><p>For: ${viewer} &nbsp;·&nbsp; Length: ${length} mins &nbsp;·&nbsp; Outcome: ${outcome}</p>`;
+    out.appendChild(header);
+
+    const sections = [
+      { label: 'Hook', key: 'hook' },
+      { label: 'Intro', key: 'intro' },
+      { label: 'Main content', key: 'main' },
+      { label: 'Bridge / summary', key: 'bridge' },
+      { label: 'Call to action', key: 'cta' },
+      { label: 'Outro', key: 'outro' },
+    ];
+
+    sections.forEach(s => {
+      const sec = document.createElement('div');
+      sec.className = 'script-section';
+      sec.innerHTML = `<div class="script-section-label">${s.label}</div><div class="script-section-text">${(data[s.key] || '(not filled in)').replace(/</g,'&lt;')}</div>`;
+      out.appendChild(sec);
+    });
+
+    goTo(7);
+  }
+
+  function copyScript() {
+    const topic = document.getElementById('topic').value || 'My Video';
+    const viewer = document.getElementById('viewer').value || '';
+    const length = document.getElementById('length').value || '';
+    const outcome = document.getElementById('outcome').value || '';
+    const lines = [
+      'YOUTUBE SCRIPT',
+      '==============',
+      `Topic: ${topic}`,
+      `Viewer: ${viewer}`,
+      `Length: ${length} minutes`,
+      `Outcome: ${outcome}`,
+      '',
+      '--- HOOK ---',
+      data.hook || '',
+      '',
+      '--- INTRO ---',
+      data.intro || '',
+      '',
+      '--- MAIN CONTENT ---',
+      data.main || '',
+      '',
+      '--- BRIDGE / SUMMARY ---',
+      data.bridge || '',
+      '',
+      '--- CALL TO ACTION ---',
+      data.cta || '',
+      '',
+      '--- OUTRO ---',
+      data.outro || '',
+      '',
+      'Created with the YouTube Script Builder by Dee Dee Paradis · @deedeeparadis',
+    ];
+    navigator.clipboard.writeText(lines.join('\n')).then(() => {
+      const c = document.getElementById('copy-confirm');
+      c.style.display = 'block';
+      setTimeout(() => c.style.display = 'none', 3000);
+    }).catch(() => {
+      alert('Please select and copy the script text manually.');
+    });
+  }
+
+  function printScript() {
+    window.print();
+  }
+
+  function resetTool() {
+    ['hook','intro','main','bridge','cta','outro','topic','viewer','outcome'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+    for (let i = 1; i <= 6; i++) {
+      const p = document.getElementById('pill-' + i);
+      if (p) p.style.display = 'none';
+    }
+    Object.keys(data).forEach(k => delete data[k]);
+    document.getElementById('panel-final').classList.remove('visible');
+    current = 0;
+    document.getElementById('panel-0').classList.add('visible');
+    buildProgress();
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  buildProgress();
+</script>
+</body>
+</html>
