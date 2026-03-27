@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dee Dee's Gear List — YouTube Creator Essentials</title>
+<meta name="description" content="The exact equipment Dee Dee uses to film her YouTube channel. Every item personally tested and recommended.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --coral: #f47c7c;
+    --coral-hover: #e86b6b;
+    --coral-light: #fdf0f0;
+    --coral-border: #f9c8c8;
+    --brown: #c5a073;
+    --brown-light: #fdf6ec;
+    --cream: #f3ead0;
+    --dark: #406c79;
+    --dark-hover: #2d4f59;
+    --mid: #688a93;
+    --light: #dae5ea;
+    --card-bg: #fffdf8;
+    --page-bg: #faf7f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--page-bg); color: var(--dark-hover); min-height: 100vh; }
+
+  /* HEADER */
+  .site-header {
+    background: var(--dark);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .site-header .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    color: white;
+    font-weight: 400;
+  }
+  .site-header .logo span { color: var(--coral); }
+  .site-header .tagline { font-size: 13px; color: var(--light); }
+
+  /* HERO */
+  .hero {
+    background: var(--dark);
+    padding: 3.5rem 1.5rem 3rem;
+    text-align: center;
+    border-bottom: 4px solid var(--coral);
+  }
+  .hero-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--coral);
+    background: rgba(244,124,124,0.15);
+    border: 1px solid rgba(244,124,124,0.3);
+    padding: 5px 16px;
+    border-radius: 99px;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: 400;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+  .hero h1 em { color: var(--coral); font-style: italic; }
+  .hero p { font-size: 15px; color: var(--light); line-height: 1.7; max-width: 540px; margin: 0 auto 1.5rem; }
+  .disclosure-hero {
+    display: inline-block;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    max-width: 560px;
+    line-height: 1.6;
+  }
+  .disclosure-hero strong { color: rgba(255,255,255,0.85); }
+
+  /* MAIN */
+  .main { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+
+  /* SECTION */
+  .gear-section { margin-bottom: 2.5rem; }
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--cream); }
+  .section-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+  .section-title { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--dark); font-weight: 400; }
+  .section-count { font-size: 12px; color: var(--mid); margin-left: auto; }
+
+  /* GEAR CARDS */
+  .gear-grid { display: flex; flex-direction: column; gap: 0.75rem; }
+  .gear-card {
+    background: var(--card-bg);
+    border: 1px solid var(--light);
+    border-radius: 14px;
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .gear-card:hover { border-color: var(--coral); box-shadow: 0 2px 16px rgba(244,124,124,0.1); transform: translateY(-1px); }
+  .gear-info { flex: 1; }
+  .gear-name { font-size: 15px; font-weight: 500; color: var(--dark); margin-bottom: 4px; line-height: 1.3; }
+  .gear-desc { font-size: 13px; color: var(--mid); line-height: 1.5; }
+  .gear-badge { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 9px; border-radius: 99px; margin-top: 5px; }
+  .badge-essential { background: var(--coral-light); color: var(--coral); border: 1px solid var(--coral-border); }
+  .badge-upgrade { background: var(--brown-light); color: var(--brown); border: 1px solid #e8d4b8; }
+  .badge-starter { background: var(--light); color: var(--mid); border: 1px solid #c0d4dc; }
+  .gear-cta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--coral);
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 9px 18px;
+    border-radius: 8px;
+    white-space: nowrap;
+    transition: background 0.15s;
+    flex-shrink: 0;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .gear-card:hover .gear-cta { background: var(--coral-hover); }
+  .gear-cta svg { width: 14px; height: 14px; fill: white; flex-shrink: 0; }
+
+  /* VARIANT CARDS (smaller, indented) */
+  .gear-variant {
+    background: var(--cream);
+    border: 1px solid var(--light);
+    border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: -0.25rem;
+    margin-left: 1.5rem;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .gear-variant:hover { border-color: var(--brown); }
+  .gear-variant .gear-name { font-size: 14px; color: var(--dark-hover); }
+  .gear-variant .gear-desc { font-size: 12px; }
+  .gear-variant .gear-cta { background: var(--brown); font-size: 12px; padding: 7px 14px; }
+  .gear-variant:hover .gear-cta { background: #b08a5e; }
+
+  /* DEE DEE NOTE */
+  .dee-note {
+    background: var(--cream);
+    border-left: 3px solid var(--brown);
+    border-radius: 0 10px 10px 0;
+    padding: 0.85rem 1.1rem;
+    margin-top: 1.25rem;
+  }
+  .dee-note p { font-size: 14px; color: var(--dark); line-height: 1.6; font-style: italic; }
+  .dee-note strong { color: var(--brown); font-style: normal; }
+
+  /* STARTER CALLOUT */
+  .starter-callout {
+    background: var(--dark);
+    border-radius: 16px;
+    padding: 1.75rem;
+    margin-bottom: 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .starter-callout-header { grid-column: 1 / -1; }
+  .starter-callout h3 { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: white; font-weight: 400; margin-bottom: 0.3rem; }
+  .starter-callout p { font-size: 13px; color: var(--light); line-height: 1.6; }
+  .starter-item { background: rgba(255,255,255,0.08); border-radius: 10px; padding: 0.85rem 1rem; }
+  .starter-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--coral); margin-bottom: 4px; }
+  .starter-value { font-size: 14px; color: white; line-height: 1.4; }
+
+  /* FOOTER */
+  .site-footer { background: var(--dark); padding: 2.5rem 1.5rem; text-align: center; margin-top: 2rem; }
+  .footer-name { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: white; margin-bottom: 0.4rem; }
+  .footer-tagline { font-size: 14px; color: var(--light); margin-bottom: 1.25rem; }
+  .footer-disclosure { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.7; max-width: 560px; margin: 0 auto; }
+
+  @media (max-width: 560px) {
+    .gear-card, .gear-variant { flex-direction: column; align-items: flex-start; }
+    .gear-cta { width: 100%; justify-content: center; }
+    .starter-callout { grid-template-columns: 1fr; }
+    .gear-variant { margin-left: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">Dee Dee <span>Paradis</span></div>
+  <div class="tagline">7-Day YouTube Challenge</div>
+</header>
+
+<div class="hero">
+  <div class="hero-badge">My Personal Gear List</div>
+  <h1>Everything I use to<br><em>film my channel</em></h1>
+  <p>Every item on this page is something I personally use and trust. No fluff — just the gear that actually makes a difference.</p>
+  <div class="disclosure-hero">
+    <strong>Affiliate disclosure:</strong> Links on this page are affiliate links. If you purchase through them, I may earn a small commission at no extra cost to you. As an Amazon Associate I earn from qualifying purchases.
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- STARTER SETUP CALLOUT -->
+  <div class="starter-callout">
+    <div class="starter-callout-header">
+      <h3>Start here — the honest beginner setup</h3>
+      <p>You do not need everything on this page to start. Here is what actually matters first, in order of priority.</p>
+    </div>
+    <div class="starter-item">
+      <div class="starter-label">Priority 1</div>
+      <div class="starter-value">Your smartphone — it is enough to start filming today</div>
+    </div>
+    <div class="starter-item">
+      <div class="starter-label">Priority 2</div>
+      <div class="starter-value">A microphone — audio matters more than video quality</div>
+    </div>
+    <div class="starter-item">
+      <div class="starter-label">Priority 3</div>
+      <div class="starter-value">A stable surface — tripod or a stack of books works fine</div>
+    </div>
+    <div class="starter-item">
+      <div class="starter-label">Priority 4</div>
+      <div class="starter-value">Natural window light — free and often better than any artificial light. An affordable LED panel is your first lighting upgrade.</div>
+    </div>
+  </div>
+
+  <!-- TRIPODS & MOUNTS -->
+  <div class="gear-section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#fdf0f0; font-size:20px;">📷</div>
+      <div class="section-title">Tripods & mounts</div>
+      <div class="section-count">3 items</div>
+    </div>
+    <div class="gear-grid">
+      <a class="gear-card" href="https://amzn.to/3WxjzlO" target="_blank" rel="noopener noreferrer nofollow">
+        <div class="gear-info">
+          <div class="gear-name">Tripod</div>
+          <div class="gear-desc">My everyday filming tripod — sturdy, adjustable height, and works with both my phone and camera.</div>
+          <span class="gear-badge badge-essential">Essential</span>
+        </div>
+        <div class="gear-cta"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>View on Amazon</div>
+      </a>
+      <a class="gear-card" href="https://amzn.to/4nDz9ID" target="_blank" rel="noopener noreferrer nofollow">
+        <div class="gear-info">
+          <div class="gear-name">SmallRig Tripod</div>
+          <div class="gear-desc">A compact, travel-friendly alternative. Great for filming on the go or in smaller spaces.</div>
+          <span class="gear-badge badge-upgrade">Great upgrade</span>
+        </div>
+        <div class="gear-cta"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>View on Amazon</div>
+      </a>
+      <a class="gear-card" href="https://amzn.to/4o5VMVV" target="_blank" rel="noopener noreferrer nofollow">
+        <div class="gear-info">
+          <div class="gear-name">Phone holder for tripod</div>
+          <div class="gear-desc">Mounts your smartphone securely to any standard tripod. Adjustable and compatible with most phones.</div>
+          <span class="gear-badge badge-essential">Essential for phone users</span>
+        </div>
+        <div class="gear-cta"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>View on Amazon</div>
+      </a>
+      <a class="gear-variant" href="https://amzn.to/4t2omuF" target="_blank" rel="noopener noreferrer nofollow">
+        <div class="gear-info">
+          <div class="gear-name">Magnetic phone mount — alternative option</div>
+          <div class="gear-desc">A magnetic alternative to the clip-style holder. Quick attach and release.</div>
+        </div>
+        <div class="gear-cta"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>View on Amazon</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- AUDIO -->
+  <div class="gear-section">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--brown-light); font-size:20px;">🎤</div>
+      <div class="section-title">Audio</div>
+      <div class="section-count">1 item</div>
+    </div>
+    <div class="gear-grid">
+      <a class="gear-card" href="https://amzn.to/46JxlIh" target="_blank" rel="noopener noreferrer nofollow">
+        <div class="gear-info">
+          <div class="gear-name">DJI Mic Mini</div>
+          <div class="gear-desc">My go-to wireless microphone. Compact, easy to set up, and the audio quality is genuinely excellent. This is the single upgrade that made the biggest difference to my videos.</div>
+          <span class="gear-badge badge-essential">My top recommendation</span>
+        </div>
+        <div class="gear-cta"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>View on Amazon</div>
+      </a>
+    </div>
+    <div class="dee-note">
+      <p><strong>Dee Dee's note:</strong> Bad audio loses viewers faster than anything else. If you are only going to invest in one piece of equipment before you start, make it a microphone. The DJI Mic Mini is what I use every single video.</p>
+    </div>
+  </div>
+
+  <!-- LIGHTING -->
+  <div class="gear-section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#fffbea; font-size:20px;">💡</div>
+      <div class="section-title">Lighting</div>
+      <div class="section-count">3 options</div>
+    </div>
+    <div class="gear-grid">
+      <a class="gear-card" href="https://amzn.to/4o5WHpl" target="_blank" rel="noopener noreferrer nofollow">
+        <div class="gear-info">
+          <div class="gear-name">LED panel light</div>
+          <div class="gear-desc">An affordable LED panel that gives you consistent, even light for face-to-camera videos. This is what I actually use — a great starting point that won't break the bank.</div>
+          <span class="gear-badge badge-starter">What I use — great starter option</span>
+        </div>
+        <div class="gear-cta"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>View on Amazon</div>
+      </a>
+      <a class="gear-card" href="https://amzn.to/3OrEDtp" target="_blank" rel="noopener noreferrer nofollow">
+        <div class="gear-info">
+          <div class="gear-name">Studio light</div>
+          <div class="gear-desc">A step up from a ring light — gives softer, more professional lighting for a polished look.</div>
+          <span class="gear-badge badge-upgrade">Upgrade option</span>
+        </div>
+        <div class="gear-cta"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>View on Amazon</div>
+      </a>
+      <a class="gear-card" href="https://amzn.to/4kTMSL2" target="_blank" rel="noopener noreferrer nofollow">
+        <div class="gear-info">
+          <div class="gear-name">Softbox</div>
+          <div class="gear-desc">Creates beautifully diffused, even light. Eliminates harsh shadows and is ideal for longer filming sessions.</div>
+          <span class="gear-badge badge-upgrade">Upgrade option</span>
+        </div>
+        <div class="gear-cta"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>View on Amazon</div>
+      </a>
+      <a class="gear-variant" href="https://amzn.to/4kIsEUd" target="_blank" rel="noopener noreferrer nofollow">
+        <div class="gear-info">
+          <div class="gear-name">Light stand — pairs with softbox or studio light</div>
+          <div class="gear-desc">Adjustable height stand for positioning your lights at the perfect angle.</div>
+        </div>
+        <div class="gear-cta"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>View on Amazon</div>
+      </a>
+    </div>
+    <div class="dee-note">
+      <p><strong>Dee Dee's note:</strong> Natural light from a window facing you is completely free and often the best place to start. When you are ready to upgrade, an affordable LED panel or softbox gives you consistent, even light regardless of the time of day or weather. Start with what you have — invest when your channel is earning.</p>
+    </div>
+  </div>
+
+  <!-- CAMERA & ACCESSORIES -->
+  <div class="gear-section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#e8f4f0; font-size:20px;">🎬</div>
+      <div class="section-title">Camera & accessories</div>
+      <div class="section-count">4 items</div>
+    </div>
+    <div class="gear-grid">
+      <a class="gear-card" href="https://amzn.to/3IUC3K2" target="_blank" rel="noopener noreferrer nofollow">
+        <div class="gear-info">
+          <div class="gear-name">Sony ZV-E10 camera</div>
+          <div class="gear-desc">The camera I film with. Built specifically for content creators — excellent video quality, easy to use, and interchangeable lenses. A genuine upgrade when you are ready.</div>
+          <span class="gear-badge badge-upgrade">When you are ready to upgrade</span>
+        </div>
+        <div class="gear-cta"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>View on Amazon</div>
+      </a>
+      <a class="gear-card" href="https://amzn.to/46WlPYF" target="_blank" rel="noopener noreferrer nofollow">
+        <div class="gear-info">
+          <div class="gear-name">Sigma 16mm lens</div>
+          <div class="gear-desc">The lens I use with the Sony ZV-E10. Gives a beautiful, flattering look for talking head videos — sharp, bright, and cinematic.</div>
+          <span class="gear-badge badge-upgrade">Pairs with Sony ZV-E10</span>
+        </div>
+        <div class="gear-cta"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>View on Amazon</div>
+      </a>
+      <a class="gear-card" href="https://amzn.to/4pWuGCB" target="_blank" rel="noopener noreferrer nofollow">
+        <div class="gear-info">
+          <div class="gear-name">Dummy battery for Sony ZV-E10</div>
+          <div class="gear-desc">Powers your camera via a wall outlet so you never have to stop filming because your battery died mid-take. A simple but essential accessory.</div>
+          <span class="gear-badge badge-upgrade">Pairs with Sony ZV-E10</span>
+        </div>
+        <div class="gear-cta"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>View on Amazon</div>
+      </a>
+      <a class="gear-card" href="https://amzn.to/4o2E8lS" target="_blank" rel="noopener noreferrer nofollow">
+        <div class="gear-info">
+          <div class="gear-name">Camera monitor</div>
+          <div class="gear-desc">An external monitor that lets you see exactly what your camera is recording in real time. No more guessing if you are in frame.</div>
+          <span class="gear-badge badge-upgrade">Nice to have</span>
+        </div>
+        <div class="gear-cta"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>View on Amazon</div>
+      </a>
+    </div>
+    <div class="dee-note">
+      <p><strong>Dee Dee's note:</strong> Your phone is genuinely enough for your first 20+ videos. I started without a dedicated camera. Only invest in this when your channel is growing and you feel ready for the next level.</p>
+    </div>
+  </div>
+
+  <!-- EXTRAS -->
+  <div class="gear-section">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--coral-light); font-size:20px;">🔥</div>
+      <div class="section-title">Extras I love</div>
+      <div class="section-count">2 items</div>
+    </div>
+    <div class="gear-grid">
+      <a class="gear-card" href="https://amzn.to/3IZhQCJ" target="_blank" rel="noopener noreferrer nofollow">
+        <div class="gear-info">
+          <div class="gear-name">Elgato Teleprompter</div>
+          <div class="gear-desc">A game changer for reading your script while looking directly into the lens. Keeps your delivery natural and confident without memorizing a word.</div>
+          <span class="gear-badge badge-upgrade">Game changer for scripted videos</span>
+        </div>
+        <div class="gear-cta"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>View on Amazon</div>
+      </a>
+      <a class="gear-card" href="https://amzn.to/4nZXeK9" target="_blank" rel="noopener noreferrer nofollow">
+        <div class="gear-info">
+          <div class="gear-name">Memory card</div>
+          <div class="gear-desc">A fast, reliable memory card for your camera. Never lose a take because you ran out of storage mid-video.</div>
+          <span class="gear-badge badge-essential">Essential for camera users</span>
+        </div>
+        <div class="gear-cta"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>View on Amazon</div>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-name">Dee Dee Paradis</div>
+  <div class="footer-tagline">7-Day YouTube Challenge — Start where you are. Shine with what you have.</div>
+  <div class="footer-disclosure">
+    As an Amazon Associate I earn from qualifying purchases. Links on this page are affiliate links. If you purchase through them, I may earn a small commission at no extra cost to you. I only recommend tools I personally use and trust.
+  </div>
+</footer>
+
+</body>
+</html>
