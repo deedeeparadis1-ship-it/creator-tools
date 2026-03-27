@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 3 — Video Idea Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --coral: #f47c7c;
+    --coral-hover: #e86b6b;
+    --coral-light: #fdf0f0;
+    --coral-border: #f9c8c8;
+    --brown: #c5a073;
+    --brown-light: #fdf6ec;
+    --cream: #f3ead0;
+    --dark: #406c79;
+    --dark-hover: #2d4f59;
+    --mid: #688a93;
+    --light: #dae5ea;
+    --card-bg: #fffdf8;
+    --page-bg: #faf7f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--page-bg); color: var(--dark-hover); min-height: 100vh; padding: 2rem 1rem 4rem; }
+  .container { max-width: 700px; margin: 0 auto; }
+
+  .hero { text-align: center; padding: 3rem 1rem 2.5rem; border-bottom: 1px solid var(--light); margin-bottom: 2.5rem; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; color: var(--coral); background: var(--coral-light); border: 1px solid var(--coral-border); padding: 5px 16px; border-radius: 99px; margin-bottom: 1.25rem; }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 5vw, 2.2rem); font-weight: 400; color: var(--dark); line-height: 1.2; margin-bottom: 0.75rem; }
+  .hero p { font-size: 15px; color: var(--mid); line-height: 1.7; }
+
+  .card { background: var(--card-bg); border: 1px solid var(--light); border-radius: 16px; padding: 2rem; margin-bottom: 1.25rem; }
+  .card-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brown); margin-bottom: 0.3rem; }
+  .card-title { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--dark); margin-bottom: 0.5rem; }
+  .card-desc { font-size: 14px; color: var(--mid); line-height: 1.7; margin-bottom: 1.5rem; }
+
+  .field-label { display: block; font-size: 13px; font-weight: 500; color: var(--mid); margin-bottom: 7px; }
+  .field-hint { display: block; font-size: 12px; color: var(--brown); margin-bottom: 8px; font-style: italic; }
+  input[type="text"], textarea {
+    width: 100%; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--dark-hover);
+    background: white; border: 1px solid var(--light); border-radius: 10px; padding: 11px 14px;
+    outline: none; transition: border-color 0.2s, box-shadow 0.2s; margin-bottom: 1.1rem;
+  }
+  textarea { min-height: 80px; resize: vertical; line-height: 1.6; }
+  input:focus, textarea:focus { border-color: var(--coral); box-shadow: 0 0 0 3px rgba(244,124,124,0.12); }
+
+  .tag-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.25rem; }
+  .tag { font-size: 13px; padding: 6px 15px; border: 1px solid var(--light); border-radius: 99px; cursor: pointer; color: var(--mid); background: white; transition: all 0.15s; user-select: none; }
+  .tag:hover { border-color: var(--coral); color: var(--coral); background: var(--coral-light); }
+  .tag.selected { border-color: var(--coral); color: var(--coral); background: var(--coral-light); font-weight: 500; }
+
+  .generate-btn { width: 100%; padding: 15px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; color: white; background: var(--coral); border: none; border-radius: 12px; cursor: pointer; transition: all 0.2s; margin-top: 0.5rem; letter-spacing: 0.01em; }
+  .generate-btn:hover { background: var(--coral-hover); transform: translateY(-1px); }
+  .generate-btn:disabled { opacity: 0.6; cursor: default; transform: none; }
+
+  .ideas-section { display: none; animation: fadeIn 0.4s ease; }
+  .ideas-section.visible { display: block; }
+
+  .ideas-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 10px; }
+  .ideas-title { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: var(--dark); }
+  .ideas-sub { font-size: 13px; color: var(--mid); margin-top: 2px; }
+  .regenerate-btn { font-size: 13px; font-weight: 500; color: var(--mid); background: white; border: 1px solid var(--light); border-radius: 8px; padding: 7px 16px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+  .regenerate-btn:hover { background: var(--cream); color: var(--dark); }
+
+  .idea-card { background: white; border: 1px solid var(--light); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 14px; transition: all 0.2s; cursor: pointer; }
+  .idea-card:hover { border-color: var(--coral); box-shadow: 0 2px 12px rgba(244,124,124,0.1); }
+  .idea-card.saved { border-color: var(--brown); background: var(--brown-light); }
+  .idea-card.top-pick { border-color: var(--coral); background: var(--coral-light); }
+
+  .idea-num { min-width: 32px; height: 32px; border-radius: 50%; background: var(--cream); color: var(--brown); font-size: 13px; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; transition: all 0.2s; }
+  .idea-card.saved .idea-num { background: var(--brown); color: white; }
+  .idea-card.top-pick .idea-num { background: var(--coral); color: white; }
+
+  .idea-body { flex: 1; }
+  .idea-title { font-size: 14px; font-weight: 500; color: var(--dark); line-height: 1.4; margin-bottom: 4px; }
+  .idea-card.saved .idea-title, .idea-card.top-pick .idea-title { color: var(--dark-hover); }
+  .idea-why { font-size: 12px; color: var(--mid); line-height: 1.5; }
+
+  .idea-actions { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+  .idea-btn { font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-family: 'DM Sans', sans-serif; border: 1px solid var(--light); background: transparent; color: var(--mid); transition: all 0.15s; white-space: nowrap; }
+  .idea-btn:hover { background: var(--cream); color: var(--dark); }
+  .idea-btn.save-btn.active { background: var(--brown-light); border-color: var(--brown); color: var(--brown); }
+  .idea-btn.pick-btn.active { background: var(--coral-light); border-color: var(--coral); color: var(--coral); }
+
+  .saved-section { background: var(--cream); border: 1px solid var(--light); border-radius: 14px; padding: 1.5rem; margin-top: 1.5rem; display: none; }
+  .saved-section.visible { display: block; animation: fadeIn 0.3s ease; }
+  .saved-title { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--dark); margin-bottom: 1rem; }
+  .saved-list { list-style: none; }
+  .saved-list li { font-size: 14px; color: var(--dark-hover); padding: 7px 0; border-bottom: 1px solid var(--light); display: flex; gap: 10px; align-items: flex-start; line-height: 1.5; }
+  .saved-list li:last-child { border-bottom: none; }
+  .saved-dot { min-width: 8px; height: 8px; border-radius: 50%; background: var(--coral); margin-top: 6px; flex-shrink: 0; }
+  .top-pick-label { display: inline-block; font-size: 11px; font-weight: 500; background: var(--coral); color: white; padding: 2px 8px; border-radius: 99px; margin-left: 8px; vertical-align: middle; }
+
+  .copy-saved-btn { width: 100%; margin-top: 1rem; padding: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: white; background: var(--dark); border: none; border-radius: 10px; cursor: pointer; transition: all 0.15s; }
+  .copy-saved-btn:hover { background: var(--dark-hover); }
+
+  .prompt-block { background: var(--cream); border-left: 3px solid var(--brown); border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; margin: 1.25rem 0; }
+  .prompt-block p { font-size: 14px; font-style: italic; color: var(--dark); line-height: 1.6; }
+
+  .loading-state { text-align: center; padding: 2.5rem 1rem; display: none; }
+  .loading-state.visible { display: block; }
+  .spinner { width: 36px; height: 36px; border: 3px solid var(--light); border-top-color: var(--coral); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1rem; }
+  .loading-text { font-size: 14px; color: var(--mid); }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (max-width: 480px) { .card { padding: 1.25rem; } .idea-actions { flex-direction: row; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="hero">
+    <div class="badge">Day 3 — 7-Day YouTube Challenge</div>
+    <h1>Video Idea<br><em>Generator</em></h1>
+    <p>Tell me about your channel and I'll generate 20 video ideas<br>your audience is already searching for.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Step 1 of 2</div>
+    <div class="card-title">Tell me about your channel</div>
+    <div class="card-desc">The more specific you are, the better your ideas will be. Think about the person you described on Day 1.</div>
+
+    <label class="field-label">What is your niche or topic?</label>
+    <span class="field-hint">Be specific — not just "fitness" but "fitness for women over 40"</span>
+    <input type="text" id="niche" placeholder="e.g. budgeting for single moms, natural hair care for beginners, starting a business after 50..." />
+
+    <label class="field-label">Who is your ideal viewer?</label>
+    <span class="field-hint">Age, situation, what they're struggling with</span>
+    <input type="text" id="viewer" placeholder="e.g. women over 40 who feel stuck and want to start over but don't know where to begin..." />
+
+    <label class="field-label">What result or transformation do you help them achieve?</label>
+    <input type="text" id="transformation" placeholder="e.g. build confidence, save money, launch a side hustle, feel healthy again..." />
+  </div>
+
+  <div class="card">
+    <div class="card-label">Step 2 of 2</div>
+    <div class="card-title">What kind of videos do you want to make?</div>
+    <div class="card-desc">Select all the formats that feel natural to you.</div>
+    <div class="tag-grid" id="formatGrid">
+      <span class="tag selected" onclick="toggleTag(this)">How-to tutorials</span>
+      <span class="tag selected" onclick="toggleTag(this)">Beginner guides</span>
+      <span class="tag" onclick="toggleTag(this)">My story / personal journey</span>
+      <span class="tag" onclick="toggleTag(this)">Mistakes to avoid</span>
+      <span class="tag" onclick="toggleTag(this)">Tips & lists</span>
+      <span class="tag" onclick="toggleTag(this)">Q&A / myth busting</span>
+      <span class="tag" onclick="toggleTag(this)">Day in my life</span>
+      <span class="tag" onclick="toggleTag(this)">Product reviews</span>
+      <span class="tag" onclick="toggleTag(this)">Motivational / mindset</span>
+      <span class="tag" onclick="toggleTag(this)">Before & after / results</span>
+    </div>
+  </div>
+
+  <button class="generate-btn" id="generateBtn" onclick="generateIdeas()">✦ Generate my 20 video ideas</button>
+
+  <div class="loading-state" id="loadingState">
+    <div class="spinner"></div>
+    <div class="loading-text">Researching ideas for your niche...</div>
+  </div>
+
+  <div class="ideas-section" id="ideasSection">
+    <div class="ideas-header">
+      <div>
+        <div class="ideas-title">Your 20 video ideas</div>
+        <div class="ideas-sub">Tap an idea to save it. Mark your top pick when you're ready.</div>
+      </div>
+      <button class="regenerate-btn" onclick="generateIdeas()">Regenerate ↺</button>
+    </div>
+
+    <div class="prompt-block">
+      <p>Save any ideas you like using the bookmark button. Use the star to mark the one you'll film first. Your saved ideas will appear below.</p>
+    </div>
+
+    <div id="ideaCards"></div>
+
+    <div class="saved-section" id="savedSection">
+      <div class="saved-title">Your saved ideas</div>
+      <ul class="saved-list" id="savedList"></ul>
+      <button class="copy-saved-btn" onclick="copySaved()">Copy my saved ideas list</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let savedIdeas = new Set();
+  let topPick = null;
+  let allIdeas = [];
+
+  function toggleTag(el) { el.classList.toggle('selected'); }
+
+  function getFormats() {
+    return [...document.querySelectorAll('#formatGrid .tag.selected')].map(t => t.innerText);
+  }
+
+  function buildIdeas(niche, viewer, transformation, formats) {
+    const n = niche || 'your niche';
+    const v = viewer || 'your ideal viewer';
+    const t = transformation || 'their goals';
+    const f = formats.length ? formats : ['How-to tutorials', 'Beginner guides', 'Tips & lists'];
+
+    const pools = {
+      'How-to tutorials': [
+        { title: `How to get started with ${n} (even if you're a complete beginner)`, why: 'High search volume — beginners always outnumber advanced viewers' },
+        { title: `How I went from zero to results with ${n}`, why: 'Personal story format — builds trust and connection fast' },
+        { title: `How to ${t} using ${n} — step by step`, why: 'Transformation-focused titles perform well in search' },
+        { title: `How to stay consistent with ${n} when life gets busy`, why: 'Solves the #1 problem most beginners face' },
+      ],
+      'Beginner guides': [
+        { title: `${n} for beginners — everything you need to know`, why: '"For beginners" is one of the most searched YouTube phrases' },
+        { title: `The complete beginner's guide to ${n}`, why: 'Long-form guides earn watch time and subscriber trust' },
+        { title: `Start here: my beginner roadmap for ${n}`, why: 'Great pinned video — sends new subscribers on a journey' },
+        { title: `What I wish I knew before starting ${n}`, why: 'Relatable angle — strong click-through rate' },
+      ],
+      'My story / personal journey': [
+        { title: `My honest story: how ${n} changed my life`, why: 'Vulnerability-driven content builds loyal audiences' },
+        { title: `Why I started my ${n} journey at this stage of my life`, why: 'Speaks directly to viewers who feel it is too late' },
+        { title: `What nobody tells you about ${n}`, why: 'Curiosity-gap title — very high click-through rate' },
+        { title: `I tried ${n} for 30 days — here is what happened`, why: 'Challenge format performs extremely well on YouTube' },
+      ],
+      'Mistakes to avoid': [
+        { title: `5 mistakes beginners make with ${n} (and how to avoid them)`, why: 'Mistake videos are searched heavily and shared widely' },
+        { title: `Stop doing this if you want results with ${n}`, why: 'Bold, direct title — creates urgency to click' },
+        { title: `I made every ${n} mistake so you don't have to`, why: 'Self-deprecating, relatable — builds authenticity' },
+        { title: `The biggest myth about ${n} that's holding you back`, why: 'Myth-busting content positions you as the trusted expert' },
+      ],
+      'Tips & lists': [
+        { title: `10 things I do every week for ${n} results`, why: 'List videos are easy to watch and easy to share' },
+        { title: `5 free tools that make ${n} so much easier`, why: '"Free" in the title consistently boosts click-through rate' },
+        { title: `My top 3 tips for ${n} as a busy ${v.split(' ')[0]}`, why: 'Specific audience callout drives higher viewer retention' },
+        { title: `Quick wins for ${n} — results you can see this week`, why: 'Instant gratification angle — highly searched by beginners' },
+      ],
+      'Q&A / myth busting': [
+        { title: `Answering your most asked questions about ${n}`, why: 'Community-driven content — great for engagement' },
+        { title: `Is ${n} really worth it? My honest answer`, why: 'Opinion-based titles create strong click curiosity' },
+        { title: `${n} — facts vs myths (what the internet gets wrong)`, why: 'Controversy-adjacent content earns strong watch time' },
+        { title: `The truth about ${n} nobody is talking about`, why: 'Insider knowledge positioning — builds authority fast' },
+      ],
+      'Day in my life': [
+        { title: `A day in my life using ${n}`, why: 'Lifestyle integration — helps viewers picture themselves doing it' },
+        { title: `What my ${n} routine actually looks like (real and unfiltered)`, why: '"Real and unfiltered" resonates strongly with audiences over 40' },
+        { title: `Behind the scenes: how I fit ${n} into a busy life`, why: 'Relatable to your specific viewer who is time-poor' },
+        { title: `Come with me: my honest ${n} check-in`, why: 'Vlog-style content drives strong community loyalty' },
+      ],
+      'Product reviews': [
+        { title: `The only ${n} tools and resources you actually need`, why: 'Curation content — positions you as the shortcut to saving time' },
+        { title: `I tested 5 popular ${n} methods — here is what works`, why: 'Comparison content earns high trust and long watch time' },
+        { title: `Best free resources for ${n} in ${new Date().getFullYear()}`, why: 'Year-tagged titles rank well in search' },
+        { title: `What I actually use for ${n} (honest review)`, why: '"Honest" signals authenticity — strong click driver' },
+      ],
+      'Motivational / mindset': [
+        { title: `You are not too late to start ${n} — here is proof`, why: 'Directly addresses the #1 fear of your audience' },
+        { title: `What finally made ${n} click for me`, why: 'Breakthrough narrative — highly relatable and shareable' },
+        { title: `If you are struggling with ${n}, watch this first`, why: 'Empathetic framing — drives strong emotional connection' },
+        { title: `The mindset shift that changed everything about my ${n} journey`, why: 'Mindset content performs well with audiences over 40' },
+      ],
+      'Before & after / results': [
+        { title: `My ${n} results after 90 days — honest before and after`, why: 'Results content is the most searched category on YouTube' },
+        { title: `What 6 months of ${n} actually looks like`, why: 'Time-based progress content earns subscriber loyalty' },
+        { title: `The moment everything changed with ${n}`, why: 'Story-arc format — keeps viewers watching to the end' },
+        { title: `From overwhelmed to confident: my ${n} transformation`, why: 'Transformation titles align with your core viewer motivation' },
+      ],
+    };
+
+    let ideas = [];
+    const used = new Set();
+
+    f.forEach(format => {
+      if (pools[format]) {
+        pools[format].forEach(idea => {
+          if (!used.has(idea.title)) {
+            ideas.push(idea);
+            used.add(idea.title);
+          }
+        });
+      }
+    });
+
+    Object.keys(pools).forEach(format => {
+      if (!f.includes(format)) {
+        pools[format].forEach(idea => {
+          if (!used.has(idea.title) && ideas.length < 24) {
+            ideas.push(idea);
+            used.add(idea.title);
+          }
+        });
+      }
+    });
+
+    ideas = ideas.sort(() => Math.random() - 0.5).slice(0, 20);
+    return ideas;
+  }
+
+  function generateIdeas() {
+    const niche = document.getElementById('niche').value.trim();
+    const viewer = document.getElementById('viewer').value.trim();
+    const transformation = document.getElementById('transformation').value.trim();
+    const formats = getFormats();
+
+    if (!niche) {
+      document.getElementById('niche').focus();
+      document.getElementById('niche').style.borderColor = '#f47c7c';
+      setTimeout(() => document.getElementById('niche').style.borderColor = '', 2000);
+      return;
+    }
+
+    savedIdeas.clear();
+    topPick = null;
+
+    document.getElementById('generateBtn').disabled = true;
+    document.getElementById('loadingState').classList.add('visible');
+    document.getElementById('ideasSection').classList.remove('visible');
+    document.getElementById('savedSection').classList.remove('visible');
+
+    setTimeout(() => {
+      allIdeas = buildIdeas(niche, viewer, transformation, formats);
+      renderIdeas();
+      document.getElementById('loadingState').classList.remove('visible');
+      document.getElementById('ideasSection').classList.add('visible');
+      document.getElementById('generateBtn').disabled = false;
+      document.getElementById('ideasSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 1200);
+  }
+
+  function renderIdeas() {
+    const container = document.getElementById('ideaCards');
+    container.innerHTML = '';
+    allIdeas.forEach((idea, i) => {
+      const isSaved = savedIdeas.has(i);
+      const isTop = topPick === i;
+      const card = document.createElement('div');
+      card.className = 'idea-card' + (isTop ? ' top-pick' : isSaved ? ' saved' : '');
+      card.innerHTML = `
+        <div class="idea-num">${i + 1}</div>
+        <div class="idea-body">
+          <div class="idea-title">${idea.title}</div>
+          <div class="idea-why">${idea.why}</div>
+        </div>
+        <div class="idea-actions">
+          <button class="idea-btn save-btn ${isSaved ? 'active' : ''}" onclick="toggleSave(event, ${i})">
+            ${isSaved ? '✓ Saved' : '+ Save'}
+          </button>
+          <button class="idea-btn pick-btn ${isTop ? 'active' : ''}" onclick="setTopPick(event, ${i})">
+            ${isTop ? '★ Top pick' : '☆ Top pick'}
+          </button>
+        </div>`;
+      container.appendChild(card);
+    });
+    updateSavedSection();
+  }
+
+  function toggleSave(e, i) {
+    e.stopPropagation();
+    if (savedIdeas.has(i)) savedIdeas.delete(i);
+    else savedIdeas.add(i);
+    renderIdeas();
+  }
+
+  function setTopPick(e, i) {
+    e.stopPropagation();
+    topPick = topPick === i ? null : i;
+    if (topPick !== null) savedIdeas.add(i);
+    renderIdeas();
+  }
+
+  function updateSavedSection() {
+    const sec = document.getElementById('savedSection');
+    const list = document.getElementById('savedList');
+    if (savedIdeas.size === 0 && topPick === null) { sec.classList.remove('visible'); return; }
+    sec.classList.add('visible');
+    list.innerHTML = '';
+    savedIdeas.forEach(i => {
+      const li = document.createElement('li');
+      li.innerHTML = `<div class="saved-dot"></div><div>${allIdeas[i].title}${topPick === i ? '<span class="top-pick-label">Top pick</span>' : ''}</div>`;
+      list.appendChild(li);
+    });
+  }
+
+  function copySaved() {
+    let text = 'My saved video ideas:\n\n';
+    savedIdeas.forEach(i => {
+      text += `• ${allIdeas[i].title}${topPick === i ? ' ⭐ TOP PICK' : ''}\n`;
+    });
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.querySelector('.copy-saved-btn');
+      btn.innerText = 'Copied to clipboard!';
+      btn.style.background = '#1D9E75';
+      setTimeout(() => { btn.innerText = 'Copy my saved ideas list'; btn.style.background = ''; }, 2500);
+    });
+  }
+</script>
+</body>
+</html>
