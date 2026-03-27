@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 5 — CapCut Beginner's Walkthrough</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --coral: #f47c7c;
+    --coral-hover: #e86b6b;
+    --coral-light: #fdf0f0;
+    --coral-border: #f9c8c8;
+    --brown: #c5a073;
+    --brown-light: #fdf6ec;
+    --cream: #f3ead0;
+    --dark: #406c79;
+    --dark-hover: #2d4f59;
+    --mid: #688a93;
+    --light: #dae5ea;
+    --card-bg: #fffdf8;
+    --page-bg: #faf7f0;
+    --green: #1d9e75;
+    --green-light: #e1f5ee;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--page-bg); color: var(--dark-hover); min-height: 100vh; padding: 2rem 1rem 4rem; }
+  .container { max-width: 720px; margin: 0 auto; }
+
+  .hero { text-align: center; padding: 3rem 1rem 2.5rem; border-bottom: 1px solid var(--light); margin-bottom: 2.5rem; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; color: var(--coral); background: var(--coral-light); border: 1px solid var(--coral-border); padding: 5px 16px; border-radius: 99px; margin-bottom: 1.25rem; }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 5vw, 2.2rem); font-weight: 400; color: var(--dark); line-height: 1.2; margin-bottom: 0.75rem; }
+  .hero p { font-size: 15px; color: var(--mid); line-height: 1.7; }
+
+  /* PROGRESS */
+  .progress-bar-wrap { height: 6px; background: var(--light); border-radius: 3px; margin: 1.5rem 0 0.5rem; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--coral); border-radius: 3px; transition: width 0.4s ease; width: 0%; }
+  .progress-label { font-size: 13px; color: var(--mid); text-align: center; }
+
+  /* TABS */
+  .tab-row { display: flex; gap: 6px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .tab { font-size: 13px; font-weight: 500; padding: 8px 18px; border-radius: 99px; border: 1px solid var(--light); background: white; color: var(--mid); cursor: pointer; transition: all 0.15s; font-family: 'DM Sans', sans-serif; }
+  .tab:hover { border-color: var(--coral); color: var(--coral); }
+  .tab.active { background: var(--coral); border-color: var(--coral); color: white; }
+
+  /* STEP PANEL */
+  .step-panel { display: none; animation: fadeIn 0.3s ease; }
+  .step-panel.visible { display: block; }
+
+  /* STEP CARD */
+  .step-card { background: var(--card-bg); border: 1px solid var(--light); border-radius: 16px; padding: 2rem; margin-bottom: 1.25rem; }
+  .step-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 1.25rem; }
+  .step-num { min-width: 44px; height: 44px; border-radius: 12px; background: var(--coral); color: white; font-size: 18px; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'DM Serif Display', serif; }
+  .step-num.done { background: var(--green); }
+  .step-title-wrap {}
+  .step-label { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brown); margin-bottom: 3px; }
+  .step-title { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: var(--dark); }
+  .step-desc { font-size: 14px; color: var(--mid); line-height: 1.7; margin-bottom: 1.25rem; }
+
+  /* INSTRUCTION LIST */
+  .instruction-list { list-style: none; }
+  .instruction-item { display: flex; gap: 14px; padding: 10px 0; border-bottom: 1px solid #f0ece4; align-items: flex-start; }
+  .instruction-item:last-child { border-bottom: none; }
+  .inst-num { min-width: 26px; height: 26px; border-radius: 50%; background: var(--cream); color: var(--brown); font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .inst-text { font-size: 14px; color: var(--dark-hover); line-height: 1.6; }
+  .inst-text strong { color: var(--dark); font-weight: 500; }
+  .inst-text .path { display: inline-block; background: var(--light); color: var(--dark); font-size: 12px; font-weight: 500; padding: 2px 8px; border-radius: 4px; margin: 0 2px; font-family: monospace; }
+
+  /* TIP BOX */
+  .tip-box { background: var(--cream); border-left: 3px solid var(--brown); border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; margin-top: 1.1rem; }
+  .tip-box p { font-size: 14px; color: var(--dark); line-height: 1.6; font-style: italic; }
+  .tip-box strong { color: var(--brown); font-style: normal; }
+
+  /* WARNING BOX */
+  .warn-box { background: var(--coral-light); border-left: 3px solid var(--coral); border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; margin-top: 1.1rem; }
+  .warn-box p { font-size: 14px; color: var(--dark-hover); line-height: 1.6; }
+  .warn-box strong { color: var(--coral); }
+
+  /* CHECK ITEMS */
+  .check-list { margin-top: 1rem; }
+  .check-item { display: flex; align-items: flex-start; gap: 12px; padding: 9px 0; border-bottom: 1px solid #f0ece4; cursor: pointer; user-select: none; }
+  .check-item:last-child { border-bottom: none; }
+  .check-box { min-width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid var(--light); background: white; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; margin-top: 1px; }
+  .check-box svg { width: 13px; height: 13px; fill: white; opacity: 0; transition: opacity 0.2s; }
+  .check-item.done .check-box { background: var(--green); border-color: var(--green); }
+  .check-item.done .check-box svg { opacity: 1; }
+  .check-item.done .check-label { text-decoration: line-through; color: var(--mid); }
+  .check-label { font-size: 14px; color: var(--dark-hover); line-height: 1.5; }
+  .check-sub { font-size: 12px; color: var(--mid); margin-top: 2px; }
+
+  /* NAV BUTTONS */
+  .nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--light); }
+  .btn { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; padding: 10px 24px; border-radius: 10px; cursor: pointer; border: 1px solid var(--light); background: transparent; color: var(--mid); transition: all 0.15s; }
+  .btn:hover { background: var(--cream); color: var(--dark); }
+  .btn.primary { background: var(--coral); color: white; border-color: var(--coral); }
+  .btn.primary:hover { background: var(--coral-hover); border-color: var(--coral-hover); }
+  .btn:disabled { opacity: 0.3; cursor: default; }
+
+  /* SOFTWARE COMPARISON */
+  .software-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  .software-card { background: var(--card-bg); border: 1px solid var(--light); border-radius: 14px; padding: 1.25rem; }
+  .software-card.featured { border-color: var(--coral); border-width: 2px; }
+  .software-name { font-size: 15px; font-weight: 500; color: var(--dark); margin-bottom: 4px; }
+  .software-tag { display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 99px; margin-bottom: 0.75rem; }
+  .tag-free { background: var(--green-light); color: var(--green); }
+  .tag-paid { background: var(--light); color: var(--mid); }
+  .tag-rec { background: var(--coral-light); color: var(--coral); border: 1px solid var(--coral-border); }
+  .software-desc { font-size: 13px; color: var(--mid); line-height: 1.5; }
+  .software-best { font-size: 12px; font-weight: 500; color: var(--brown); margin-top: 8px; }
+
+  /* EXPORT SETTINGS */
+  .export-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1rem; }
+  .export-item { background: var(--cream); border-radius: 10px; padding: 0.85rem 1rem; }
+  .export-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--brown); margin-bottom: 4px; }
+  .export-value { font-size: 14px; font-weight: 500; color: var(--dark); }
+  .export-note { font-size: 12px; color: var(--mid); margin-top: 2px; }
+
+  /* COMPLETE */
+  .complete-card { background: var(--dark); border-radius: 16px; padding: 2rem; text-align: center; margin-top: 1.5rem; display: none; animation: fadeIn 0.4s ease; }
+  .complete-card.visible { display: block; }
+  .complete-card h3 { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: white; margin-bottom: 0.5rem; }
+  .complete-card p { font-size: 14px; color: var(--light); line-height: 1.7; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 480px) { .step-card { padding: 1.25rem; } .export-grid { grid-template-columns: 1fr; } .tab { font-size: 12px; padding: 7px 14px; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="hero">
+    <div class="badge">Day 5 — 7-Day YouTube Challenge</div>
+    <h1>CapCut Beginner's<br><em>Walkthrough</em></h1>
+    <p>A step-by-step guide to editing your first YouTube video in CapCut.<br>Follow each step in order and your video will be clean, clear, and ready to upload.</p>
+  </div>
+
+  <!-- SOFTWARE OPTIONS -->
+  <div class="step-card" style="margin-bottom:1.5rem;">
+    <div class="step-label" style="font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--brown);margin-bottom:0.75rem;">Choose your software</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--dark);margin-bottom:0.5rem;">Which editor are you using?</div>
+    <div style="font-size:14px;color:var(--mid);margin-bottom:1.25rem;line-height:1.6;">This guide walks through CapCut. All options below are beginner-friendly — start with what feels easiest.</div>
+    <div class="software-grid">
+      <div class="software-card featured">
+        <div class="software-name">CapCut</div>
+        <span class="software-tag tag-rec">This guide</span>
+        <div class="software-desc">Free, beginner-friendly, works on phone and desktop. The easiest starting point for most creators.</div>
+        <div class="software-best">Best for: Complete beginners</div>
+      </div>
+      <div class="software-card">
+        <div class="software-name">iMovie</div>
+        <span class="software-tag tag-free">Free — Mac only</span>
+        <div class="software-desc">Simple drag-and-drop editing. Great for Mac users who want something clean and easy.</div>
+        <div class="software-best">Best for: Mac beginners</div>
+      </div>
+      <div class="software-card">
+        <div class="software-name">DaVinci Resolve</div>
+        <span class="software-tag tag-free">Free</span>
+        <div class="software-desc">Professional-grade editing software. Steeper learning curve but incredibly powerful — and free.</div>
+        <div class="software-best">Best for: When you are ready to level up</div>
+      </div>
+      <div class="software-card">
+        <div class="software-name">Adobe Premiere</div>
+        <span class="software-tag tag-paid">Paid</span>
+        <div class="software-desc">Industry standard. Powerful and flexible but comes with a monthly subscription cost.</div>
+        <div class="software-best">Best for: Serious investment stage</div>
+      </div>
+    </div>
+    <div class="tip-box">
+      <p><strong>Dee Dee's note:</strong> I personally edit in iMovie and DaVinci Resolve. I have also used CapCut and it is genuinely the easiest place to start. I have linked a video in the community showing my rough pass process in DaVinci — check that out once you are comfortable with the basics.</p>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
+  <div class="progress-label" id="progressLabel" style="margin-bottom:1.5rem;">Step 1 of 8 — Getting started</div>
+
+  <!-- TAB ROW -->
+  <div class="tab-row" id="tabRow">
+    <button class="tab active" onclick="goToStep(0)">1. Import</button>
+    <button class="tab" onclick="goToStep(1)">2. Cut</button>
+    <button class="tab" onclick="goToStep(2)">3. Audio</button>
+    <button class="tab" onclick="goToStep(3)">4. Music</button>
+    <button class="tab" onclick="goToStep(4)">5. Text</button>
+    <button class="tab" onclick="goToStep(5)">6. Transitions</button>
+    <button class="tab" onclick="goToStep(6)">7. Color</button>
+    <button class="tab" onclick="goToStep(7)">8. Export</button>
+  </div>
+
+  <!-- STEP 1: IMPORT -->
+  <div class="step-panel visible" id="step-0">
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-num" id="num-0">1</div>
+        <div class="step-title-wrap">
+          <div class="step-label">Step 1 of 8</div>
+          <div class="step-title">Import your footage</div>
+        </div>
+      </div>
+      <div class="step-desc">Before you can edit anything you need to get your footage into CapCut. This takes less than two minutes.</div>
+      <ul class="instruction-list">
+        <li class="instruction-item"><div class="inst-num">1</div><div class="inst-text">Download and open <strong>CapCut</strong> — available free at capcut.com or in the App Store / Google Play</div></li>
+        <li class="instruction-item"><div class="inst-num">2</div><div class="inst-text">Click <span class="path">New Project</span> on the home screen</div></li>
+        <li class="instruction-item"><div class="inst-num">3</div><div class="inst-text">Click <span class="path">Import</span> and navigate to where your video file is saved</div></li>
+        <li class="instruction-item"><div class="inst-num">4</div><div class="inst-text">Select your footage and click <span class="path">Add</span> — it will appear on the timeline at the bottom of the screen</div></li>
+        <li class="instruction-item"><div class="inst-num">5</div><div class="inst-text">Make sure your project is set to <strong>1080p</strong> — click the resolution setting in the top right corner to check</div></li>
+        <li class="instruction-item"><div class="inst-num">6</div><div class="inst-text"><strong>Watch your full footage once</strong> before you cut anything — note the timestamps of mistakes, long pauses, and anything off-topic</div></li>
+      </ul>
+      <div class="tip-box">
+        <p><strong>Tip:</strong> Watching before cutting is the step most beginners skip — and it is the most important one. You will edit much faster when you know exactly what you are working with.</p>
+      </div>
+      <div class="check-list">
+        <div class="check-item" onclick="toggleCheck(this, 'step0')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">CapCut downloaded and opened</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this, 'step0')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Footage imported to timeline</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this, 'step0')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Project set to 1080p</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this, 'step0')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Watched full footage once and noted timestamps</div></div></div>
+      </div>
+      <div class="nav-row">
+        <button class="btn" disabled>← Previous</button>
+        <button class="btn primary" onclick="goToStep(1)">Next step →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: CUT -->
+  <div class="step-panel" id="step-1">
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-num" id="num-1">2</div>
+        <div class="step-title-wrap">
+          <div class="step-label">Step 2 of 8</div>
+          <div class="step-title">Cut your footage</div>
+        </div>
+      </div>
+      <div class="step-desc">This is the most important editing step. Cutting mistakes and pauses is what transforms raw footage into a watchable video. Take your time here.</div>
+      <ul class="instruction-list">
+        <li class="instruction-item"><div class="inst-num">1</div><div class="inst-text">Drag the <strong>playhead</strong> (the white vertical line) to the start of a mistake or long pause</div></li>
+        <li class="instruction-item"><div class="inst-num">2</div><div class="inst-text">Click on your clip in the timeline to select it, then tap <span class="path">Split</span> — this cuts the clip at that point</div></li>
+        <li class="instruction-item"><div class="inst-num">3</div><div class="inst-text">Move the playhead to the end of the section you want to remove, click <span class="path">Split</span> again</div></li>
+        <li class="instruction-item"><div class="inst-num">4</div><div class="inst-text">Select the unwanted section between the two cuts and press <span class="path">Delete</span></div></li>
+        <li class="instruction-item"><div class="inst-num">5</div><div class="inst-text">Repeat for every mistake, long pause, filler word, and off-topic section in your footage</div></li>
+        <li class="instruction-item"><div class="inst-num">6</div><div class="inst-text">Watch the edited version back — your video should feel tighter and more energetic than the raw footage</div></li>
+      </ul>
+      <div class="tip-box">
+        <p><strong>What to cut:</strong> mistakes and stumbles, pauses longer than 1–2 seconds, filler words like "um" and "so", anything that repeats information already covered, and sections where your energy drops noticeably.</p>
+      </div>
+      <div class="warn-box">
+        <p><strong>Don't over-cut:</strong> a small pause here and there feels natural. Cutting every single breath makes your video feel rushed and exhausting to watch. Leave the natural rhythm in.</p>
+      </div>
+      <div class="check-list">
+        <div class="check-item" onclick="toggleCheck(this, 'step1')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">All mistakes and stumbles removed</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this, 'step1')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Long pauses and filler words trimmed</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this, 'step1')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Watched back and pacing feels good</div></div></div>
+      </div>
+      <div class="nav-row">
+        <button class="btn" onclick="goToStep(0)">← Previous</button>
+        <button class="btn primary" onclick="goToStep(2)">Next step →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: AUDIO -->
+  <div class="step-panel" id="step-2">
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-num" id="num-2">3</div>
+        <div class="step-title-wrap">
+          <div class="step-label">Step 3 of 8</div>
+          <div class="step-title">Enhance your audio</div>
+        </div>
+      </div>
+      <div class="step-desc">Good audio is what separates a professional-feeling video from an amateur one. CapCut has built-in tools that make this easier than you think.</div>
+      <ul class="instruction-list">
+        <li class="instruction-item"><div class="inst-num">1</div><div class="inst-text">Select your main clip in the timeline, then tap <span class="path">Audio</span> in the bottom menu</div></li>
+        <li class="instruction-item"><div class="inst-num">2</div><div class="inst-text">Turn on <strong>Noise Reduction</strong> — this removes background hum, air conditioning, and room noise automatically</div></li>
+        <li class="instruction-item"><div class="inst-num">3</div><div class="inst-text">Check your <strong>volume level</strong> — your voice should be clearly audible without distorting. Aim for a consistent level throughout</div></li>
+        <li class="instruction-item"><div class="inst-num">4</div><div class="inst-text">Use <strong>Auto Volume</strong> if your levels vary between sections — CapCut will balance them out automatically</div></li>
+        <li class="instruction-item"><div class="inst-num">5</div><div class="inst-text">Play back your audio with headphones if you have them — listen for anything that sounds off</div></li>
+      </ul>
+      <div class="tip-box">
+        <p><strong>Tip:</strong> If your audio still sounds echoey after noise reduction, try re-recording in a smaller room with softer furnishings — a closet full of clothes is genuinely one of the best recording spaces in a house.</p>
+      </div>
+      <div class="check-list">
+        <div class="check-item" onclick="toggleCheck(this, 'step2')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Noise reduction applied</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this, 'step2')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Volume is consistent and clear</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this, 'step2')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Played back and audio sounds good</div></div></div>
+      </div>
+      <div class="nav-row">
+        <button class="btn" onclick="goToStep(1)">← Previous</button>
+        <button class="btn primary" onclick="goToStep(3)">Next step →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: MUSIC -->
+  <div class="step-panel" id="step-3">
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-num" id="num-3">4</div>
+        <div class="step-title-wrap">
+          <div class="step-label">Step 4 of 8</div>
+          <div class="step-title">Add background music (optional)</div>
+        </div>
+      </div>
+      <div class="step-desc">Background music adds warmth and energy to your video. It is optional — but done right, it makes a real difference. The key word is subtle.</div>
+      <ul class="instruction-list">
+        <li class="instruction-item"><div class="inst-num">1</div><div class="inst-text">Tap <span class="path">Audio</span> then <span class="path">Music</span> in the bottom toolbar</div></li>
+        <li class="instruction-item"><div class="inst-num">2</div><div class="inst-text">Browse CapCut's built-in library — all tracks are <strong>royalty-free</strong> and safe to use on YouTube</div></li>
+        <li class="instruction-item"><div class="inst-num">3</div><div class="inst-text">Alternatively use the <strong>YouTube Audio Library</strong> (free at studio.youtube.com → Audio Library) — download a track and import it into CapCut</div></li>
+        <li class="instruction-item"><div class="inst-num">4</div><div class="inst-text">Choose something <strong>instrumental</strong> — no lyrics. Lyrics compete with your voice and distract viewers</div></li>
+        <li class="instruction-item"><div class="inst-num">5</div><div class="inst-text">Set the music volume to <strong>10–20%</strong> of your voice level — it should be felt, not heard</div></li>
+        <li class="instruction-item"><div class="inst-num">6</div><div class="inst-text">Use <strong>fade in</strong> at the start and <strong>fade out</strong> at the end so the music does not cut abruptly</div></li>
+      </ul>
+      <div class="warn-box">
+        <p><strong>Copyright warning:</strong> Never use popular songs — even for a few seconds. YouTube's Content ID system will flag your video and it could be muted or removed. Stick to royalty-free music only.</p>
+      </div>
+      <div class="tip-box">
+        <p><strong>Dee Dee's tip:</strong> If in doubt, skip the music for your first video. A clean, well-edited voice-only video is better than a video where the music competes with your message.</p>
+      </div>
+      <div class="check-list">
+        <div class="check-item" onclick="toggleCheck(this, 'step3')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Royalty-free music added (or skipped for video one)</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this, 'step3')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Music volume set to 10–20% — subtle, not loud</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this, 'step3')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Fade in and fade out added</div></div></div>
+      </div>
+      <div class="nav-row">
+        <button class="btn" onclick="goToStep(2)">← Previous</button>
+        <button class="btn primary" onclick="goToStep(4)">Next step →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: TEXT -->
+  <div class="step-panel" id="step-4">
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-num" id="num-4">5</div>
+        <div class="step-title-wrap">
+          <div class="step-label">Step 5 of 8</div>
+          <div class="step-title">Add text and graphics</div>
+        </div>
+      </div>
+      <div class="step-desc">Text on screen reinforces key points, keeps viewers engaged, and makes your video more accessible. Keep it clean and use it sparingly.</div>
+      <ul class="instruction-list">
+        <li class="instruction-item"><div class="inst-num">1</div><div class="inst-text">Tap <span class="path">Text</span> in the bottom toolbar, then <span class="path">Add Text</span></div></li>
+        <li class="instruction-item"><div class="inst-num">2</div><div class="inst-text">Add a <strong>title card</strong> at the very beginning of your video — your video title or topic in large, readable text</div></li>
+        <li class="instruction-item"><div class="inst-num">3</div><div class="inst-text">Add <strong>on-screen text</strong> to highlight your key points — keep each one to 5 words or fewer</div></li>
+        <li class="instruction-item"><div class="inst-num">4</div><div class="inst-text">Choose a <strong>clean, readable font</strong> — avoid cursive or decorative fonts that are hard to read at speed</div></li>
+        <li class="instruction-item"><div class="inst-num">5</div><div class="inst-text">Make sure text <strong>contrasts</strong> with your background — white text with a dark shadow or outline works on most backgrounds</div></li>
+        <li class="instruction-item"><div class="inst-num">6</div><div class="inst-text">Add a <strong>CTA text card</strong> at the end of your video — "Subscribe for more" or "Watch Day 2 next"</div></li>
+        <li class="instruction-item"><div class="inst-num">7</div><div class="inst-text">Use <span class="path">Auto Captions</span> under the Text menu — CapCut will automatically transcribe your speech into subtitles</div></li>
+      </ul>
+      <div class="tip-box">
+        <p><strong>Tip:</strong> Auto Captions is one of CapCut's best features. Adding captions makes your video accessible to more viewers, increases watch time, and helps people watch in environments where they can't use sound.</p>
+      </div>
+      <div class="check-list">
+        <div class="check-item" onclick="toggleCheck(this, 'step4')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Title card added at the start</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this, 'step4')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Key points highlighted with on-screen text</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this, 'step4')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">CTA text added at the end</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this, 'step4')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Auto Captions generated and reviewed</div></div></div>
+      </div>
+      <div class="nav-row">
+        <button class="btn" onclick="goToStep(3)">← Previous</button>
+        <button class="btn primary" onclick="goToStep(5)">Next step →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 6: TRANSITIONS -->
+  <div class="step-panel" id="step-5">
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-num" id="num-5">6</div>
+        <div class="step-title-wrap">
+          <div class="step-label">Step 6 of 8</div>
+          <div class="step-title">Add transitions</div>
+        </div>
+      </div>
+      <div class="step-desc">Transitions connect your cuts smoothly. Less is more here — simple and clean always beats flashy and distracting.</div>
+      <ul class="instruction-list">
+        <li class="instruction-item"><div class="inst-num">1</div><div class="inst-text">Look for the small <strong>white diamond icon</strong> between clips on your timeline — tap it to add a transition</div></li>
+        <li class="instruction-item"><div class="inst-num">2</div><div class="inst-text">For most cuts between sections use a simple <strong>fade</strong> or <strong>dissolve</strong> — these are smooth and professional</div></li>
+        <li class="instruction-item"><div class="inst-num">3</div><div class="inst-text">Keep transition duration to <strong>0.3–0.5 seconds</strong> — any longer feels slow and drawn out</div></li>
+        <li class="instruction-item"><div class="inst-num">4</div><div class="inst-text">For cuts within the same section — like between two sentences — <strong>no transition is needed</strong>. A clean cut is completely fine</div></li>
+        <li class="instruction-item"><div class="inst-num">5</div><div class="inst-text">Avoid flashy or spinning transitions — they pull attention away from your content and look dated</div></li>
+      </ul>
+      <div class="tip-box">
+        <p><strong>Simple rule:</strong> if you notice the transition, it is probably too much. The best transitions are the ones your viewer does not consciously register.</p>
+      </div>
+      <div class="check-list">
+        <div class="check-item" onclick="toggleCheck(this, 'step5')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Simple transitions added between main sections</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this, 'step5')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Transition duration kept to 0.3–0.5 seconds</div></div></div>
+      </div>
+      <div class="nav-row">
+        <button class="btn" onclick="goToStep(4)">← Previous</button>
+        <button class="btn primary" onclick="goToStep(6)">Next step →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 7: COLOR -->
+  <div class="step-panel" id="step-6">
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-num" id="num-6">7</div>
+        <div class="step-title-wrap">
+          <div class="step-label">Step 7 of 8</div>
+          <div class="step-title">Color correction</div>
+        </div>
+      </div>
+      <div class="step-desc">You do not need to be a colorist. For your first video, simple brightness and contrast adjustments are all you need to look polished and professional.</div>
+      <ul class="instruction-list">
+        <li class="instruction-item"><div class="inst-num">1</div><div class="inst-text">Select your main clip, then tap <span class="path">Adjust</span> in the bottom menu</div></li>
+        <li class="instruction-item"><div class="inst-num">2</div><div class="inst-text">If your footage looks dark, increase <strong>Brightness</strong> slightly — keep it subtle</div></li>
+        <li class="instruction-item"><div class="inst-num">3</div><div class="inst-text">Increase <strong>Contrast</strong> slightly to make your image pop — again, less is more</div></li>
+        <li class="instruction-item"><div class="inst-num">4</div><div class="inst-text">If colors look washed out, increase <strong>Saturation</strong> slightly — a small boost goes a long way</div></li>
+        <li class="instruction-item"><div class="inst-num">5</div><div class="inst-text">Use a <strong>Filter</strong> if you want a consistent look — tap Filters and choose something subtle and warm. Avoid heavy, dramatic filters</div></li>
+        <li class="instruction-item"><div class="inst-num">6</div><div class="inst-text">Make sure your skin tone looks natural — if it looks too orange or too yellow, reduce Warmth slightly</div></li>
+      </ul>
+      <div class="tip-box">
+        <p><strong>Dee Dee's tip:</strong> The best color correction is the kind no one notices. Your goal is for your footage to look natural and bright — not processed. When in doubt, make smaller adjustments than you think you need.</p>
+      </div>
+      <div class="check-list">
+        <div class="check-item" onclick="toggleCheck(this, 'step6')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Brightness and contrast adjusted</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this, 'step6')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Skin tone looks natural</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this, 'step6')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Watched back — footage looks bright and natural</div></div></div>
+      </div>
+      <div class="nav-row">
+        <button class="btn" onclick="goToStep(5)">← Previous</button>
+        <button class="btn primary" onclick="goToStep(7)">Next step →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 8: EXPORT -->
+  <div class="step-panel" id="step-7">
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-num" id="num-7">8</div>
+        <div class="step-title-wrap">
+          <div class="step-label">Step 8 of 8 — Final step</div>
+          <div class="step-title">Review and export</div>
+        </div>
+      </div>
+      <div class="step-desc">You are almost done. Watch your full edit one final time before you export — catching something now is much easier than re-exporting later.</div>
+      <ul class="instruction-list">
+        <li class="instruction-item"><div class="inst-num">1</div><div class="inst-text"><strong>Watch your full edit from start to finish</strong> — at least once, ideally twice. Check for awkward cuts, audio issues, and any text errors</div></li>
+        <li class="instruction-item"><div class="inst-num">2</div><div class="inst-text">Make any final tweaks, then tap the <span class="path">Export</span> button in the top right corner</div></li>
+        <li class="instruction-item"><div class="inst-num">3</div><div class="inst-text">Set resolution to <strong>1080p</strong> — this is the minimum for YouTube. If your footage was shot in 4K, export in 4K</div></li>
+        <li class="instruction-item"><div class="inst-num">4</div><div class="inst-text">Set frame rate to match your footage — <strong>30fps</strong> is standard for talking head videos</div></li>
+        <li class="instruction-item"><div class="inst-num">5</div><div class="inst-text">Wait for the export to complete, then <strong>save the file</strong> somewhere you can easily find it for Day 6</div></li>
+      </ul>
+
+      <div style="margin-top:1.25rem;">
+        <div style="font-size:13px;font-weight:500;color:var(--mid);margin-bottom:0.75rem;letter-spacing:0.04em;text-transform:uppercase;font-size:11px;">Recommended export settings</div>
+        <div class="export-grid">
+          <div class="export-item"><div class="export-label">Resolution</div><div class="export-value">1080p</div><div class="export-note">Minimum for YouTube</div></div>
+          <div class="export-item"><div class="export-label">Frame rate</div><div class="export-value">30fps</div><div class="export-note">Standard for talking head</div></div>
+          <div class="export-item"><div class="export-label">Format</div><div class="export-value">MP4</div><div class="export-note">Best compatibility</div></div>
+          <div class="export-item"><div class="export-label">Target length</div><div class="export-value">5–15 min</div><div class="export-note">Ideal for first videos</div></div>
+        </div>
+      </div>
+
+      <div class="tip-box" style="margin-top:1.25rem;">
+        <p><strong>You did it.</strong> Your edited video is ready. Save it, back it up somewhere, and bring it to Day 6 — where we create your thumbnail and write your title and description before uploading.</p>
+      </div>
+
+      <div class="check-list">
+        <div class="check-item" onclick="toggleCheck(this, 'step7')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Watched full edit at least twice</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this, 'step7')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Exported at 1080p, 30fps, MP4</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this, 'step7')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">File saved and backed up</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this, 'step7')"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="check-label">Ready for Day 6</div></div></div>
+      </div>
+
+      <div class="nav-row">
+        <button class="btn" onclick="goToStep(6)">← Previous</button>
+        <span style="font-size:14px;color:var(--green);font-weight:500;">All steps complete!</span>
+      </div>
+    </div>
+
+    <div class="complete-card" id="completeCard">
+      <h3>Your video is edited. 🎬</h3>
+      <p>Every step is done. You have a polished, exported video ready to go.<br>Head to the Wins & Challenges post and let the community know — then get ready for Day 6.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let currentStep = 0;
+  const stepChecks = { step0:0, step1:0, step2:0, step3:0, step4:0, step5:0, step6:0, step7:0 };
+  const stepTotals = { step0:4, step1:3, step2:3, step3:3, step4:4, step5:2, step6:3, step7:4 };
+  const stepLabels = ['Getting started','Cutting footage','Enhancing audio','Background music','Text & graphics','Transitions','Color correction','Review & export'];
+
+  function goToStep(i) {
+    document.getElementById('step-' + currentStep).classList.remove('visible');
+    document.querySelectorAll('.tab')[currentStep].classList.remove('active');
+    currentStep = i;
+    document.getElementById('step-' + currentStep).classList.add('visible');
+    document.querySelectorAll('.tab')[currentStep].classList.add('active');
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleCheck(el, stepKey) {
+    el.classList.toggle('done');
+    const checks = document.querySelectorAll('#step-' + currentStep + ' .check-item');
+    let done = 0;
+    checks.forEach(c => { if (c.classList.contains('done')) done++; });
+    stepChecks[stepKey] = done;
+    updateProgress();
+    checkComplete();
+  }
+
+  function updateProgress() {
+    const totalDone = Object.values(stepChecks).reduce((a,b) => a+b, 0);
+    const totalItems = Object.values(stepTotals).reduce((a,b) => a+b, 0);
+    const pct = Math.round((totalDone / totalItems) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').innerText = 'Step ' + (currentStep+1) + ' of 8 — ' + stepLabels[currentStep] + ' (' + pct + '% complete)';
+  }
+
+  function checkComplete() {
+    const allDone = Object.keys(stepChecks).every(k => stepChecks[k] === stepTotals[k]);
+    const card = document.getElementById('completeCard');
+    if (card) card.classList.toggle('visible', allDone);
+  }
+</script>
+</body>
+</html>
