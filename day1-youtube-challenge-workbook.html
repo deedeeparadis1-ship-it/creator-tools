@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 1 — YouTube Challenge Workbook</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --coral: #f47c7c;
+    --coral-hover: #e86b6b;
+    --coral-light: #fdf0f0;
+    --coral-border: #f9c8c8;
+    --brown: #c5a073;
+    --brown-light: #fdf6ec;
+    --cream: #f3ead0;
+    --dark: #406c79;
+    --dark-hover: #2d4f59;
+    --mid: #688a93;
+    --light: #dae5ea;
+    --card-bg: #fffdf8;
+    --page-bg: #faf7f0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--page-bg);
+    color: var(--dark-hover);
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 3rem 1rem 2.5rem;
+    border-bottom: 1px solid var(--light);
+    margin-bottom: 2.5rem;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--coral);
+    background: var(--coral-light);
+    border: 1px solid var(--coral-border);
+    padding: 5px 16px;
+    border-radius: 99px;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 5vw, 2.4rem);
+    font-weight: 400;
+    color: var(--dark);
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero p {
+    font-size: 15px;
+    color: var(--mid);
+    line-height: 1.7;
+  }
+
+  /* PROGRESS */
+  .progress-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 2.5rem;
+  }
+
+  .prog-step {
+    flex: 1;
+    height: 5px;
+    border-radius: 3px;
+    background: var(--light);
+    transition: background 0.4s;
+  }
+
+  .prog-step.active { background: var(--coral); }
+  .prog-step.done { background: var(--brown); }
+
+  /* STEP LABEL */
+  .step-label {
+    font-size: 12px;
+    color: var(--mid);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .step-dots {
+    display: flex;
+    gap: 4px;
+  }
+
+  .step-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--light);
+  }
+
+  .step-dot.on { background: var(--coral); }
+
+  /* CARD */
+  .section-card {
+    background: var(--card-bg);
+    border: 1px solid var(--light);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 1.25rem;
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .section-card.visible { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-num {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brown);
+    margin-bottom: 0.3rem;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-desc {
+    font-size: 14px;
+    color: var(--mid);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  /* PROMPT BLOCK */
+  .prompt-block {
+    background: var(--cream);
+    border-left: 3px solid var(--brown);
+    border-radius: 0 8px 8px 0;
+    padding: 0.85rem 1.1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .prompt-block p {
+    font-size: 14px;
+    font-style: italic;
+    color: var(--dark);
+    line-height: 1.6;
+  }
+
+  /* FORM */
+  .field-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--mid);
+    margin-bottom: 7px;
+  }
+
+  textarea, input[type="text"] {
+    width: 100%;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--dark-hover);
+    background: white;
+    border: 1px solid var(--light);
+    border-radius: 10px;
+    padding: 11px 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    margin-bottom: 1.1rem;
+  }
+
+  textarea {
+    min-height: 95px;
+    resize: vertical;
+    line-height: 1.6;
+  }
+
+  textarea:focus, input[type="text"]:focus {
+    border-color: var(--coral);
+    box-shadow: 0 0 0 3px rgba(244,124,124,0.12);
+  }
+
+  /* WHY CHAIN */
+  .why-chain { display: flex; flex-direction: column; }
+
+  .why-chain-item { position: relative; }
+
+  .why-chain-item:not(:last-child)::after {
+    content: "↓";
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    color: var(--brown);
+    line-height: 2;
+  }
+
+  .why-chain-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--brown);
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  /* TAGS */
+  .tag-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 1.25rem;
+  }
+
+  .tag {
+    font-size: 13px;
+    padding: 6px 15px;
+    border: 1px solid var(--light);
+    border-radius: 99px;
+    cursor: pointer;
+    color: var(--mid);
+    background: white;
+    transition: all 0.15s;
+    user-select: none;
+  }
+
+  .tag:hover { border-color: var(--coral); color: var(--coral); background: var(--coral-light); }
+  .tag.selected { border-color: var(--coral); color: var(--coral); background: var(--coral-light); font-weight: 500; }
+
+  /* BUTTONS */
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.75rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--light);
+  }
+
+  .btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 24px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid var(--light);
+    background: transparent;
+    color: var(--mid);
+    transition: all 0.15s;
+  }
+
+  .btn:hover { background: var(--cream); color: var(--dark); border-color: var(--brown); }
+
+  .btn.primary {
+    background: var(--coral);
+    color: white;
+    border-color: var(--coral);
+  }
+
+  .btn.primary:hover { background: var(--coral-hover); border-color: var(--coral-hover); }
+
+  /* NAME GENERATOR */
+  .gen-btn {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 11px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 10px;
+    border: 1.5px dashed var(--brown);
+    background: transparent;
+    color: var(--brown);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .gen-btn:hover { background: var(--brown-light); }
+
+  .name-result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 1rem;
+  }
+
+  .name-pill {
+    background: var(--cream);
+    border: 1px solid var(--light);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark);
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+
+  .name-pill:hover { border-color: var(--coral); background: var(--coral-light); color: var(--coral); }
+  .name-pill.chosen { border-color: var(--brown); background: var(--brown-light); color: var(--brown); }
+
+  /* SUMMARY */
+  .celebrate {
+    text-align: center;
+    padding: 1.5rem 0 2rem;
+  }
+
+  .celebrate-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--coral);
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .celebrate-icon svg { width: 28px; height: 28px; fill: white; }
+
+  .celebrate h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--dark);
+    margin-bottom: 0.4rem;
+  }
+
+  .celebrate p { font-size: 14px; color: var(--mid); }
+
+  .summary-card {
+    background: var(--cream);
+    border: 1px solid var(--light);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .summary-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brown);
+    margin-bottom: 5px;
+  }
+
+  .summary-value {
+    font-size: 15px;
+    color: var(--dark);
+    line-height: 1.6;
+  }
+
+  .summary-name {
+    font-size: 20px;
+    font-family: 'DM Serif Display', serif;
+    color: var(--coral);
+  }
+
+  .cta-row {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--light);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cta-note {
+    font-size: 13px;
+    color: var(--mid);
+    margin-bottom: 4px;
+  }
+
+  .restart-btn {
+    font-size: 13px;
+    color: var(--mid);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .restart-btn:hover { color: var(--dark); }
+
+  /* PRINT */
+  @media print {
+    body { background: white; }
+    .btn, .gen-btn, .cta-row { display: none; }
+    .section-card { display: block !important; border: 1px solid #ddd; page-break-inside: avoid; }
+  }
+
+  @media (max-width: 480px) {
+    .section-card { padding: 1.25rem; }
+    .name-result-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="hero">
+    <div class="badge">Day 1 — YouTube Challenge</div>
+    <h1>Find your why,<br><em>find your channel.</em></h1>
+    <p>Work through these four exercises to build your foundation.<br>Take your time — your answers are private and stay in your browser.</p>
+  </div>
+
+  <div class="progress-row" id="progress">
+    <div class="prog-step active" id="p0"></div>
+    <div class="prog-step" id="p1"></div>
+    <div class="prog-step" id="p2"></div>
+    <div class="prog-step" id="p3"></div>
+    <div class="prog-step" id="p4"></div>
+  </div>
+
+  <!-- EXERCISE 1: YOUR WHY -->
+  <div class="section-card visible" id="s0">
+    <div class="section-num">Exercise 1 of 4</div>
+    <div class="section-title">Finding your why</div>
+    <div class="section-desc">Your "why" is the fuel that keeps you going when views are low and motivation is hard. The 5 Whys technique helps you dig past the surface answer to find what truly drives you.</div>
+
+    <div class="why-chain">
+      <div class="why-chain-item">
+        <label class="why-chain-label">I want to start a YouTube channel because...</label>
+        <textarea id="why1" placeholder="Write the first thing that comes to mind, even if it feels simple..."></textarea>
+      </div>
+      <div class="why-chain-item">
+        <label class="why-chain-label">And why does that matter to you?</label>
+        <textarea id="why2" placeholder="Go a little deeper..."></textarea>
+      </div>
+      <div class="why-chain-item">
+        <label class="why-chain-label">And why is that important to you?</label>
+        <textarea id="why3" placeholder="Keep digging — you're getting closer..."></textarea>
+      </div>
+      <div class="why-chain-item" style="margin-top: 6px;">
+        <div class="prompt-block">
+          <p>Your deepest why usually lives right here. Read your last answer back slowly. That's the real reason. Now write it as one clear, powerful statement you could say out loud.</p>
+        </div>
+        <label class="field-label">My core why is:</label>
+        <textarea id="whyCore" style="min-height: 75px;" placeholder="e.g. I want to show everyday women that it's never too late to start something of their own."></textarea>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <span style="font-size: 13px; color: var(--mid);">No wrong answers here.</span>
+      <button class="btn primary" onclick="goTo(1)">Next exercise →</button>
+    </div>
+  </div>
+
+  <!-- EXERCISE 2: MINDSET -->
+  <div class="section-card" id="s1">
+    <div class="section-num">Exercise 2 of 4</div>
+    <div class="section-title">Mindset check</div>
+    <div class="section-desc">The biggest thing that stops people from starting isn't skill — it's fear. Let's name yours and flip it before it stops you.</div>
+
+    <label class="field-label">What is your biggest fear about starting a YouTube channel?</label>
+    <textarea id="fear" placeholder="Be honest — judgment, failure, looking silly on camera, wasting time..."></textarea>
+
+    <label class="field-label">Now flip it: what is the real cost of NOT starting?</label>
+    <textarea id="fearFlip" placeholder="What are you missing out on? Who aren't you helping? What stays stuck?"></textarea>
+
+    <label class="field-label">What does success look like for you in 90 days? Be specific.</label>
+    <textarea id="success90" placeholder="e.g. 10 videos published, 200 subscribers, one viewer messages me saying I helped them..."></textarea>
+
+    <div class="nav-row">
+      <button class="btn" onclick="goTo(0)">← Back</button>
+      <button class="btn primary" onclick="goTo(2)">Next exercise →</button>
+    </div>
+  </div>
+
+  <!-- EXERCISE 3: NICHE -->
+  <div class="section-card" id="s2">
+    <div class="section-num">Exercise 3 of 4</div>
+    <div class="section-title">Finding your niche</div>
+    <div class="section-desc">The best niches sit at the intersection of what you love, what you know, and what people are already searching for. Don't try to be for everyone — be everything to someone.</div>
+
+    <label class="field-label">What topics could you talk about for hours without getting bored?</label>
+    <textarea id="passion" placeholder="List as many as you want — budget meals, postpartum fitness, faith journeys, DIY decor..."></textarea>
+
+    <label class="field-label">What do people ask you for advice or help with in real life?</label>
+    <textarea id="expertise" placeholder="Think about texts from friends, questions at work, things you're known for..."></textarea>
+
+    <label class="field-label">Describe your ideal viewer in one sentence.</label>
+    <input type="text" id="audience" placeholder="e.g. First-time moms in their 30s who want simple, real advice without the overwhelm." />
+
+    <div class="prompt-block">
+      <p>Select the broad category that best fits your channel (you can pick up to two):</p>
+    </div>
+    <div class="tag-grid" id="nicheGrid">
+      <span class="tag" onclick="toggleTag(this)">Health & Fitness</span>
+      <span class="tag" onclick="toggleTag(this)">Personal Finance</span>
+      <span class="tag" onclick="toggleTag(this)">Parenting</span>
+      <span class="tag" onclick="toggleTag(this)">Business / Side Hustle</span>
+      <span class="tag" onclick="toggleTag(this)">Faith & Spirituality</span>
+      <span class="tag" onclick="toggleTag(this)">DIY & Home</span>
+      <span class="tag" onclick="toggleTag(this)">Food & Cooking</span>
+      <span class="tag" onclick="toggleTag(this)">Beauty & Style</span>
+      <span class="tag" onclick="toggleTag(this)">Relationships</span>
+      <span class="tag" onclick="toggleTag(this)">Education & Learning</span>
+      <span class="tag" onclick="toggleTag(this)">Tech & Gaming</span>
+      <span class="tag" onclick="toggleTag(this)">Travel & Lifestyle</span>
+      <span class="tag" onclick="toggleTag(this)">Mental Health & Wellness</span>
+      <span class="tag" onclick="toggleTag(this)">Creative Arts</span>
+      <span class="tag" onclick="toggleTag(this)">Mindset & Personal Growth</span>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn" onclick="goTo(1)">← Back</button>
+      <button class="btn primary" onclick="goTo(3)">Next exercise →</button>
+    </div>
+  </div>
+
+  <!-- EXERCISE 4: CHANNEL NAME -->
+  <div class="section-card" id="s3">
+    <div class="section-num">Exercise 4 of 4</div>
+    <div class="section-title">Choosing your channel name</div>
+    <div class="section-desc">A great name is easy to remember, easy to search, and feels like you. It doesn't have to be perfect today — but let's get you to something you love.</div>
+
+    <label class="field-label">Three words that describe your personality or brand vibe:</label>
+    <input type="text" id="vibeWords" placeholder="e.g. real, warm, no-fluff" />
+
+    <label class="field-label">Your first name, nickname, or a word people associate with you:</label>
+    <input type="text" id="firstName" placeholder="e.g. Jess, Mama, Coach, The Real..." />
+
+    <button class="gen-btn" onclick="generateNames()">✦ Generate name ideas for me</button>
+
+    <div id="nameResults" style="display: none;">
+      <div class="prompt-block" style="margin-top: 1.25rem;">
+        <p>These are jumping-off points — tap one to use it, or let them spark your own idea. The best name often comes from combining two of these.</p>
+      </div>
+      <div class="name-result-grid" id="nameGrid"></div>
+    </div>
+
+    <div style="margin-top: 1.5rem;">
+      <label class="field-label">My channel name (write your top choice here):</label>
+      <input type="text" id="chosenName" placeholder="Your channel name..." />
+    </div>
+
+    <div class="nav-row">
+      <button class="btn" onclick="goTo(2)">← Back</button>
+      <button class="btn primary" onclick="goTo(4)">See my Day 1 summary →</button>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="section-card" id="s4">
+    <div class="celebrate">
+      <div class="celebrate-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+      </div>
+      <h2>Day 1 complete.</h2>
+      <p>Here is your foundation. Screenshot or print this page and keep it somewhere visible.</p>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-label">My core why</div>
+      <div class="summary-value" id="sum-why">—</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">My fear, reframed</div>
+      <div class="summary-value" id="sum-fear">—</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">My 90-day vision</div>
+      <div class="summary-value" id="sum-90">—</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">My ideal viewer</div>
+      <div class="summary-value" id="sum-audience">—</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">My niche</div>
+      <div class="summary-value" id="sum-niche">—</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">My channel name</div>
+      <div class="summary-value summary-name" id="sum-name">—</div>
+    </div>
+
+    <div class="cta-row">
+      <p class="cta-note">Come back to this whenever you need a reminder of why you started.</p>
+      <button class="restart-btn" onclick="goTo(0)">Start over from the beginning</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let currentStep = 0;
+
+  function goTo(step) {
+    document.getElementById('s' + currentStep).classList.remove('visible');
+    currentStep = step;
+    document.getElementById('s' + currentStep).classList.add('visible');
+    updateProgress();
+    if (step === 4) buildSummary();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateProgress() {
+    for (let i = 0; i < 5; i++) {
+      const el = document.getElementById('p' + i);
+      el.className = 'prog-step';
+      if (i < currentStep) el.classList.add('done');
+      else if (i === currentStep) el.classList.add('active');
+    }
+  }
+
+  function toggleTag(el) {
+    const selected = document.querySelectorAll('#nicheGrid .tag.selected');
+    if (!el.classList.contains('selected') && selected.length >= 2) return;
+    el.classList.toggle('selected');
+  }
+
+  function generateNames() {
+    const first = (document.getElementById('firstName').value || 'Your').trim().split(' ')[0];
+    const passion = document.getElementById('passion').value || '';
+    const selected = [...document.querySelectorAll('#nicheGrid .tag.selected')].map(t => t.innerText);
+    const niche = selected[0] || passion.split(' ')[0] || 'Life';
+    const nicheWord = niche.replace(/[^a-zA-Z]/g, '');
+
+    const names = [
+      first + ' Unfiltered',
+      'Real Talk with ' + first,
+      first + ' Explains It All',
+      'The ' + nicheWord + ' Life',
+      first + ' & You',
+      'Simply ' + first,
+      'With ' + first,
+      first + ' Behind the Scenes',
+      'Everyday ' + first,
+      first + ' Keeps It Real',
+    ];
+
+    const grid = document.getElementById('nameGrid');
+    grid.innerHTML = '';
+    names.forEach(n => {
+      const el = document.createElement('div');
+      el.className = 'name-pill';
+      el.innerText = n;
+      el.onclick = () => {
+        document.querySelectorAll('.name-pill').forEach(p => p.classList.remove('chosen'));
+        el.classList.add('chosen');
+        document.getElementById('chosenName').value = n;
+      };
+      grid.appendChild(el);
+    });
+
+    document.getElementById('nameResults').style.display = 'block';
+  }
+
+  function buildSummary() {
+    const why = document.getElementById('whyCore').value || document.getElementById('why3').value || document.getElementById('why1').value || '(not filled in)';
+    const fear = document.getElementById('fear').value;
+    const fearFlip = document.getElementById('fearFlip').value;
+    const s90 = document.getElementById('success90').value || '(not filled in)';
+    const audience = document.getElementById('audience').value || '(not filled in)';
+    const selected = [...document.querySelectorAll('#nicheGrid .tag.selected')].map(t => t.innerText);
+    const niche = selected.length ? selected.join(' + ') : (document.getElementById('passion').value.slice(0, 80) || '(not filled in)');
+    const name = document.getElementById('chosenName').value || '(not chosen yet)';
+
+    document.getElementById('sum-why').innerText = why;
+    if (fear && fearFlip) {
+      document.getElementById('sum-fear').innerText = '"' + fear.slice(0, 80) + (fear.length > 80 ? '...' : '') + '" → ' + fearFlip.slice(0, 100) + (fearFlip.length > 100 ? '...' : '');
+    } else {
+      document.getElementById('sum-fear').innerText = fearFlip || fear || '(not filled in)';
+    }
+    document.getElementById('sum-90').innerText = s90;
+    document.getElementById('sum-audience').innerText = audience;
+    document.getElementById('sum-niche').innerText = niche;
+    document.getElementById('sum-name').innerText = name;
+  }
+</script>
+</body>
+</html>
