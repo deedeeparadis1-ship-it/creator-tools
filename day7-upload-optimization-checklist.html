@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 7 — Upload & Optimization Checklist</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --coral: #f47c7c;
+    --coral-hover: #e86b6b;
+    --coral-light: #fdf0f0;
+    --coral-border: #f9c8c8;
+    --brown: #c5a073;
+    --brown-light: #fdf6ec;
+    --cream: #f3ead0;
+    --dark: #406c79;
+    --dark-hover: #2d4f59;
+    --mid: #688a93;
+    --light: #dae5ea;
+    --card-bg: #fffdf8;
+    --page-bg: #faf7f0;
+    --green: #1d9e75;
+    --green-light: #e1f5ee;
+    --green-dark: #0f6e56;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--page-bg); color: var(--dark-hover); min-height: 100vh; padding: 0 0 4rem; }
+
+  /* HERO */
+  .hero { background: var(--dark); padding: 3.5rem 1.5rem 3rem; text-align: center; border-bottom: 4px solid var(--coral); }
+  .hero-badge { display: inline-block; font-size: 11px; font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; color: var(--coral); background: rgba(244,124,124,0.15); border: 1px solid rgba(244,124,124,0.3); padding: 5px 16px; border-radius: 99px; margin-bottom: 1.25rem; }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 400; color: white; line-height: 1.2; margin-bottom: 0.75rem; }
+  .hero h1 em { color: var(--coral); font-style: italic; }
+  .hero p { font-size: 15px; color: var(--light); line-height: 1.7; max-width: 500px; margin: 0 auto; }
+
+  .main { max-width: 720px; margin: 0 auto; padding: 2.5rem 1.25rem; }
+
+  /* OVERALL PROGRESS */
+  .overall-progress { background: var(--card-bg); border: 1px solid var(--light); border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem; }
+  .op-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 10px; }
+  .op-title { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--dark); }
+  .op-count { font-size: 14px; font-weight: 500; color: var(--mid); }
+  .progress-bar-wrap { height: 10px; background: var(--light); border-radius: 5px; overflow: hidden; margin-bottom: 0.75rem; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--coral), var(--brown)); border-radius: 5px; transition: width 0.5s ease; width: 0%; }
+  .section-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+  .s-pill { font-size: 11px; padding: 3px 11px; border-radius: 99px; border: 1px solid var(--light); color: var(--mid); background: white; transition: all 0.3s; }
+  .s-pill.complete { background: var(--green-light); border-color: var(--green); color: var(--green-dark); font-weight: 500; }
+  .reset-link { font-size: 12px; color: var(--mid); background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; text-decoration: underline; text-underline-offset: 2px; }
+  .reset-link:hover { color: var(--coral); }
+
+  /* SECTION CARDS */
+  .section-card { background: var(--card-bg); border: 1px solid var(--light); border-radius: 16px; margin-bottom: 1.25rem; overflow: hidden; }
+  .section-head { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--light); display: flex; align-items: center; gap: 14px; }
+  .section-icon { width: 42px; height: 42px; border-radius: 11px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 19px; }
+  .section-name { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--dark); }
+  .section-sub { font-size: 13px; color: var(--mid); margin-top: 2px; }
+  .section-body { padding: 0.5rem 1.5rem 1.25rem; }
+
+  /* CHECK ITEMS */
+  .check-item { display: flex; align-items: flex-start; gap: 14px; padding: 12px 0; border-bottom: 1px solid #f0ece4; cursor: pointer; user-select: none; }
+  .check-item:last-child { border-bottom: none; }
+  .check-box { min-width: 26px; height: 26px; border-radius: 8px; border: 1.5px solid var(--light); background: white; display: flex; align-items: center; justify-content: center; transition: all 0.25s; flex-shrink: 0; margin-top: 1px; }
+  .check-box svg { width: 15px; height: 15px; fill: white; opacity: 0; transition: opacity 0.2s; }
+  .check-item.done .check-box { background: var(--green); border-color: var(--green); }
+  .check-item.done .check-box svg { opacity: 1; }
+  .check-item.done .check-label { text-decoration: line-through; color: var(--mid); }
+  .check-item.done .check-sub { opacity: 0.5; }
+  .check-content { flex: 1; }
+  .check-label { font-size: 14px; font-weight: 500; color: var(--dark); line-height: 1.4; margin-bottom: 3px; transition: all 0.2s; }
+  .check-sub { font-size: 12px; color: var(--mid); line-height: 1.5; transition: all 0.2s; }
+  .check-tag { display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 99px; margin-left: 7px; vertical-align: middle; }
+  .tag-must { background: var(--coral-light); color: var(--coral); border: 1px solid var(--coral-border); }
+  .tag-opt { background: var(--light); color: var(--mid); border: 1px solid #c0d4dc; }
+
+  /* TIP BOX */
+  .tip-box { background: var(--cream); border-left: 3px solid var(--brown); border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; margin: 1rem 0 0; }
+  .tip-box p { font-size: 13px; color: var(--dark); line-height: 1.6; font-style: italic; }
+  .tip-box strong { color: var(--brown); font-style: normal; }
+
+  /* POST-PUBLISH TIMELINE */
+  .timeline { margin-top: 0.5rem; }
+  .timeline-item { display: flex; gap: 16px; padding: 12px 0; border-bottom: 1px solid #f0ece4; }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-dot-wrap { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+  .timeline-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--coral); flex-shrink: 0; margin-top: 3px; }
+  .timeline-line { width: 2px; flex: 1; background: var(--light); margin-top: 4px; }
+  .timeline-item:last-child .timeline-line { display: none; }
+  .timeline-time { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--brown); margin-bottom: 3px; }
+  .timeline-label { font-size: 14px; font-weight: 500; color: var(--dark); margin-bottom: 3px; }
+  .timeline-desc { font-size: 12px; color: var(--mid); line-height: 1.5; }
+
+  /* SCHEDULE CARDS */
+  .schedule-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-top: 0.75rem; }
+  .schedule-card { background: white; border: 1.5px solid var(--light); border-radius: 12px; padding: 1rem; text-align: center; cursor: pointer; transition: all 0.2s; user-select: none; }
+  .schedule-card:hover { border-color: var(--coral); }
+  .schedule-card.selected { border-color: var(--coral); background: var(--coral-light); }
+  .schedule-freq { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--dark); margin-bottom: 4px; }
+  .schedule-card.selected .schedule-freq { color: var(--coral); }
+  .schedule-label { font-size: 12px; color: var(--mid); line-height: 1.4; }
+  .schedule-card.selected .schedule-label { color: var(--coral-hover); }
+  .schedule-commit { margin-top: 1rem; background: var(--cream); border-radius: 10px; padding: 0.85rem 1rem; display: none; }
+  .schedule-commit.visible { display: block; animation: fadeIn 0.3s ease; }
+  .schedule-commit p { font-size: 14px; color: var(--dark); line-height: 1.6; }
+  .schedule-commit strong { color: var(--coral); }
+
+  /* CELEBRATE SECTION */
+  .celebrate-card { background: var(--dark); border-radius: 16px; padding: 2.5rem 2rem; text-align: center; margin-top: 1.5rem; display: none; animation: fadeIn 0.5s ease; }
+  .celebrate-card.visible { display: block; }
+  .celebrate-icon { width: 72px; height: 72px; border-radius: 50%; background: var(--coral); margin: 0 auto 1.25rem; display: flex; align-items: center; justify-content: center; }
+  .celebrate-icon svg { width: 36px; height: 36px; fill: white; }
+  .celebrate-card h2 { font-family: 'DM Serif Display', serif; font-size: 2rem; color: white; font-weight: 400; margin-bottom: 0.5rem; }
+  .celebrate-card .sub { font-size: 15px; color: var(--light); line-height: 1.7; margin-bottom: 1.5rem; }
+  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+  .stat-box { background: rgba(255,255,255,0.08); border-radius: 10px; padding: 1rem; }
+  .stat-num { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: var(--coral); }
+  .stat-label { font-size: 12px; color: var(--light); margin-top: 2px; }
+  .quote-block { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
+  .quote-text { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: white; font-style: italic; line-height: 1.6; margin-bottom: 0.5rem; }
+  .quote-attr { font-size: 13px; color: var(--light); }
+  .next-btn { display: inline-block; background: var(--coral); color: white; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; padding: 13px 32px; border-radius: 10px; border: none; cursor: pointer; transition: all 0.2s; }
+  .next-btn:hover { background: var(--coral-hover); transform: translateY(-1px); }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 560px) { .section-body, .section-head { padding-left: 1rem; padding-right: 1rem; } .schedule-grid { grid-template-columns: 1fr; } .stats-row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">Day 7 — 7-Day YouTube Challenge</div>
+  <h1>Upload, Optimize<br><em>& Celebrate</em></h1>
+  <p>This is the day everything was building toward. Work through this checklist and then press publish.</p>
+</div>
+
+<div class="main">
+
+  <!-- OVERALL PROGRESS -->
+  <div class="overall-progress">
+    <div class="op-top">
+      <div class="op-title">Your Day 7 progress</div>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <div class="op-count" id="opCount">0 of 22 complete</div>
+        <button class="reset-link" onclick="resetAll()">Reset</button>
+      </div>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="section-pills">
+      <span class="s-pill" id="pill-0">Before upload</span>
+      <span class="s-pill" id="pill-1">Upload settings</span>
+      <span class="s-pill" id="pill-2">After publish</span>
+      <span class="s-pill" id="pill-3">Schedule</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1: BEFORE UPLOAD -->
+  <div class="section-card" data-section="0" data-total="6">
+    <div class="section-head">
+      <div class="section-icon" style="background:var(--coral-light);">📁</div>
+      <div>
+        <div class="section-name">Before you upload</div>
+        <div class="section-sub">Have everything ready before you open YouTube Studio</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="check-content">
+          <div class="check-label">Video file is exported and saved <span class="check-tag tag-must">Must have</span></div>
+          <div class="check-sub">1080p minimum, MP4 format. Know exactly where it is on your device before you start.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="check-content">
+          <div class="check-label">Title is finalized — under 60 characters <span class="check-tag tag-must">Must have</span></div>
+          <div class="check-sub">Copy and paste it somewhere handy — you will need it in the upload form.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="check-content">
+          <div class="check-label">Description is written <span class="check-tag tag-must">Must have</span></div>
+          <div class="check-sub">First 2 lines: your hook and main keyword. Then expand with detail, links, and your affiliate disclosure if relevant.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="check-content">
+          <div class="check-label">Thumbnail is ready to upload <span class="check-tag tag-must">Must have</span></div>
+          <div class="check-sub">Your custom Canva thumbnail from Day 6 — saved as a JPG or PNG. Do not use the auto-generated option.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="check-content">
+          <div class="check-label">Tags list is ready <span class="check-tag tag-must">Must have</span></div>
+          <div class="check-sub">10–15 tags: your main keyword, related keywords, your niche, and your channel name. Write them out before you start.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="check-content">
+          <div class="check-label">You have taken a breath and you are ready <span class="check-tag tag-must">Must have</span></div>
+          <div class="check-sub">This is a big moment. It is allowed to feel like one. Take a second, then let's go.</div>
+        </div>
+      </div>
+      <div class="tip-box">
+        <p><strong>Tip:</strong> Write your title, description, and tags in a Notes doc or Google Doc first. Copying and pasting into YouTube Studio is much faster and less stressful than typing it all in the upload form.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: UPLOAD SETTINGS -->
+  <div class="section-card" data-section="1" data-total="9">
+    <div class="section-head">
+      <div class="section-icon" style="background:#e8f4f0;">⬆️</div>
+      <div>
+        <div class="section-name">Upload & optimize in YouTube Studio</div>
+        <div class="section-sub">Go to studio.youtube.com → Create → Upload Videos</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="check-content">
+          <div class="check-label">Video file uploaded <span class="check-tag tag-must">Must have</span></div>
+          <div class="check-sub">Click Select Files and choose your MP4. YouTube will start processing — this can take a few minutes. Fill in the details while it processes.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="check-content">
+          <div class="check-label">Title added <span class="check-tag tag-must">Must have</span></div>
+          <div class="check-sub">Paste your finalized title — the clearest, most specific version from Day 6.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="check-content">
+          <div class="check-label">Description added with keywords in first 2 lines <span class="check-tag tag-must">Must have</span></div>
+          <div class="check-sub">The first 2 lines show before the "Show more" button — treat them like a second title. Keywords here help YouTube understand your content.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="check-content">
+          <div class="check-label">Custom thumbnail uploaded <span class="check-tag tag-must">Must have</span></div>
+          <div class="check-sub">Select Upload thumbnail and choose your Canva file. Never use the auto-generated option — it almost never captures your best moment.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="check-content">
+          <div class="check-label">Tags added <span class="check-tag tag-must">Must have</span></div>
+          <div class="check-sub">Click Show More to find the tags field. Paste your 10–15 tags. Separate each with a comma.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="check-content">
+          <div class="check-label">Category set <span class="check-tag tag-must">Must have</span></div>
+          <div class="check-sub">Under Show More — choose the category that best matches your niche. Helps YouTube place your video in the right context.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="check-content">
+          <div class="check-label">Added to a playlist <span class="check-tag tag-opt">Optional</span></div>
+          <div class="check-sub">If you have a series in mind, create a playlist now and add this video. Playlists improve watch time and give new viewers a clear path to follow.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="check-content">
+          <div class="check-label">End screens added <span class="check-tag tag-opt">Optional</span></div>
+          <div class="check-sub">Add a Subscribe button end screen at minimum. Video Editor → End Screens — set them to appear in the last 5–20 seconds of your video.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="check-content">
+          <div class="check-label">Visibility set to Public — video published <span class="check-tag tag-must">The moment</span></div>
+          <div class="check-sub">Set to Public and click Publish. Or schedule it if you want it to go live at a specific time. Either way — this is it. Press the button.</div>
+        </div>
+      </div>
+      <div class="tip-box">
+        <p><strong>Done is better than perfect.</strong> If you have the essentials — title, description, thumbnail, tags — that is enough. You can always go back and add end screens, playlists, and cards after it is live. Publishing is the goal.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: AFTER PUBLISH -->
+  <div class="section-card" data-section="2" data-total="5">
+    <div class="section-head">
+      <div class="section-icon" style="background:var(--brown-light);">🎉</div>
+      <div>
+        <div class="section-name">After you publish</div>
+        <div class="section-sub">The 24 hours after going live matter — here is what to do</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+          <div>
+            <div class="timeline-time">First 30 minutes</div>
+            <div class="timeline-label">Share everywhere</div>
+            <div class="timeline-desc">Post on Instagram, Facebook, your email list, and every community you are in — including this one. Early views signal to YouTube that your video is worth showing to more people.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+          <div>
+            <div class="timeline-time">First few hours</div>
+            <div class="timeline-label">Reply to every comment</div>
+            <div class="timeline-desc">The first comments on your video matter. Reply to every single one — even if it is just a heart or a thank you. This builds community and tells the algorithm your video is engaging.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+          <div>
+            <div class="timeline-time">48 hours later</div>
+            <div class="timeline-label">Check your analytics — once</div>
+            <div class="timeline-desc">Look at click-through rate, average view duration, and where viewers drop off. These three numbers tell you everything you need to know for video two. Then close the tab.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+          <div>
+            <div class="timeline-time">This week</div>
+            <div class="timeline-label">Do not obsess over the numbers</div>
+            <div class="timeline-desc">Video one is a learning experience. The goal was to publish — and you did. A small number of views on your first video is completely normal and has nothing to do with your potential.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot-wrap"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+          <div>
+            <div class="timeline-time">When you are ready</div>
+            <div class="timeline-label">Plan video two</div>
+            <div class="timeline-desc">The second video is easier than the first. You have already done the hardest part. Go back to your saved ideas from Day 3 and start the process again.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="check-list" style="margin-top:1.25rem; border-top: 1px solid var(--light); padding-top:0.5rem;">
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div class="check-content"><div class="check-label">Shared the video on at least one platform</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div class="check-content"><div class="check-label">Shared the link in the Wins & Challenges post</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div class="check-content"><div class="check-label">Replied to every comment that comes in</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div class="check-content"><div class="check-label">Checked analytics once at 48 hours — then closed the tab</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div class="check-content"><div class="check-label">Video two topic chosen from my Day 3 idea list</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: POSTING SCHEDULE -->
+  <div class="section-card" data-section="3" data-total="2">
+    <div class="section-head">
+      <div class="section-icon" style="background:var(--green-light);">📅</div>
+      <div>
+        <div class="section-name">Set your posting schedule</div>
+        <div class="section-sub">Choose a pace you can actually maintain — then commit to it</div>
+      </div>
+    </div>
+    <div class="section-body" style="padding-top:1rem;">
+      <p style="font-size:14px;color:var(--mid);line-height:1.7;margin-bottom:1rem;">Consistency is not about posting every day. It is about showing up on a schedule your audience can count on — and that you can actually sustain alongside your real life.</p>
+
+      <div class="schedule-grid" id="scheduleGrid">
+        <div class="schedule-card" onclick="selectSchedule(this, 'weekly')">
+          <div class="schedule-freq">Once a week</div>
+          <div class="schedule-label">Ambitious but achievable. Great for rapid channel growth if you can maintain it.</div>
+        </div>
+        <div class="schedule-card" onclick="selectSchedule(this, 'biweekly')">
+          <div class="schedule-freq">Twice a month</div>
+          <div class="schedule-label">A strong sustainable pace. Gives you time to plan, film, and edit without burning out.</div>
+        </div>
+        <div class="schedule-card" onclick="selectSchedule(this, 'monthly')">
+          <div class="schedule-freq">Once a month</div>
+          <div class="schedule-label">Completely valid. One high-quality video a month consistently beats weekly videos that stop after six weeks.</div>
+        </div>
+      </div>
+
+      <div class="schedule-commit" id="scheduleCommit">
+        <p id="scheduleCommitText"></p>
+      </div>
+
+      <div style="margin-top:1.25rem;">
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div class="check-content"><div class="check-label">I have chosen a posting schedule I can realistically maintain</div><div class="check-sub">Write it somewhere visible — your phone notes, your planner, your mirror. Make it real.</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div class="check-content"><div class="check-label">My next filming date is in my calendar</div><div class="check-sub">Block it out like a meeting. If it is not scheduled it will not happen.</div></div></div>
+      </div>
+
+      <div class="tip-box" style="margin-top:1rem;">
+        <p><strong>Dee Dee's rule:</strong> Start smaller than you think you need to. It is far better to post once a month for a year than to post weekly for six weeks and then disappear. Consistency always wins.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CELEBRATE -->
+  <div class="celebrate-card" id="celebrateCard">
+    <div class="celebrate-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+    <h2>You did it.</h2>
+    <div class="sub">In 7 days you went from idea to published creator.<br>Every box is ticked. Every step is done. You are a YouTuber.</div>
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-num">7</div><div class="stat-label">Days</div></div>
+      <div class="stat-box"><div class="stat-num">1</div><div class="stat-label">Published video</div></div>
+      <div class="stat-box"><div class="stat-num">∞</div><div class="stat-label">From here</div></div>
+    </div>
+    <div class="quote-block">
+      <div class="quote-text">"You didn't just make a video. You became someone who makes videos. That's the whole thing."</div>
+      <div class="quote-attr">— Dee Dee Paradis</div>
+    </div>
+    <button class="next-btn" onclick="window.open('https://youtube.com', '_blank')">Go watch your video live ↗</button>
+  </div>
+
+</div>
+
+<script>
+  const TOTAL = 22;
+  const sectionTotals = { 0: 6, 1: 9, 2: 5, 3: 2 };
+
+  function toggleCheck(el) {
+    el.classList.toggle('done');
+    updateAll();
+  }
+
+  function selectSchedule(el, type) {
+    document.querySelectorAll('.schedule-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    const messages = {
+      weekly: '<strong>Once a week</strong> — that means your next video should be filmed within the next 7 days. Block that time in your calendar right now. Which day works for you every week?',
+      biweekly: '<strong>Twice a month</strong> — that means two upload dates per month. Pick them now. The 1st and 15th, or two specific weekdays. Write them in your calendar today.',
+      monthly: '<strong>Once a month</strong> — that means one upload date per month. Pick your day now. The first Monday? The last Friday? Make it the same every month so it becomes a habit.'
+    };
+    const commit = document.getElementById('scheduleCommit');
+    document.getElementById('scheduleCommitText').innerHTML = messages[type];
+    commit.classList.add('visible');
+  }
+
+  function updateAll() {
+    const allDone = document.querySelectorAll('.check-item.done').length;
+    const pct = Math.round((allDone / TOTAL) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('opCount').innerText = allDone + ' of ' + TOTAL + ' complete';
+
+    Object.keys(sectionTotals).forEach(s => {
+      const card = document.querySelector(`.section-card[data-section="${s}"]`);
+      const done = card ? card.querySelectorAll('.check-item.done').length : 0;
+      const pill = document.getElementById('pill-' + s);
+      if (pill) pill.classList.toggle('complete', done === sectionTotals[s]);
+    });
+
+    document.getElementById('celebrateCard').classList.toggle('visible', allDone === TOTAL);
+  }
+
+  function resetAll() {
+    document.querySelectorAll('.check-item').forEach(el => el.classList.remove('done'));
+    document.querySelectorAll('.schedule-card').forEach(el => el.classList.remove('selected'));
+    document.getElementById('scheduleCommit').classList.remove('visible');
+    updateAll();
+  }
+</script>
+</body>
+</html>
