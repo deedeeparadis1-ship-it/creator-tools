@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 4 — Equipment & Setup Checklist</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --coral: #f47c7c;
+    --coral-hover: #e86b6b;
+    --coral-light: #fdf0f0;
+    --coral-border: #f9c8c8;
+    --brown: #c5a073;
+    --brown-light: #fdf6ec;
+    --cream: #f3ead0;
+    --dark: #406c79;
+    --dark-hover: #2d4f59;
+    --mid: #688a93;
+    --light: #dae5ea;
+    --card-bg: #fffdf8;
+    --page-bg: #faf7f0;
+    --green: #1d9e75;
+    --green-light: #e1f5ee;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--page-bg); color: var(--dark-hover); min-height: 100vh; padding: 2rem 1rem 4rem; }
+  .container { max-width: 700px; margin: 0 auto; }
+
+  .hero { text-align: center; padding: 3rem 1rem 2.5rem; border-bottom: 1px solid var(--light); margin-bottom: 2.5rem; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; color: var(--coral); background: var(--coral-light); border: 1px solid var(--coral-border); padding: 5px 16px; border-radius: 99px; margin-bottom: 1.25rem; }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 5vw, 2.2rem); font-weight: 400; color: var(--dark); line-height: 1.2; margin-bottom: 0.75rem; }
+  .hero p { font-size: 15px; color: var(--mid); line-height: 1.7; }
+
+  /* PROGRESS SUMMARY */
+  .progress-card { background: var(--card-bg); border: 1px solid var(--light); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; }
+  .progress-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 10px; }
+  .progress-title { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--dark); }
+  .progress-count { font-size: 14px; font-weight: 500; color: var(--mid); }
+  .progress-bar-wrap { height: 8px; background: var(--light); border-radius: 4px; overflow: hidden; margin-bottom: 0.5rem; }
+  .progress-bar-fill { height: 100%; background: var(--coral); border-radius: 4px; transition: width 0.4s ease; width: 0%; }
+  .progress-sections { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 0.75rem; }
+  .section-pill { font-size: 12px; padding: 3px 12px; border-radius: 99px; border: 1px solid var(--light); color: var(--mid); background: white; transition: all 0.2s; }
+  .section-pill.complete { background: var(--green-light); border-color: var(--green); color: var(--green); }
+  .reset-btn { font-size: 12px; color: var(--mid); background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; text-decoration: underline; text-underline-offset: 2px; padding: 0; }
+  .reset-btn:hover { color: var(--coral); }
+
+  /* SECTION */
+  .section-card { background: var(--card-bg); border: 1px solid var(--light); border-radius: 16px; padding: 1.75rem; margin-bottom: 1.25rem; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 0.5rem; }
+  .section-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .section-icon svg { width: 22px; height: 22px; }
+  .section-name { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: var(--dark); }
+  .section-sub { font-size: 13px; color: var(--mid); margin-bottom: 1.25rem; line-height: 1.6; padding-left: 58px; }
+  .divider { height: 1px; background: var(--light); margin-bottom: 1.25rem; }
+
+  /* CHECK ITEMS */
+  .check-item { display: flex; align-items: flex-start; gap: 14px; padding: 11px 0; border-bottom: 1px solid #f0ece4; cursor: pointer; user-select: none; transition: opacity 0.2s; }
+  .check-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .check-item:first-of-type { padding-top: 0; }
+  .check-box { min-width: 24px; height: 24px; border-radius: 7px; border: 1.5px solid var(--light); background: white; display: flex; align-items: center; justify-content: center; transition: all 0.2s; margin-top: 1px; flex-shrink: 0; }
+  .check-box svg { width: 14px; height: 14px; fill: white; opacity: 0; transition: opacity 0.2s; }
+  .check-item.done .check-box { background: var(--green); border-color: var(--green); }
+  .check-item.done .check-box svg { opacity: 1; }
+  .check-item.done .check-label { text-decoration: line-through; color: var(--mid); }
+  .check-item.done .check-sub { color: var(--light); }
+  .check-content { flex: 1; }
+  .check-label { font-size: 14px; font-weight: 500; color: var(--dark); line-height: 1.4; margin-bottom: 3px; transition: all 0.2s; }
+  .check-sub { font-size: 12px; color: var(--mid); line-height: 1.5; transition: all 0.2s; }
+  .priority-badge { display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 99px; margin-left: 8px; vertical-align: middle; }
+  .priority-must { background: var(--coral-light); color: var(--coral); border: 1px solid var(--coral-border); }
+  .priority-nice { background: var(--brown-light); color: var(--brown); border: 1px solid #e8d4b8; }
+  .priority-later { background: var(--light); color: var(--mid); border: 1px solid #c8d8e0; }
+
+  /* PROMPT BLOCK */
+  .prompt-block { background: var(--cream); border-left: 3px solid var(--brown); border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; margin: 1.25rem 0 0; }
+  .prompt-block p { font-size: 14px; font-style: italic; color: var(--dark); line-height: 1.6; }
+
+  /* BUDGET TABLE */
+  .budget-card { background: var(--card-bg); border: 1px solid var(--light); border-radius: 16px; padding: 1.75rem; margin-bottom: 1.25rem; }
+  .budget-title { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: var(--dark); margin-bottom: 0.4rem; }
+  .budget-desc { font-size: 14px; color: var(--mid); margin-bottom: 1.25rem; line-height: 1.6; }
+  .budget-row { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0ece4; }
+  .budget-row:last-child { border-bottom: none; }
+  .budget-row-header { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brown); padding-bottom: 8px; }
+  .budget-item { font-size: 14px; color: var(--dark-hover); }
+  .budget-price { font-size: 14px; font-weight: 500; color: var(--dark); white-space: nowrap; }
+  .budget-tag { font-size: 11px; padding: 3px 10px; border-radius: 99px; white-space: nowrap; }
+  .tag-free { background: var(--green-light); color: var(--green); }
+  .tag-low { background: var(--cream); color: var(--brown); }
+  .tag-mid { background: var(--light); color: var(--mid); }
+
+  /* TEST SHOT CHECKLIST */
+  .test-card { background: var(--dark); border-radius: 16px; padding: 1.75rem; margin-bottom: 1.25rem; }
+  .test-title { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: white; margin-bottom: 0.4rem; }
+  .test-desc { font-size: 14px; color: var(--light); margin-bottom: 1.25rem; line-height: 1.6; }
+  .test-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); cursor: pointer; user-select: none; }
+  .test-item:last-child { border-bottom: none; }
+  .test-box { min-width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid rgba(255,255,255,0.3); background: transparent; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; margin-top: 1px; }
+  .test-box svg { width: 13px; height: 13px; fill: white; opacity: 0; transition: opacity 0.2s; }
+  .test-item.done .test-box { background: var(--coral); border-color: var(--coral); }
+  .test-item.done .test-box svg { opacity: 1; }
+  .test-item.done .test-label { text-decoration: line-through; opacity: 0.5; }
+  .test-label { font-size: 14px; color: white; line-height: 1.5; transition: all 0.2s; }
+  .test-note { font-size: 12px; color: var(--light); margin-top: 2px; opacity: 0.8; }
+
+  .complete-banner { background: var(--green-light); border: 1px solid var(--green); border-radius: 12px; padding: 1.25rem 1.5rem; text-align: center; margin-top: 1.5rem; display: none; animation: fadeIn 0.4s ease; }
+  .complete-banner.visible { display: block; }
+  .complete-banner p { font-size: 15px; color: var(--green); font-weight: 500; }
+  .complete-banner span { font-size: 14px; color: var(--dark); display: block; margin-top: 4px; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 480px) { .section-card, .budget-card, .test-card { padding: 1.25rem; } .budget-row { grid-template-columns: 1fr auto; } .budget-tag { display: none; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="hero">
+    <div class="badge">Day 4 — 7-Day YouTube Challenge</div>
+    <h1>Equipment & Setup<br><em>Checklist</em></h1>
+    <p>Everything you need to set up and film — tick it off as you go.<br>You need less than you think. Start with what you have.</p>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-card">
+    <div class="progress-top">
+      <div class="progress-title">Your setup progress</div>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <div class="progress-count" id="progressCount">0 of 21 complete</div>
+        <button class="reset-btn" onclick="resetAll()">Reset</button>
+      </div>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="progress-sections">
+      <span class="section-pill" id="pill-0">Equipment</span>
+      <span class="section-pill" id="pill-1">Location</span>
+      <span class="section-pill" id="pill-2">On camera</span>
+      <span class="section-pill" id="pill-3">Test shot</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1: EQUIPMENT -->
+  <div class="section-card" data-section="0">
+    <div class="section-header">
+      <div class="section-icon" style="background:#fdf0f0;">
+        <svg viewBox="0 0 24 24" fill="#f47c7c"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+      </div>
+      <div class="section-name">Your equipment</div>
+    </div>
+    <div class="section-sub">Tick off what you have. Don't buy anything new until your channel is live — work with what you own.</div>
+    <div class="divider"></div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div class="check-content">
+        <div class="check-label">Smartphone or camera <span class="priority-badge priority-must">Must have</span></div>
+        <div class="check-sub">Your phone camera is enough to start — modern smartphones shoot in 1080p or 4K. Use what you have.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div class="check-content">
+        <div class="check-label">A way to keep your camera stable <span class="priority-badge priority-must">Must have</span></div>
+        <div class="check-sub">Tripod, phone stand, or prop it on a stack of books. Shaky video is distracting and easy to fix for free.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div class="check-content">
+        <div class="check-label">Audio solution <span class="priority-badge priority-must">Must have</span></div>
+        <div class="check-sub">Bad audio loses viewers faster than bad video. Built-in phone mic works in a quiet room. A $20 lapel mic is a game changer.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div class="check-content">
+        <div class="check-label">Lighting source <span class="priority-badge priority-must">Must have</span></div>
+        <div class="check-sub">A window with natural light facing you is completely free and often better than a ring light. Avoid overhead lighting — it casts shadows.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div class="check-content">
+        <div class="check-label">Script or outline nearby <span class="priority-badge priority-must">Must have</span></div>
+        <div class="check-sub">Print it out or have it open on a second screen just off camera. You don't need to memorize it — just know it well enough to glance.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div class="check-content">
+        <div class="check-label">Ring light or softbox <span class="priority-badge priority-nice">Nice to have</span></div>
+        <div class="check-sub">A ring light ($25–$50) gives you consistent lighting year-round regardless of weather or time of day.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div class="check-content">
+        <div class="check-label">Lapel or USB microphone <span class="priority-badge priority-nice">Nice to have</span></div>
+        <div class="check-sub">The single best first upgrade for most creators. A lapel mic clips to your shirt and dramatically improves audio quality for under $25.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div class="check-content">
+        <div class="check-label">External camera or webcam <span class="priority-badge priority-later">Upgrade later</span></div>
+        <div class="check-sub">Only invest in this once your channel is growing and earning. Your phone is genuinely enough for your first 20+ videos.</div>
+      </div>
+    </div>
+
+    <div class="prompt-block">
+      <p>Remember: your first video's job is to exist — not to be perfect. Every creator you admire started with worse equipment than you have right now.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 2: LOCATION -->
+  <div class="section-card" data-section="1">
+    <div class="section-header">
+      <div class="section-icon" style="background:#e8f4f0;">
+        <svg viewBox="0 0 24 24" fill="#406c79"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      </div>
+      <div class="section-name">Your filming location</div>
+    </div>
+    <div class="section-sub">Run through this checklist before you press record. A good location makes everything easier.</div>
+    <div class="divider"></div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div class="check-content">
+        <div class="check-label">Light source is in front of you, not behind</div>
+        <div class="check-sub">Face a window or your ring light. Never film with a bright window behind you — it turns you into a silhouette.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div class="check-content">
+        <div class="check-label">Room is as quiet as possible</div>
+        <div class="check-sub">Close windows, turn off fans and AC, silence your phone. Soft furnishings like rugs and curtains absorb echo naturally.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div class="check-content">
+        <div class="check-label">Background is clean and intentional</div>
+        <div class="check-sub">Tidy shelf, plain wall, or a simple backdrop. What is behind you says something about your brand — make it say something good.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div class="check-content">
+        <div class="check-label">Camera is at eye level or just above</div>
+        <div class="check-sub">Filming from below is unflattering and unprofessional. Stack books under your phone or tripod until the lens is level with your eyes.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div class="check-content">
+        <div class="check-label">You have enough room to move and breathe</div>
+        <div class="check-sub">Feeling cramped affects your energy on camera. Make sure you can sit or stand comfortably without feeling boxed in.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div class="check-content">
+        <div class="check-label">You can use this same spot consistently</div>
+        <div class="check-sub">Viewers recognize your setting. Consistency builds brand familiarity and speeds up your setup time every single shoot.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: ON CAMERA -->
+  <div class="section-card" data-section="2">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--brown-light);">
+        <svg viewBox="0 0 24 24" fill="#c5a073"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      </div>
+      <div class="section-name">Before you press record</div>
+    </div>
+    <div class="section-sub">Run through these before every take — especially your first one. The prep takes 60 seconds and makes a real difference.</div>
+    <div class="divider"></div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div class="check-content">
+        <div class="check-label">Script or outline is nearby and reviewed</div>
+        <div class="check-sub">You don't need to have it memorized — just read through it one more time so it feels familiar when you're on camera.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div class="check-content">
+        <div class="check-label">Phone notifications are silenced</div>
+        <div class="check-sub">Put your phone on Do Not Disturb. Nothing breaks a good take like a notification buzz mid-sentence.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div class="check-content">
+        <div class="check-label">You have taken three slow, deep breaths</div>
+        <div class="check-sub">This sounds simple because it is. It works. Nerves affect your voice and your pace — a breath before you start resets everything.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div class="check-content">
+        <div class="check-label">Posture is tall and relaxed</div>
+        <div class="check-sub">Sit forward in your chair or stand with your weight evenly placed. Slumping compresses your voice and reads as low energy on camera.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div class="check-content">
+        <div class="check-label">You have smiled before pressing record</div>
+        <div class="check-sub">Smiling before you start — even for a second — physically shifts your energy. Your viewer feels the difference even when they can't explain why.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div class="check-content">
+        <div class="check-label">You have committed to doing at least two takes</div>
+        <div class="check-sub">Give yourself permission to not be perfect on take one. Take two is almost always better. Plan for it from the start.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: TEST SHOT -->
+  <div class="test-card" data-section="3">
+    <div class="test-title" style="color:white;">Test shot checklist</div>
+    <p class="test-desc">Before filming your real video, do a 60-second test recording and check each of these. Catching problems now saves you from re-filming later.</p>
+
+    <div class="test-item" onclick="toggleTest(this)">
+      <div class="test-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div>
+        <div class="test-label">Audio is clear — no echo, buzz, or background noise</div>
+        <div class="test-note">Play it back with headphones if you have them. Echo means you need softer furnishings or a smaller room.</div>
+      </div>
+    </div>
+    <div class="test-item" onclick="toggleTest(this)">
+      <div class="test-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div>
+        <div class="test-label">Your face is well lit and easy to see</div>
+        <div class="test-note">If your face looks dark or shadowed, move closer to your light source or reposition so the light faces you directly.</div>
+      </div>
+    </div>
+    <div class="test-item" onclick="toggleTest(this)">
+      <div class="test-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div>
+        <div class="test-label">Framing looks good — head and shoulders centered</div>
+        <div class="test-note">Leave a small amount of space above your head. You should fill roughly two-thirds of the frame — not too zoomed in or too far away.</div>
+      </div>
+    </div>
+    <div class="test-item" onclick="toggleTest(this)">
+      <div class="test-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div>
+        <div class="test-label">Video is stable — no wobble or movement</div>
+        <div class="test-note">If it's shaky, add more support under your tripod or phone stand. Even a rubber band around a stack of books can stabilize a phone.</div>
+      </div>
+    </div>
+    <div class="test-item" onclick="toggleTest(this)">
+      <div class="test-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div>
+        <div class="test-label">Background looks clean and intentional on screen</div>
+        <div class="test-note">What looks tidy in person can look cluttered on camera. Check your test recording and remove anything distracting from the background.</div>
+      </div>
+    </div>
+    <div class="test-item" onclick="toggleTest(this)">
+      <div class="test-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div>
+        <div class="test-label">You are happy enough to film for real</div>
+        <div class="test-note">It does not need to be perfect. It just needs to be good enough that you can work with it. If you can say yes — you are ready. Press record.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUDGET GUIDE -->
+  <div class="budget-card">
+    <div class="budget-title">Starter budget guide</div>
+    <div class="budget-desc">You do not need to spend a single dollar to film your first video. But if you want to invest, here is what actually makes a difference — in order of impact.</div>
+
+    <div class="budget-row budget-row-header">
+      <span>Item</span><span>Cost</span><span>Priority</span>
+    </div>
+    <div class="budget-row">
+      <span class="budget-item">Smartphone (what you already own)</span>
+      <span class="budget-price">$0</span>
+      <span class="budget-tag tag-free">Free</span>
+    </div>
+    <div class="budget-row">
+      <span class="budget-item">Natural window light</span>
+      <span class="budget-price">$0</span>
+      <span class="budget-tag tag-free">Free</span>
+    </div>
+    <div class="budget-row">
+      <span class="budget-item">Books as a phone stand / tripod</span>
+      <span class="budget-price">$0</span>
+      <span class="budget-tag tag-free">Free</span>
+    </div>
+    <div class="budget-row">
+      <span class="budget-item">Lapel microphone (first upgrade)</span>
+      <span class="budget-price">$15–$25</span>
+      <span class="budget-tag tag-low">Low cost</span>
+    </div>
+    <div class="budget-row">
+      <span class="budget-item">Phone tripod with mount</span>
+      <span class="budget-price">$15–$30</span>
+      <span class="budget-tag tag-low">Low cost</span>
+    </div>
+    <div class="budget-row">
+      <span class="budget-item">Ring light (10 inch)</span>
+      <span class="budget-price">$25–$45</span>
+      <span class="budget-tag tag-low">Low cost</span>
+    </div>
+    <div class="budget-row">
+      <span class="budget-item">USB microphone (desk mic)</span>
+      <span class="budget-price">$50–$100</span>
+      <span class="budget-tag tag-mid">When ready</span>
+    </div>
+    <div class="budget-row">
+      <span class="budget-item">Dedicated camera or webcam</span>
+      <span class="budget-price">$100+</span>
+      <span class="budget-tag tag-mid">When ready</span>
+    </div>
+
+    <div class="prompt-block" style="margin-top:1.25rem;">
+      <p>Dee Dee's rule: don't upgrade your equipment until your channel is earning. Reinvest your first earnings into the one upgrade that will make the biggest difference for your setup.</p>
+    </div>
+  </div>
+
+  <div class="complete-banner" id="completeBanner">
+    <p>You are ready to film. Go press record.</p>
+    <span>Every box is ticked. Your setup is done. The only thing left is to do it.</span>
+  </div>
+
+</div>
+
+<script>
+  const TOTAL = 21;
+
+  function toggleCheck(el) {
+    el.classList.toggle('done');
+    updateProgress();
+  }
+
+  function toggleTest(el) {
+    el.classList.toggle('done');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const allItems = document.querySelectorAll('.check-item.done, .test-item.done');
+    const done = allItems.length;
+    const pct = Math.round((done / TOTAL) * 100);
+
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressCount').innerText = done + ' of ' + TOTAL + ' complete';
+
+    // Section pills
+    const sections = [
+      { id: 'pill-0', total: 8, selector: '.section-card[data-section="0"] .check-item.done' },
+      { id: 'pill-1', total: 6, selector: '.section-card[data-section="1"] .check-item.done' },
+      { id: 'pill-2', total: 6, selector: '.section-card[data-section="2"] .check-item.done' },
+      { id: 'pill-3', total: 6, selector: '.test-card .test-item.done' },
+    ];
+
+    sections.forEach(s => {
+      const count = document.querySelectorAll(s.selector).length;
+      const pill = document.getElementById(s.id);
+      pill.classList.toggle('complete', count === s.total);
+    });
+
+    document.getElementById('completeBanner').classList.toggle('visible', done === TOTAL);
+  }
+
+  function resetAll() {
+    document.querySelectorAll('.check-item, .test-item').forEach(el => el.classList.remove('done'));
+    updateProgress();
+  }
+</script>
+</body>
+</html>
