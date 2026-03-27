@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 2 — Channel Description Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --coral: #f47c7c;
+    --coral-hover: #e86b6b;
+    --coral-light: #fdf0f0;
+    --coral-border: #f9c8c8;
+    --brown: #c5a073;
+    --brown-light: #fdf6ec;
+    --cream: #f3ead0;
+    --dark: #406c79;
+    --dark-hover: #2d4f59;
+    --mid: #688a93;
+    --light: #dae5ea;
+    --card-bg: #fffdf8;
+    --page-bg: #faf7f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--page-bg); color: var(--dark-hover); min-height: 100vh; padding: 2rem 1rem 4rem; }
+  .container { max-width: 680px; margin: 0 auto; }
+  .hero { text-align: center; padding: 3rem 1rem 2.5rem; border-bottom: 1px solid var(--light); margin-bottom: 2.5rem; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; color: var(--coral); background: var(--coral-light); border: 1px solid var(--coral-border); padding: 5px 16px; border-radius: 99px; margin-bottom: 1.25rem; }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 5vw, 2.2rem); font-weight: 400; color: var(--dark); line-height: 1.2; margin-bottom: 0.75rem; }
+  .hero p { font-size: 15px; color: var(--mid); line-height: 1.7; }
+  .card { background: var(--card-bg); border: 1px solid var(--light); border-radius: 16px; padding: 2rem; margin-bottom: 1.25rem; }
+  .card-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brown); margin-bottom: 0.3rem; }
+  .card-title { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--dark); margin-bottom: 0.5rem; }
+  .card-desc { font-size: 14px; color: var(--mid); line-height: 1.7; margin-bottom: 1.5rem; }
+  .field-label { display: block; font-size: 13px; font-weight: 500; color: var(--mid); margin-bottom: 7px; }
+  .field-hint { display: block; font-size: 12px; color: var(--brown); margin-bottom: 7px; font-style: italic; }
+  input[type="text"], textarea, select {
+    width: 100%; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--dark-hover);
+    background: white; border: 1px solid var(--light); border-radius: 10px; padding: 11px 14px;
+    outline: none; transition: border-color 0.2s, box-shadow 0.2s; margin-bottom: 1.1rem;
+  }
+  textarea { min-height: 80px; resize: vertical; line-height: 1.6; }
+  input:focus, textarea:focus, select:focus { border-color: var(--coral); box-shadow: 0 0 0 3px rgba(244,124,124,0.12); }
+  .tag-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.25rem; }
+  .tag { font-size: 13px; padding: 6px 15px; border: 1px solid var(--light); border-radius: 99px; cursor: pointer; color: var(--mid); background: white; transition: all 0.15s; user-select: none; }
+  .tag:hover { border-color: var(--coral); color: var(--coral); background: var(--coral-light); }
+  .tag.selected { border-color: var(--coral); color: var(--coral); background: var(--coral-light); font-weight: 500; }
+  .generate-btn { width: 100%; padding: 14px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; color: white; background: var(--coral); border: none; border-radius: 12px; cursor: pointer; transition: all 0.2s; margin-top: 0.5rem; }
+  .generate-btn:hover { background: var(--coral-hover); }
+  .result-box { background: var(--cream); border: 1px solid var(--light); border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; display: none; animation: fadeIn 0.3s ease; }
+  .result-label { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brown); margin-bottom: 0.75rem; }
+  .result-text { font-size: 15px; color: var(--dark); line-height: 1.8; white-space: pre-wrap; }
+  .result-actions { display: flex; gap: 10px; margin-top: 1.25rem; flex-wrap: wrap; }
+  .copy-btn { flex: 1; min-width: 120px; padding: 10px 18px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: white; background: var(--dark); border: none; border-radius: 10px; cursor: pointer; transition: all 0.15s; }
+  .copy-btn:hover { background: var(--dark-hover); }
+  .regen-btn { flex: 1; min-width: 120px; padding: 10px 18px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: var(--mid); background: white; border: 1px solid var(--light); border-radius: 10px; cursor: pointer; transition: all 0.15s; }
+  .regen-btn:hover { background: var(--cream); color: var(--dark); }
+  .versions-row { display: flex; gap: 8px; margin-top: 1rem; flex-wrap: wrap; }
+  .version-pill { font-size: 12px; padding: 5px 14px; border: 1px solid var(--light); border-radius: 99px; cursor: pointer; color: var(--mid); background: white; transition: all 0.15s; }
+  .version-pill:hover, .version-pill.active { border-color: var(--dark); color: var(--dark); background: var(--cream); font-weight: 500; }
+  .prompt-block { background: var(--cream); border-left: 3px solid var(--brown); border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; margin-bottom: 1.25rem; }
+  .prompt-block p { font-size: 14px; font-style: italic; color: var(--dark); line-height: 1.6; }
+  .step-row { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 1rem; }
+  .step-num { min-width: 28px; height: 28px; border-radius: 50%; background: var(--coral); color: white; font-size: 13px; font-weight: 500; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .step-text { font-size: 14px; color: var(--dark-hover); line-height: 1.6; }
+  .step-text strong { color: var(--dark); font-weight: 500; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 480px) { .card { padding: 1.25rem; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="hero">
+    <div class="badge">Day 2 — 7-Day YouTube Challenge</div>
+    <h1>Channel Description<br><em>Generator</em></h1>
+    <p>Fill in the blanks and get a ready-to-publish channel description<br>that tells the right viewers exactly why they should subscribe.</p>
+  </div>
+
+  <!-- HOW TO USE -->
+  <div class="card">
+    <div class="card-label">Before you start</div>
+    <div class="card-title">Where does this go?</div>
+    <div class="card-desc">Once you have your description, here is exactly where to paste it in YouTube:</div>
+    <div class="step-row"><div class="step-num">1</div><div class="step-text">Go to <strong>studio.youtube.com</strong></div></div>
+    <div class="step-row"><div class="step-num">2</div><div class="step-text">Click <strong>Customization</strong> in the left menu</div></div>
+    <div class="step-row"><div class="step-num">3</div><div class="step-text">Click the <strong>Basic Info</strong> tab</div></div>
+    <div class="step-row"><div class="step-num">4</div><div class="step-text">Paste your description into the <strong>Description</strong> field</div></div>
+    <div class="step-row"><div class="step-num">5</div><div class="step-text">Click <strong>Publish</strong> in the top right corner</div></div>
+  </div>
+
+  <!-- GENERATOR FORM -->
+  <div class="card">
+    <div class="card-label">Step 1 of 3</div>
+    <div class="card-title">Tell me about your channel</div>
+    <div class="card-desc">Answer these questions and your description will write itself.</div>
+
+    <label class="field-label">What is your channel name?</label>
+    <input type="text" id="channelName" placeholder="e.g. Real Talk with Dee Dee" />
+
+    <label class="field-label">Who is your audience? Be specific.</label>
+    <span class="field-hint">Think about age, situation, and what they're struggling with.</span>
+    <input type="text" id="audience" placeholder="e.g. women over 40 who are ready to start something of their own" />
+
+    <label class="field-label">What will you help them do, learn, or achieve?</label>
+    <input type="text" id="action" placeholder="e.g. start a YouTube channel and build an income from their expertise" />
+
+    <label class="field-label">What is the result or transformation they'll get?</label>
+    <input type="text" id="result" placeholder="e.g. show up confidently online and create a life they love on their own terms" />
+
+    <label class="field-label">What makes your channel different?</label>
+    <span class="field-hint">Your lived experience, your age, your story, your no-nonsense style — anything that sets you apart.</span>
+    <input type="text" id="unique" placeholder="e.g. I started at 50 with no tech experience — I know exactly where you are" />
+
+    <label class="field-label">How often do you upload? (optional)</label>
+    <input type="text" id="schedule" placeholder="e.g. New videos every Tuesday" />
+  </div>
+
+  <div class="card">
+    <div class="card-label">Step 2 of 3</div>
+    <div class="card-title">Choose your tone</div>
+    <div class="card-desc">Pick the style that feels most like you.</div>
+    <div class="tag-grid" id="toneGrid">
+      <span class="tag selected" onclick="selectTone(this)">Warm & encouraging</span>
+      <span class="tag" onclick="selectTone(this)">Bold & direct</span>
+      <span class="tag" onclick="selectTone(this)">Professional & credible</span>
+      <span class="tag" onclick="selectTone(this)">Conversational & real</span>
+    </div>
+  </div>
+
+  <button class="generate-btn" onclick="generateDescriptions()">✦ Generate my channel description</button>
+
+  <div class="result-box" id="resultBox">
+    <div class="result-label">Your channel description</div>
+    <div class="versions-row" id="versionsRow"></div>
+    <div class="result-text" id="resultText"></div>
+    <div class="result-actions">
+      <button class="copy-btn" onclick="copyText()">Copy to clipboard</button>
+      <button class="regen-btn" onclick="generateDescriptions()">Try different versions</button>
+    </div>
+    <div class="prompt-block" style="margin-top: 1.5rem;">
+      <p>Tip: Read it out loud before you publish. If it doesn't sound like you, tweak the wording until it does. The template is just a starting point.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let descriptions = [];
+  let activeVersion = 0;
+
+  function selectTone(el) {
+    document.querySelectorAll('#toneGrid .tag').forEach(t => t.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function getVal(id) {
+    return document.getElementById(id).value.trim();
+  }
+
+  function generateDescriptions() {
+    const name = getVal('channelName') || 'this channel';
+    const audience = getVal('audience') || 'people like you';
+    const action = getVal('action') || 'achieve your goals';
+    const result = getVal('result') || 'build the life you want';
+    const unique = getVal('unique') || 'I know exactly where you are';
+    const schedule = getVal('schedule');
+    const tone = document.querySelector('#toneGrid .tag.selected')?.innerText || 'Warm & encouraging';
+    const schedLine = schedule ? `\n${schedule} — subscribe so you never miss one.` : '\nNew videos dropping regularly — subscribe so you never miss one.';
+
+    const versions = {
+      'Warm & encouraging': [
+        `Welcome to ${name}!\n\nI help ${audience} ${action} so they can ${result}.\n\n${unique} — and I created this channel so you don't have to figure it out alone.${schedLine}`,
+        `Hey, I'm so glad you're here.\n\nThis channel is for ${audience} who are ready to ${action}. If you've been waiting for a sign — this is it.\n\n${unique}.${schedLine}`,
+        `You're in the right place.\n\n${name} is where ${audience} come to ${action} and walk away with the confidence to ${result}.\n\n${unique}.${schedLine}`
+      ],
+      'Bold & direct': [
+        `${name} is for ${audience} who are done waiting and ready to ${action}.\n\nNo fluff. No gatekeeping. Just real guidance that gets you to ${result}.\n\n${unique}.${schedLine}`,
+        `Ready to ${action}? You're in the right place.\n\nI help ${audience} ${result} — and I don't sugarcoat it.\n\n${unique}.${schedLine}`,
+        `This channel exists for one reason: to help ${audience} ${action}.\n\nIf you're serious about ${result}, subscribe and let's get to work.\n\n${unique}.${schedLine}`
+      ],
+      'Professional & credible': [
+        `${name} is dedicated to helping ${audience} ${action}.\n\nWith practical guidance and proven strategies, you'll gain the tools you need to ${result}.\n\n${unique}.${schedLine}`,
+        `Welcome to ${name} — a channel built specifically for ${audience} ready to ${action}.\n\nEvery video is designed to help you ${result}, step by step.\n\n${unique}.${schedLine}`,
+        `At ${name}, we believe ${audience} deserve clear, actionable guidance to ${action} and ultimately ${result}.\n\n${unique}.${schedLine}`
+      ],
+      'Conversational & real': [
+        `So here's the deal — I made this channel for ${audience} who want to ${action} without all the overwhelm.\n\nBecause ${unique}.\n\nLet's figure this out together.${schedLine}`,
+        `Hey! If you're ${audience} trying to ${action}... this channel is literally for you.\n\nI started this because ${unique}, and I want to share everything I've learned.${schedLine}`,
+        `Okay, real talk — ${audience} deserve better resources for how to ${action} and ${result}.\n\nSo I built this channel. ${unique}.${schedLine}`
+      ]
+    };
+
+    descriptions = versions[tone] || versions['Warm & encouraging'];
+    activeVersion = 0;
+
+    const box = document.getElementById('resultBox');
+    box.style.display = 'block';
+    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    renderVersions();
+    showVersion(0);
+  }
+
+  function renderVersions() {
+    const row = document.getElementById('versionsRow');
+    row.innerHTML = '';
+    descriptions.forEach((_, i) => {
+      const pill = document.createElement('span');
+      pill.className = 'version-pill' + (i === 0 ? ' active' : '');
+      pill.innerText = 'Version ' + (i + 1);
+      pill.onclick = () => { activeVersion = i; showVersion(i); document.querySelectorAll('.version-pill').forEach((p, j) => p.classList.toggle('active', j === i)); };
+      row.appendChild(pill);
+    });
+  }
+
+  function showVersion(i) {
+    document.getElementById('resultText').innerText = descriptions[i];
+  }
+
+  function copyText() {
+    const text = descriptions[activeVersion];
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.querySelector('.copy-btn');
+      btn.innerText = 'Copied!';
+      btn.style.background = '#1D9E75';
+      setTimeout(() => { btn.innerText = 'Copy to clipboard'; btn.style.background = ''; }, 2000);
+    });
+  }
+</script>
+</body>
+</html>

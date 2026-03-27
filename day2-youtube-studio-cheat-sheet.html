@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 2 — YouTube Studio Cheat Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --coral: #f47c7c;
+    --coral-hover: #e86b6b;
+    --coral-light: #fdf0f0;
+    --coral-border: #f9c8c8;
+    --brown: #c5a073;
+    --brown-light: #fdf6ec;
+    --cream: #f3ead0;
+    --dark: #406c79;
+    --dark-hover: #2d4f59;
+    --mid: #688a93;
+    --light: #dae5ea;
+    --card-bg: #fffdf8;
+    --page-bg: #faf7f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--page-bg); color: var(--dark-hover); min-height: 100vh; padding: 2rem 1rem 4rem; }
+  .container { max-width: 720px; margin: 0 auto; }
+  .hero { text-align: center; padding: 3rem 1rem 2.5rem; border-bottom: 1px solid var(--light); margin-bottom: 2.5rem; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; color: var(--coral); background: var(--coral-light); border: 1px solid var(--coral-border); padding: 5px 16px; border-radius: 99px; margin-bottom: 1.25rem; }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 5vw, 2.2rem); font-weight: 400; color: var(--dark); line-height: 1.2; margin-bottom: 0.75rem; }
+  .hero p { font-size: 15px; color: var(--mid); line-height: 1.7; }
+
+  /* STUDIO MAP */
+  .studio-map { background: var(--card-bg); border: 1px solid var(--light); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; }
+  .map-title { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--dark); margin-bottom: 0.4rem; }
+  .map-desc { font-size: 14px; color: var(--mid); margin-bottom: 1.75rem; line-height: 1.6; }
+
+  .sidebar-layout { display: grid; grid-template-columns: 180px 1fr; gap: 0; border: 1px solid var(--light); border-radius: 12px; overflow: hidden; }
+  .sidebar { background: var(--dark); padding: 1rem 0; }
+  .sidebar-header { padding: 0.5rem 1rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 0.5rem; }
+  .sidebar-logo { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.5); letter-spacing: 0.08em; text-transform: uppercase; }
+  .sidebar-channel { font-size: 13px; color: white; font-weight: 500; margin-top: 4px; }
+  .nav-item { padding: 9px 1rem; font-size: 13px; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.65); border-left: 3px solid transparent; }
+  .nav-item:hover { background: rgba(255,255,255,0.08); color: white; }
+  .nav-item.active { background: rgba(255,255,255,0.12); color: white; border-left-color: var(--coral); }
+  .nav-icon { width: 16px; height: 16px; opacity: 0.7; flex-shrink: 0; }
+  .nav-item.active .nav-icon { opacity: 1; }
+
+  .main-area { background: white; padding: 1.25rem; min-height: 340px; }
+  .panel { display: none; animation: fadeIn 0.2s ease; }
+  .panel.visible { display: block; }
+  .panel-title { font-size: 14px; font-weight: 500; color: var(--dark); margin-bottom: 0.5rem; }
+  .panel-desc { font-size: 13px; color: var(--mid); line-height: 1.6; margin-bottom: 1rem; }
+
+  .feature-list { list-style: none; }
+  .feature-list li { font-size: 13px; color: var(--dark-hover); line-height: 1.5; padding: 7px 0; border-bottom: 1px solid #f5f5f5; display: flex; gap: 10px; align-items: flex-start; }
+  .feature-list li:last-child { border-bottom: none; }
+  .feat-dot { min-width: 7px; height: 7px; border-radius: 50%; background: var(--coral); margin-top: 5px; }
+  .feat-name { font-weight: 500; color: var(--dark); }
+
+  .tip-box { background: var(--cream); border-radius: 8px; padding: 0.75rem 1rem; margin-top: 1rem; font-size: 13px; color: var(--dark); line-height: 1.5; }
+  .tip-box strong { color: var(--brown); }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* QUICK REF CARDS */
+  .section-title { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--dark); margin-bottom: 0.4rem; }
+  .section-desc { font-size: 14px; color: var(--mid); margin-bottom: 1.25rem; line-height: 1.6; }
+
+  .ref-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  .ref-card { background: var(--card-bg); border: 1px solid var(--light); border-radius: 14px; padding: 1.25rem; }
+  .ref-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem; }
+  .ref-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .ref-icon svg { width: 18px; height: 18px; }
+  .ref-card-title { font-size: 14px; font-weight: 500; color: var(--dark); }
+  .ref-card-sub { font-size: 12px; color: var(--mid); }
+  .ref-steps { list-style: none; }
+  .ref-steps li { font-size: 13px; color: var(--dark-hover); padding: 5px 0; border-bottom: 1px solid #f0ece4; line-height: 1.5; display: flex; gap: 8px; }
+  .ref-steps li:last-child { border-bottom: none; }
+  .ref-step-num { min-width: 18px; height: 18px; border-radius: 50%; background: var(--coral-light); color: var(--coral); font-size: 11px; font-weight: 500; display: flex; align-items: center; justify-content: center; margin-top: 1px; flex-shrink: 0; }
+
+  /* CHECKLIST */
+  .checklist-card { background: var(--card-bg); border: 1px solid var(--light); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; }
+  .check-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f0ece4; cursor: pointer; user-select: none; }
+  .check-item:last-child { border-bottom: none; }
+  .check-box { min-width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid var(--light); background: white; display: flex; align-items: center; justify-content: center; transition: all 0.2s; margin-top: 1px; flex-shrink: 0; }
+  .check-box svg { width: 13px; height: 13px; fill: white; display: none; }
+  .check-item.done .check-box { background: var(--coral); border-color: var(--coral); }
+  .check-item.done .check-box svg { display: block; }
+  .check-item.done .check-label { text-decoration: line-through; color: var(--mid); }
+  .check-label { font-size: 14px; color: var(--dark-hover); line-height: 1.5; }
+  .check-sub { font-size: 12px; color: var(--mid); margin-top: 2px; }
+  .progress-bar-wrap { height: 6px; background: var(--light); border-radius: 3px; margin-top: 1.25rem; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--coral); border-radius: 3px; transition: width 0.4s ease; }
+  .progress-label { font-size: 12px; color: var(--mid); margin-top: 8px; }
+
+  @media print {
+    .sidebar-layout, .studio-map { break-inside: avoid; }
+    .nav-item { cursor: default; }
+  }
+  @media (max-width: 560px) {
+    .sidebar-layout { grid-template-columns: 1fr; }
+    .sidebar { display: flex; flex-wrap: wrap; gap: 0; }
+    .nav-item { flex: 1; min-width: 80px; justify-content: center; border-left: none; border-bottom: 3px solid transparent; font-size: 11px; padding: 8px 6px; flex-direction: column; gap: 4px; text-align: center; }
+    .nav-item.active { border-bottom-color: var(--coral); border-left-color: transparent; }
+    .sidebar-header { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="hero">
+    <div class="badge">Day 2 — 7-Day YouTube Challenge</div>
+    <h1>YouTube Studio<br><em>Cheat Sheet</em></h1>
+    <p>A plain-English guide to every section of YouTube Studio —<br>so you always know exactly where to go.</p>
+  </div>
+
+  <!-- INTERACTIVE STUDIO MAP -->
+  <div class="studio-map">
+    <div class="map-title">Your YouTube Studio control center</div>
+    <div class="map-desc">Click each section in the menu below to learn what it does and when you'll use it.</div>
+
+    <div class="sidebar-layout">
+      <div class="sidebar">
+        <div class="sidebar-header">
+          <div class="sidebar-logo">YouTube Studio</div>
+          <div class="sidebar-channel">Your Channel</div>
+        </div>
+        <div class="nav-item active" onclick="showPanel('dashboard')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+          Dashboard
+        </div>
+        <div class="nav-item" onclick="showPanel('content')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 12.5v-9l6 4.5-6 4.5z"/></svg>
+          Content
+        </div>
+        <div class="nav-item" onclick="showPanel('analytics')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+          Analytics
+        </div>
+        <div class="nav-item" onclick="showPanel('comments')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+          Comments
+        </div>
+        <div class="nav-item" onclick="showPanel('subtitles')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 12h4v2H4v-2zm10 6H4v-2h10v2zm6 0h-4v-2h4v2zm0-4H10v-2h10v2z"/></svg>
+          Subtitles
+        </div>
+        <div class="nav-item" onclick="showPanel('customization')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+          Customization
+        </div>
+        <div class="nav-item" onclick="showPanel('settings')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+          Settings
+        </div>
+      </div>
+
+      <div class="main-area">
+        <div class="panel visible" id="panel-dashboard">
+          <div class="panel-title">Dashboard — your home base</div>
+          <div class="panel-desc">The first thing you see when you log in. Think of it as your daily briefing.</div>
+          <ul class="feature-list">
+            <li><div class="feat-dot"></div><div><span class="feat-name">Latest video performance</span> — see views, watch time, and subscribers from your most recent upload</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Channel analytics snapshot</span> — a quick summary of how your channel is performing this week</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Recent comments</span> — see the latest comments across all your videos</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">News & updates</span> — YouTube announcements and tips from the Creator Insider team</div></li>
+          </ul>
+          <div class="tip-box"><strong>Day 2 tip:</strong> Bookmark studio.youtube.com — you'll come here every time you want to upload, check stats, or reply to comments.</div>
+        </div>
+
+        <div class="panel" id="panel-content">
+          <div class="panel-title">Content — all your videos in one place</div>
+          <div class="panel-desc">This is where you manage every video you've ever uploaded.</div>
+          <ul class="feature-list">
+            <li><div class="feat-dot"></div><div><span class="feat-name">Upload a video</span> — click the blue Upload button (top right) to add a new video</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Edit title & description</span> — click on any video to update its info at any time</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Visibility settings</span> — set videos to Public, Unlisted, or Private before publishing</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Thumbnails</span> — upload a custom thumbnail for each video here</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Schedule uploads</span> — set a date and time for your video to go live automatically</div></li>
+          </ul>
+          <div class="tip-box"><strong>Day 7 tip:</strong> You'll be back here on the final day to publish your very first video. Get familiar with it now.</div>
+        </div>
+
+        <div class="panel" id="panel-analytics">
+          <div class="panel-title">Analytics — understanding your numbers</div>
+          <div class="panel-desc">Don't worry about this on Day 2 — but here's what to know for later.</div>
+          <ul class="feature-list">
+            <li><div class="feat-dot"></div><div><span class="feat-name">Views & watch time</span> — how many people watched and for how long</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Subscribers</span> — how many people subscribed (and unsubscribed) over time</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Reach</span> — how people found your video (search, browse, suggested)</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Audience</span> — age, gender, and location of your viewers</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Revenue</span> — once monetized, this is where your earnings live</div></li>
+          </ul>
+          <div class="tip-box"><strong>Beginner tip:</strong> Don't obsess over analytics in your first 30 days. Focus on publishing. The data only gets useful once you have videos out there.</div>
+        </div>
+
+        <div class="panel" id="panel-comments">
+          <div class="panel-title">Comments — your community hub</div>
+          <div class="panel-desc">Every comment across all your videos, in one place. This is where you build relationships.</div>
+          <ul class="feature-list">
+            <li><div class="feat-dot"></div><div><span class="feat-name">Reply to comments</span> — respond to viewers directly from here</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Like comments</span> — acknowledge viewers without typing a reply</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Filter by status</span> — see comments held for review, likely spam, or all comments</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Pin a comment</span> — pin your own comment to the top of a video (great for links)</div></li>
+          </ul>
+          <div class="tip-box"><strong>Growth tip:</strong> Reply to every comment for your first 50 videos. It signals to YouTube that your community is engaged — and it builds loyalty fast.</div>
+        </div>
+
+        <div class="panel" id="panel-subtitles">
+          <div class="panel-title">Subtitles — captions for your videos</div>
+          <div class="panel-desc">YouTube auto-generates captions for every video. You can also upload your own here.</div>
+          <ul class="feature-list">
+            <li><div class="feat-dot"></div><div><span class="feat-name">Auto-generated captions</span> — YouTube creates these automatically — they're usually 80–90% accurate</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Edit captions</span> — fix any errors in the auto-generated text</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Upload your own</span> — paste in a transcript or SRT file for 100% accuracy</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Add languages</span> — reach international audiences by adding translated captions</div></li>
+          </ul>
+          <div class="tip-box"><strong>Accessibility tip:</strong> Always check your captions before your video goes public. Names, places, and niche terms often get auto-corrected incorrectly.</div>
+        </div>
+
+        <div class="panel" id="panel-customization">
+          <div class="panel-title">Customization — your channel's look and feel</div>
+          <div class="panel-desc">This is where you set up your banner, profile photo, and channel description. You'll be here today.</div>
+          <ul class="feature-list">
+            <li><div class="feat-dot"></div><div><span class="feat-name">Layout tab</span> — set your channel trailer and featured sections</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Branding tab</span> — upload your profile photo, banner image, and watermark</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Basic Info tab</span> — edit your channel name, handle, description, and links</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Publish button</span> — top right corner — always click this to save your changes</div></li>
+          </ul>
+          <div class="tip-box"><strong>Day 2 action:</strong> Customization → Branding tab to upload your banner. Then Basic Info tab to paste your channel description. Hit Publish.</div>
+        </div>
+
+        <div class="panel" id="panel-settings">
+          <div class="panel-title">Settings — channel preferences</div>
+          <div class="panel-desc">You won't need most of this on Day 2, but it's good to know where things live.</div>
+          <ul class="feature-list">
+            <li><div class="feat-dot"></div><div><span class="feat-name">General</span> — currency settings for monetization</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Channel</span> — country, keywords, and whether your channel is made for kids</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Upload defaults</span> — set default titles, descriptions, tags, and visibility for new uploads</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Permissions</span> — add a manager or editor to your channel</div></li>
+            <li><div class="feat-dot"></div><div><span class="feat-name">Community</span> — set up comment filters and blocked words</div></li>
+          </ul>
+          <div class="tip-box"><strong>Quick win:</strong> Go to Settings → Channel → Basic info and add keywords that describe your niche. This helps YouTube categorize your channel correctly.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK REFERENCE CARDS -->
+  <div style="margin-bottom: 1rem;">
+    <div class="section-title">Day 2 quick reference</div>
+    <div class="section-desc">Everything you need to complete today's setup tasks, step by step.</div>
+  </div>
+
+  <div class="ref-grid">
+    <div class="ref-card">
+      <div class="ref-card-header">
+        <div class="ref-icon" style="background: var(--coral-light);">
+          <svg viewBox="0 0 24 24" fill="#f47c7c"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
+        <div>
+          <div class="ref-card-title">Upload your profile photo</div>
+          <div class="ref-card-sub">Recommended: 800 x 800 px</div>
+        </div>
+      </div>
+      <ul class="ref-steps">
+        <li><div class="ref-step-num">1</div>Go to Customization → Branding tab</li>
+        <li><div class="ref-step-num">2</div>Click Upload under Profile photo</li>
+        <li><div class="ref-step-num">3</div>Use a clear, well-lit photo of your face</li>
+        <li><div class="ref-step-num">4</div>Click Done, then Publish</li>
+      </ul>
+    </div>
+
+    <div class="ref-card">
+      <div class="ref-card-header">
+        <div class="ref-icon" style="background: var(--brown-light);">
+          <svg viewBox="0 0 24 24" fill="#c5a073"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14z"/></svg>
+        </div>
+        <div>
+          <div class="ref-card-title">Upload your channel banner</div>
+          <div class="ref-card-sub">Required: 2560 x 1440 px</div>
+        </div>
+      </div>
+      <ul class="ref-steps">
+        <li><div class="ref-step-num">1</div>Design in Canva — search "YouTube Banner"</li>
+        <li><div class="ref-step-num">2</div>Download as PNG or JPG</li>
+        <li><div class="ref-step-num">3</div>Go to Customization → Branding tab</li>
+        <li><div class="ref-step-num">4</div>Upload under Banner image, then Publish</li>
+      </ul>
+    </div>
+
+    <div class="ref-card">
+      <div class="ref-card-header">
+        <div class="ref-icon" style="background: #e8f4f0;">
+          <svg viewBox="0 0 24 24" fill="#406c79"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13z"/></svg>
+        </div>
+        <div>
+          <div class="ref-card-title">Add your channel description</div>
+          <div class="ref-card-sub">Use the generator tool!</div>
+        </div>
+      </div>
+      <ul class="ref-steps">
+        <li><div class="ref-step-num">1</div>Use the Description Generator to write it</li>
+        <li><div class="ref-step-num">2</div>Go to Customization → Basic Info tab</li>
+        <li><div class="ref-step-num">3</div>Paste into the Description field</li>
+        <li><div class="ref-step-num">4</div>Click Publish in the top right</li>
+      </ul>
+    </div>
+
+    <div class="ref-card">
+      <div class="ref-card-header">
+        <div class="ref-icon" style="background: var(--coral-light);">
+          <svg viewBox="0 0 24 24" fill="#f47c7c"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+        </div>
+        <div>
+          <div class="ref-card-title">Add your channel handle & links</div>
+          <div class="ref-card-sub">Your @handle is your URL</div>
+        </div>
+      </div>
+      <ul class="ref-steps">
+        <li><div class="ref-step-num">1</div>Go to Customization → Basic Info tab</li>
+        <li><div class="ref-step-num">2</div>Set your @handle (e.g. @YourChannelName)</li>
+        <li><div class="ref-step-num">3</div>Add links to Instagram, website, etc.</li>
+        <li><div class="ref-step-num">4</div>Click Publish to save</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- DAY 2 CHECKLIST -->
+  <div class="checklist-card">
+    <div class="section-title" style="margin-bottom: 0.4rem;">Day 2 completion checklist</div>
+    <div class="section-desc">Tap each item as you complete it. You've got this.</div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div><div class="check-label">Created my YouTube account and channel</div><div class="check-sub">accounts.google.com → youtube.com → Your Channel → Create Channel</div></div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div><div class="check-label">Uploaded my profile photo</div><div class="check-sub">Clear, well-lit face photo — 800x800px recommended</div></div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div><div class="check-label">Designed and uploaded my channel banner</div><div class="check-sub">2560x1440px — designed in Canva using my brand colors</div></div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div><div class="check-label">Written and published my channel description</div><div class="check-sub">Used the Description Generator — pasted into Basic Info → Publish</div></div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div><div class="check-label">Set my @handle and added social links</div><div class="check-sub">Customization → Basic Info → Links section</div></div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div><div class="check-label">Explored YouTube Studio and know where everything is</div><div class="check-sub">Used the cheat sheet above to get familiar</div></div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <div><div class="check-label">Shared my win in the community</div><div class="check-sub">Drop your channel link in the Wins & Challenges post — we want to see it!</div></div>
+    </div>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressFill" style="width: 0%"></div>
+    </div>
+    <div class="progress-label" id="progressLabel">0 of 7 tasks complete</div>
+  </div>
+
+</div>
+
+<script>
+  function showPanel(id) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('visible'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('visible');
+    event.currentTarget.classList.add('active');
+  }
+
+  function toggleCheck(el) {
+    el.classList.toggle('done');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const all = document.querySelectorAll('.check-item');
+    const done = document.querySelectorAll('.check-item.done');
+    const pct = Math.round((done.length / all.length) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').innerText = done.length + ' of ' + all.length + ' tasks complete' + (done.length === all.length ? ' — Day 2 done! 🎉' : '');
+  }
+</script>
+</body>
+</html>
