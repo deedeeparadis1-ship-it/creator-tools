@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7-Day YouTube Challenge Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF2DB;
+    --cream2: #F9ECC8;
+    --teal-light: #B9DADF;
+    --coral: #F36868;
+    --coral-light: #F47C7C;
+    --teal: #7DBBC3;
+    --teal-dark: #1E555C;
+    --dark: #2D4950;
+    --navy: #2F3E5C;
+    --blush: #F5C8BF;
+    --off-cream: #E0DBD7;
+    --coral-accent: #F7A49E;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    min-height: 100vh;
+    padding: 0 0 4rem;
+  }
+
+  .page-header {
+    background: var(--teal-dark);
+    color: var(--cream);
+    text-align: center;
+    padding: 3rem 1.5rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(185,218,223,0.12);
+  }
+
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -30px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(243,104,104,0.1);
+  }
+
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .page-header p {
+    font-size: 14px;
+    color: var(--teal-light);
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+    max-width: 420px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .branding {
+    font-size: 11px;
+    letter-spacing: .12em;
+    color: var(--teal-light);
+    opacity: 0.7;
+    margin-bottom: 10px;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 0 1.25rem; }
+
+  .progress-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: -1.5rem auto 1.5rem;
+    max-width: 680px;
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 4px 24px rgba(46,73,80,0.12);
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+  }
+
+  @media(min-width:720px){
+    .progress-card { margin-left: auto; margin-right: auto; }
+  }
+
+  .prog-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    color: var(--teal-dark);
+    margin-bottom: 10px;
+  }
+
+  .seg-bar {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 8px;
+  }
+
+  .seg {
+    flex: 1;
+    height: 8px;
+    border-radius: 99px;
+    background: var(--off-cream);
+    transition: background .4s ease;
+  }
+
+  .seg.done { background: var(--teal-dark); }
+  .seg.active { background: var(--teal); }
+
+  .days-count {
+    font-size: 13px;
+    color: var(--teal-dark);
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+  }
+
+  .stat {
+    background: var(--cream);
+    border-radius: 10px;
+    padding: .75rem;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--teal-dark);
+  }
+
+  .stat-lbl {
+    font-size: 9px;
+    letter-spacing: .1em;
+    color: var(--dark);
+    opacity: .6;
+    margin-top: 2px;
+    font-weight: 500;
+  }
+
+  .days-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+
+  .day-card {
+    background: #fff;
+    border: 1.5px solid var(--off-cream);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color .3s;
+  }
+
+  .day-card.complete { border-color: var(--teal); }
+
+  .day-hdr {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 1.1rem 1.25rem;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .day-circle {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 2px solid var(--off-cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark);
+    flex-shrink: 0;
+    background: var(--cream);
+    transition: all .3s;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .day-card.complete .day-circle {
+    background: var(--teal-dark);
+    border-color: var(--teal-dark);
+    color: #fff;
+    font-size: 16px;
+  }
+
+  .day-hdr-info { flex: 1; }
+
+  .day-tag {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    color: var(--teal);
+    margin-bottom: 2px;
+  }
+
+  .day-card.complete .day-tag { color: var(--teal-dark); }
+
+  .day-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--dark);
+    font-family: 'Playfair Display', serif;
+  }
+
+  .chev {
+    font-size: 11px;
+    color: var(--teal);
+    opacity: .7;
+    transition: transform .2s;
+  }
+
+  .chev.open { transform: rotate(180deg); }
+
+  .day-body {
+    display: none;
+    padding: 0 1.25rem 1.25rem;
+  }
+
+  .day-body.open { display: block; }
+
+  .divider {
+    height: 1px;
+    background: var(--off-cream);
+    margin-bottom: 1.25rem;
+  }
+
+  .action-box {
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 1rem 1.125rem;
+    margin-bottom: 1.25rem;
+    border-left: 3px solid var(--coral);
+  }
+
+  .action-lbl {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    color: var(--coral);
+    margin-bottom: 6px;
+  }
+
+  .action-text {
+    font-size: 13px;
+    color: var(--dark);
+    line-height: 1.65;
+  }
+
+  .fields-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 1.125rem;
+  }
+
+  @media(max-width:480px){ .fields-row { grid-template-columns: 1fr; } }
+
+  .field-lbl {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--dark);
+    margin-bottom: 6px;
+    opacity: .8;
+  }
+
+  textarea {
+    width: 100%;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--dark);
+    background: var(--cream);
+    border: 1.5px solid var(--off-cream);
+    border-radius: 8px;
+    padding: 10px 12px;
+    resize: vertical;
+    min-height: 76px;
+    line-height: 1.55;
+    outline: none;
+    transition: border-color .2s;
+  }
+
+  textarea:focus { border-color: var(--teal); }
+  textarea::placeholder { color: var(--dark); opacity: .35; font-weight: 300; }
+
+  .conf-lbl {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--dark);
+    opacity: .8;
+    margin-bottom: 8px;
+  }
+
+  .conf-btns {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 1.125rem;
+  }
+
+  .conf-btn {
+    padding: 6px 14px;
+    border-radius: 99px;
+    border: 1.5px solid var(--off-cream);
+    background: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--dark);
+    cursor: pointer;
+    transition: all .15s;
+    font-weight: 400;
+  }
+
+  .conf-btn:hover { border-color: var(--teal); color: var(--teal-dark); }
+
+  .conf-btn.sel {
+    background: var(--teal-dark);
+    border-color: var(--teal-dark);
+    color: #fff;
+  }
+
+  .save-btn {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 14px;
+    border-radius: 10px;
+    border: none;
+    background: var(--teal-dark);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+    letter-spacing: .01em;
+  }
+
+  .save-btn:hover { background: var(--dark); }
+  .save-btn:active { transform: scale(.99); }
+
+  .save-msg {
+    text-align: center;
+    font-size: 13px;
+    color: var(--teal-dark);
+    margin-top: 8px;
+    min-height: 18px;
+    font-weight: 500;
+  }
+
+  .congrats {
+    display: none;
+    background: var(--teal-dark);
+    color: var(--cream);
+    border-radius: 14px;
+    padding: 1.5rem;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .congrats.show { display: block; }
+
+  .congrats-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .congrats p {
+    font-size: 13px;
+    opacity: .8;
+    line-height: 1.6;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 11px;
+    color: var(--dark);
+    opacity: .4;
+    letter-spacing: .06em;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="branding">CONFIDENT CREATOR CIRCLE</div>
+  <h1>7-Day YouTube Challenge</h1>
+  <p>Track your daily progress. Log your wins, name what was hard, and keep moving forward.</p>
+</div>
+
+<div class="wrap">
+  <div class="progress-card">
+    <div class="prog-label">CHALLENGE PROGRESS</div>
+    <div class="seg-bar" id="seg-bar"></div>
+    <div class="days-count" id="days-count">0 of 7 days complete</div>
+    <div class="stats">
+      <div class="stat"><div class="stat-num" id="stat-done">0</div><div class="stat-lbl">DAYS DONE</div></div>
+      <div class="stat"><div class="stat-num" id="stat-conf">--</div><div class="stat-lbl">AVG CONFIDENCE</div></div>
+      <div class="stat"><div class="stat-num" id="stat-wins">0</div><div class="stat-lbl">WINS LOGGED</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="days-list" id="days-list"></div>
+
+<div class="wrap">
+  <div class="congrats" id="congrats">
+    <div class="congrats-title">You did it.</div>
+    <p>In 7 days you went from idea to published creator. That's not nothing — that's everything. Now keep going.</p>
+    <p style="margin-top:8px;font-size:12px;opacity:.6;">— Dee Dee Paradis</p>
+  </div>
+  <p class="footer">Confident Creator Circle &nbsp;|&nbsp; deedeeparadis</p>
+</div>
+
+<script>
+const DAYS_DATA = [
+  {day:1, title:"Your why, mindset & niche", action:"Write down your top 3 reasons for starting. Define your niche in one sentence: I help [who] do [what] so they can [outcome]. Brainstorm 5 channel name ideas and run them through the availability checklist."},
+  {day:2, title:"Account, banner & description", action:"Create your YouTube account and channel. Design and upload your channel banner in Canva using your brand colors. Upload your profile photo. Write and publish your channel description."},
+  {day:3, title:"Ideas & scripting", action:"Brainstorm 10 video ideas for your niche. Research them using TubeBuddy or VidIQ. Choose the one that excites you most and write a full outline or script — aim for 300-500 words."},
+  {day:4, title:"Filming & equipment", action:"Gather your equipment — phone, mic if you have one, lighting, and tripod. Set up your filming space. Do a 2-minute test video to check your audio, lighting, and framing. Then film your real video — at least 2 takes."},
+  {day:5, title:"Editing your video", action:"Edit your Day 4 footage. Cut mistakes, trim long pauses, add your intro. Aim for a final video between 5-15 minutes. Export at 1080p minimum and save."},
+  {day:6, title:"Titles & thumbnails", action:"Write 3 possible titles for your video. Pick the clearest, most specific one. Create your thumbnail in Canva using your brand colors. Test it at thumbnail size before saving."},
+  {day:7, title:"Upload, optimize & celebrate!", action:"Upload your video in YouTube Studio. Add your title, description, tags, and thumbnail. Add end screens and cards. Set to Public and hit publish. Share it everywhere. You earned this."}
+];
+
+const KEY = "yt7day_tracker_v2";
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch{return{};}}
+function persist(data){try{localStorage.setItem(KEY,JSON.stringify(data));}catch{}}
+let state = load();
+
+function getS(day){ return state[day]||{complete:false,win:"",hard:"",conf:null,notes:""}; }
+function setS(day,u){ state[day]={...getS(day),...u}; persist(state); }
+
+function calcStats(){
+  let done=0,confSum=0,confCount=0,wins=0;
+  DAYS_DATA.forEach(d=>{
+    const s=getS(d.day);
+    if(s.complete) done++;
+    if(s.conf){confSum+=s.conf;confCount++;}
+    if(s.win&&s.win.trim()) wins++;
+  });
+  return{done, avg:confCount?(confSum/confCount).toFixed(1):null, wins};
+}
+
+function updateHeader(){
+  const st=calcStats();
+  const segs=document.querySelectorAll(".seg");
+  segs.forEach((seg,i)=>{
+    seg.className="seg";
+    if(getS(i+1).complete) seg.classList.add("done");
+    else if(i===st.done) seg.classList.add("active");
+  });
+  document.getElementById("days-count").textContent=st.done+" of 7 days complete";
+  document.getElementById("stat-done").textContent=st.done;
+  document.getElementById("stat-conf").textContent=st.avg!==null?st.avg+"★":"--";
+  document.getElementById("stat-wins").textContent=st.wins;
+  const cg=document.getElementById("congrats");
+  if(st.done===7) cg.classList.add("show"); else cg.classList.remove("show");
+}
+
+function renderDays(){
+  const list=document.getElementById("days-list");
+  list.innerHTML="";
+  const bar=document.getElementById("seg-bar");
+  bar.innerHTML="";
+  DAYS_DATA.forEach(()=>{ const s=document.createElement("div"); s.className="seg"; bar.appendChild(s); });
+
+  DAYS_DATA.forEach(d=>{
+    const s=getS(d.day);
+    const card=document.createElement("div");
+    card.className="day-card"+(s.complete?" complete":"");
+
+    const confBtns=[1,2,3,4,5].map(n=>`<button class="conf-btn${s.conf===n?" sel":""}" onclick="setConf(${d.day},${n})">${n} ${"★".repeat(n)}</button>`).join("");
+
+    card.innerHTML=`
+      <div class="day-hdr" onclick="toggle(${d.day})">
+        <div class="day-circle">${s.complete?"✓":d.day}</div>
+        <div class="day-hdr-info">
+          <div class="day-tag">DAY ${d.day}</div>
+          <div class="day-name">${d.title}</div>
+        </div>
+        <span class="chev" id="chev-${d.day}">▼</span>
+      </div>
+      <div class="day-body" id="body-${d.day}">
+        <div class="divider"></div>
+        <div class="action-box">
+          <div class="action-lbl">TODAY'S ACTION</div>
+          <div class="action-text">${d.action}</div>
+        </div>
+        <div class="fields-row">
+          <div><div class="field-lbl">One win from today</div><textarea id="win-${d.day}" placeholder="Something you're proud of, no matter how small...">${s.win||""}</textarea></div>
+          <div><div class="field-lbl">One thing that felt hard</div><textarea id="hard-${d.day}" placeholder="It's okay — naming it makes it smaller...">${s.hard||""}</textarea></div>
+        </div>
+        <div class="conf-lbl">Confidence today (1 = rough, 5 = crushing it)</div>
+        <div class="conf-btns" id="conf-${d.day}">${confBtns}</div>
+        <div class="field-lbl">Notes (optional)</div>
+        <textarea id="notes-${d.day}" placeholder="Anything else you want to remember about today...">${s.notes||""}</textarea>
+        <button class="save-btn" onclick="saveDay(${d.day})">Save Day ${d.day}</button>
+        <div class="save-msg" id="msg-${d.day}"></div>
+      </div>`;
+
+    list.appendChild(card);
+  });
+  updateHeader();
+}
+
+function toggle(day){
+  const body=document.getElementById("body-"+day);
+  const chev=document.getElementById("chev-"+day);
+  const open=body.classList.toggle("open");
+  chev.classList.toggle("open", open);
+}
+
+function setConf(day,val){
+  setS(day,{conf:val});
+  const btns=document.querySelectorAll(`#conf-${day} .conf-btn`);
+  btns.forEach((b,i)=>b.classList.toggle("sel",i+1===val));
+}
+
+function saveDay(day){
+  const win=document.getElementById("win-"+day).value;
+  const hard=document.getElementById("hard-"+day).value;
+  const notes=document.getElementById("notes-"+day).value;
+  const cur=getS(day);
+  setS(day,{win,hard,notes,conf:cur.conf,complete:true});
+
+  const card=document.querySelectorAll(".day-card")[day-1];
+  card.classList.add("complete");
+  card.querySelector(".day-circle").textContent="✓";
+  card.querySelector(".day-circle").style.cssText="background:var(--teal-dark);border-color:var(--teal-dark);color:#fff;font-size:16px;";
+  card.querySelector(".day-tag").style.color="var(--teal-dark)";
+
+  updateHeader();
+  const msg=document.getElementById("msg-"+day);
+  msg.textContent="Saved!";
+  setTimeout(()=>msg.textContent="",2500);
+}
+
+renderDays();
+</script>
+</body>
+</html>
