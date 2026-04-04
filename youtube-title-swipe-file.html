@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube Title Swipe File — 7-Day YouTube Challenge</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF2DB;
+    --cream2: #F9ECC8;
+    --teal-light: #B9DADF;
+    --coral: #F36868;
+    --coral-light: #F47C7C;
+    --teal: #7DBBC3;
+    --teal-dark: #1E555C;
+    --dark: #2D4950;
+    --navy: #2F3E5C;
+    --blush: #F5C8BF;
+    --off-cream: #E0DBD7;
+    --coral-accent: #F7A49E;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  .page-header {
+    background: var(--teal-dark);
+    color: var(--cream);
+    padding: 3rem 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: rgba(185,218,223,0.1);
+  }
+
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(243,104,104,0.08);
+  }
+
+  .header-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header-tag {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    color: var(--teal-light);
+    margin-bottom: 10px;
+  }
+
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  .header-sub {
+    font-size: 15px;
+    color: var(--teal-light);
+    font-weight: 300;
+    max-width: 520px;
+  }
+
+  /* MAIN CONTENT */
+  .content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* HOW TO USE */
+  .how-to {
+    background: #fff;
+    border-radius: 14px;
+    padding: 1.75rem 2rem;
+    margin-bottom: 2rem;
+    border: 1.5px solid var(--off-cream);
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    color: var(--teal);
+    margin-bottom: 10px;
+  }
+
+  .how-to h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: var(--teal-dark);
+  }
+
+  .how-to ol {
+    padding-left: 1.25rem;
+    margin-bottom: 0;
+  }
+
+  .how-to li {
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: var(--dark);
+  }
+
+  /* RULES BOX */
+  .rules-box {
+    background: var(--teal-dark);
+    color: var(--cream);
+    border-radius: 14px;
+    padding: 1.75rem 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .rules-box .section-label {
+    color: var(--teal-light);
+  }
+
+  .rules-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+    color: var(--cream);
+  }
+
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+  }
+
+  .rule-item {
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: .875rem 1rem;
+  }
+
+  .rule-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--teal-light);
+    margin-bottom: 4px;
+  }
+
+  .rule-desc {
+    font-size: 12px;
+    color: rgba(250,242,219,0.7);
+    line-height: 1.5;
+  }
+
+  /* BONUS AI BOX */
+  .bonus-box {
+    background: var(--cream2);
+    border-radius: 14px;
+    padding: 1.75rem 2rem;
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--coral);
+  }
+
+  .bonus-box .section-label { color: var(--coral); }
+
+  .bonus-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--teal-dark);
+    margin-bottom: .75rem;
+  }
+
+  .bonus-box p {
+    font-size: 14px;
+    margin-bottom: 1rem;
+    color: var(--dark);
+  }
+
+  .prompt-box {
+    background: var(--teal-dark);
+    color: var(--cream);
+    border-radius: 10px;
+    padding: 1.125rem 1.25rem;
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+    font-style: italic;
+  }
+
+  .tools-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 1.25rem;
+  }
+
+  .tools-table th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: .08em;
+    color: var(--teal-dark);
+    padding: 6px 12px;
+    border-bottom: 1.5px solid var(--off-cream);
+  }
+
+  .tools-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--off-cream);
+    vertical-align: top;
+  }
+
+  .tools-table tr:last-child td { border-bottom: none; }
+
+  .tool-name {
+    font-weight: 500;
+    color: var(--teal-dark);
+  }
+
+  .followup-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .followup-list li {
+    font-size: 13px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(45,73,80,0.1);
+    color: var(--dark);
+  }
+
+  .followup-list li:last-child { border-bottom: none; }
+
+  .followup-label {
+    font-weight: 500;
+    color: var(--teal-dark);
+  }
+
+  /* NICHE SECTIONS */
+  .niche-section {
+    background: #fff;
+    border-radius: 14px;
+    margin-bottom: 1.5rem;
+    border: 1.5px solid var(--off-cream);
+    overflow: hidden;
+  }
+
+  .niche-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 1.25rem 1.5rem;
+    background: var(--cream);
+    border-bottom: 1.5px solid var(--off-cream);
+  }
+
+  .niche-emoji {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .niche-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--teal-dark);
+  }
+
+  .niche-count {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    color: var(--teal);
+    background: var(--teal-light);
+    padding: 3px 10px;
+    border-radius: 99px;
+    opacity: .8;
+  }
+
+  .templates-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .templates-table thead th {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    color: var(--teal);
+    text-align: left;
+    padding: 10px 1.5rem;
+    border-bottom: 1px solid var(--off-cream);
+    background: #fafafa;
+  }
+
+  .templates-table tbody tr {
+    border-bottom: 1px solid var(--off-cream);
+    transition: background .15s;
+  }
+
+  .templates-table tbody tr:last-child { border-bottom: none; }
+  .templates-table tbody tr:hover { background: var(--cream); }
+
+  .templates-table td {
+    padding: 12px 1.5rem;
+    vertical-align: top;
+  }
+
+  .t-num {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--teal);
+    width: 32px;
+    padding-right: 0;
+  }
+
+  .t-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark);
+    line-height: 1.4;
+  }
+
+  .t-formula {
+    font-size: 12px;
+    color: var(--dark);
+    opacity: .6;
+    font-style: italic;
+    width: 38%;
+  }
+
+  /* UNIVERSAL FORMULAS */
+  .universal-box {
+    background: var(--coral);
+    border-radius: 14px;
+    padding: 1.75rem 2rem;
+    margin-bottom: 2rem;
+    color: #fff;
+  }
+
+  .universal-box .section-label { color: rgba(255,255,255,0.7); }
+
+  .universal-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+    color: #fff;
+  }
+
+  .formula-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .formula-list li {
+    background: rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: #fff;
+    line-height: 1.4;
+  }
+
+  /* QUOTE */
+  .quote-box {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    border-top: 1.5px solid var(--off-cream);
+    margin-top: 1rem;
+  }
+
+  .quote-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--teal-dark);
+    line-height: 1.6;
+    max-width: 560px;
+    margin: 0 auto 10px;
+  }
+
+  .quote-attr {
+    font-size: 12px;
+    color: var(--teal);
+    font-weight: 500;
+    letter-spacing: .06em;
+  }
+
+  /* FOOTER */
+  .page-footer {
+    background: var(--teal-dark);
+    color: var(--teal-light);
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 12px;
+    letter-spacing: .06em;
+  }
+
+  @media(max-width: 600px) {
+    .header-title { font-size: 26px; }
+    .t-formula { display: none; }
+    .rules-grid { grid-template-columns: 1fr; }
+    .templates-table td { padding: 10px 1rem; }
+    .niche-header { padding: 1rem; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page-header { background: var(--teal-dark) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-inner">
+    <div class="header-tag">7-DAY YOUTUBE CHALLENGE  •  DAY 6 RESOURCE</div>
+    <h1 class="header-title">YouTube Title Swipe File</h1>
+    <p class="header-sub">50 done-for-you title templates across 8 niches. Replace the brackets with your topic, audience, and story.</p>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- HOW TO USE -->
+  <div class="how-to">
+    <div class="section-label">HOW TO USE THIS SWIPE FILE</div>
+    <h2>Five steps to your next great title</h2>
+    <ol>
+      <li>Find your niche section below</li>
+      <li>Choose a title template that fits your video topic</li>
+      <li>Replace the brackets with your specific content</li>
+      <li>Keep it under 60 characters — check the length before publishing</li>
+      <li>Write 3 versions and pick the clearest, most specific one</li>
+    </ol>
+    <p style="margin-top:1rem;font-size:13px;color:var(--teal-dark);font-style:italic;">The formula column shows the structure behind each title so you can create unlimited variations of your own.</p>
+  </div>
+
+  <!-- THE 6 RULES -->
+  <div class="rules-box">
+    <div class="section-label">THE 6 RULES</div>
+    <h2>What makes a great YouTube title</h2>
+    <div class="rules-grid">
+      <div class="rule-item">
+        <div class="rule-title">Under 60 characters</div>
+        <div class="rule-desc">Longer titles get cut off on mobile and in search results</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-title">Lead with the benefit</div>
+        <div class="rule-desc">Put the most compelling part first — viewers read left to right</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-title">Be specific, not vague</div>
+        <div class="rule-desc">"How to lose 10lbs" beats "How to lose weight" every time</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-title">Use a number when possible</div>
+        <div class="rule-desc">5 tips, 3 mistakes, 7 steps — numbers create expectation and trust</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-title">Include your keyword</div>
+        <div class="rule-desc">Use the words your viewer actually types into YouTube search</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-title">Make them feel it's for them</div>
+        <div class="rule-desc">Name your audience directly — "for women over 40" filters in the right viewer</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BONUS AI TIP -->
+  <div class="bonus-box">
+    <div class="section-label">BONUS TIP</div>
+    <h2>Take these further with AI</h2>
+    <p>Every title template in this swipe file can be pasted into any AI tool to instantly generate dozens of variations tailored to your exact niche, audience, and voice. Think of the 50 titles here as the seed. AI is the multiplier.</p>
+    <p style="font-size:13px;font-weight:500;color:var(--teal-dark);margin-bottom:8px;">Copy and paste this prompt into any AI tool:</p>
+    <div class="prompt-box">
+      I make YouTube videos for [your audience] about [your niche].<br>
+      Here is a title template I want to use: [paste any title template]<br>
+      My video topic is: [describe your specific video in one sentence].<br>
+      Give me 10 variations of this title tailored to my niche. Keep each one under 60 characters. Make them specific, search-friendly, and written for someone over 40.
+    </div>
+
+    <p style="font-size:13px;font-weight:500;color:var(--teal-dark);margin-bottom:8px;">Free AI tools you can use right now:</p>
+    <table class="tools-table">
+      <thead>
+        <tr><th>Tool</th><th>Where to find it</th><th>Best for</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="tool-name">ChatGPT</td><td>chatgpt.com</td><td>Fastest, most popular, great for brainstorming</td></tr>
+        <tr><td class="tool-name">Claude</td><td>claude.ai</td><td>Nuanced, warm tone — great for creator content</td></tr>
+        <tr><td class="tool-name">Gemini</td><td>gemini.google.com</td><td>Free with Google account, easy to start</td></tr>
+        <tr><td class="tool-name">Copilot</td><td>copilot.microsoft.com</td><td>Free with Microsoft account, good for beginners</td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:13px;font-weight:500;color:var(--teal-dark);margin-bottom:8px;">Once you have variations, try these follow-up prompts:</p>
+    <ul class="followup-list">
+      <li><span class="followup-label">More beginner-friendly:</span> "Now make them more specific to someone who has never started before."</li>
+      <li><span class="followup-label">Strategic feedback:</span> "Which of these would perform best in YouTube search and why?"</li>
+      <li><span class="followup-label">A/B test pairs:</span> "Turn the top 3 into A/B test pairs — two versions of each."</li>
+      <li><span class="followup-label">Speak to skeptics:</span> "Rewrite these for someone who is skeptical that YouTube can work for them."</li>
+      <li><span class="followup-label">Full upload package:</span> "Now write a YouTube description for the title we choose, with keywords in the first two lines."</li>
+    </ul>
+  </div>
+
+  <!-- NICHE: HEALTH & FITNESS -->
+  <div class="niche-section">
+    <div class="niche-header">
+      <span class="niche-emoji">💪</span>
+      <span class="niche-title">Health &amp; Fitness</span>
+      <span class="niche-count">7 templates</span>
+    </div>
+    <table class="templates-table">
+      <thead><tr><th>#</th><th>Title template</th><th>Formula</th></tr></thead>
+      <tbody>
+        <tr><td class="t-num">1</td><td class="t-title">How to Lose Weight After 40 Without Starving Yourself</td><td class="t-formula">How to [result] without [sacrifice]</td></tr>
+        <tr><td class="t-num">2</td><td class="t-title">5 Morning Habits That Changed My Body After 50</td><td class="t-formula">[Number] [habits] that [transformation]</td></tr>
+        <tr><td class="t-num">3</td><td class="t-title">The Truth About Losing Belly Fat After Menopause</td><td class="t-formula">The truth about [topic] — myth-busting angle</td></tr>
+        <tr><td class="t-num">4</td><td class="t-title">I Walked 10,000 Steps a Day for 30 Days — Here's What Happened</td><td class="t-formula">I did [thing] for [time] — here's what happened</td></tr>
+        <tr><td class="t-num">5</td><td class="t-title">Why Everything You've Been Told About Dieting After 40 Is Wrong</td><td class="t-formula">Why everything you've been told about [topic] is wrong</td></tr>
+        <tr><td class="t-num">6</td><td class="t-title">Strength Training for Women Over 50 — The Beginner's Guide</td><td class="t-formula">[Topic] for [audience] — the beginner's guide</td></tr>
+        <tr><td class="t-num">7</td><td class="t-title">3 Mistakes I Made When I First Started Working Out at 45</td><td class="t-formula">[Number] mistakes I made when [situation]</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- NICHE: PERSONAL FINANCE -->
+  <div class="niche-section">
+    <div class="niche-header">
+      <span class="niche-emoji">💰</span>
+      <span class="niche-title">Personal Finance &amp; Side Hustle</span>
+      <span class="niche-count">7 templates</span>
+    </div>
+    <table class="templates-table">
+      <thead><tr><th>#</th><th>Title template</th><th>Formula</th></tr></thead>
+      <tbody>
+        <tr><td class="t-num">1</td><td class="t-title">How I Made My First $1,000 Online After 50</td><td class="t-formula">How I [achievement] after [life stage]</td></tr>
+        <tr><td class="t-num">2</td><td class="t-title">5 Side Hustles That Actually Work for Women Over 40</td><td class="t-formula">[Number] [things] that actually work for [audience]</td></tr>
+        <tr><td class="t-num">3</td><td class="t-title">Stop Making These Money Mistakes in Your 40s and 50s</td><td class="t-formula">Stop making these [topic] mistakes in your [life stage]</td></tr>
+        <tr><td class="t-num">4</td><td class="t-title">How to Start a Business With No Money and No Experience</td><td class="t-formula">How to [do thing] with no [barrier 1] and no [barrier 2]</td></tr>
+        <tr><td class="t-num">5</td><td class="t-title">What I Wish I Knew Before Starting My Online Business at 52</td><td class="t-formula">What I wish I knew before [doing thing] at [age]</td></tr>
+        <tr><td class="t-num">6</td><td class="t-title">From Broke to $5K a Month — My Honest Story</td><td class="t-formula">From [starting point] to [result] — my honest story</td></tr>
+        <tr><td class="t-num">7</td><td class="t-title">The Side Hustle That Changed My Life After 40</td><td class="t-formula">The [thing] that changed my life after [milestone]</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- NICHE: FAITH -->
+  <div class="niche-section">
+    <div class="niche-header">
+      <span class="niche-emoji">🙏</span>
+      <span class="niche-title">Faith &amp; Spirituality</span>
+      <span class="niche-count">7 templates</span>
+    </div>
+    <table class="templates-table">
+      <thead><tr><th>#</th><th>Title template</th><th>Formula</th></tr></thead>
+      <tbody>
+        <tr><td class="t-num">1</td><td class="t-title">How My Faith Helped Me Start Over After 50</td><td class="t-formula">How [belief] helped me [do hard thing]</td></tr>
+        <tr><td class="t-num">2</td><td class="t-title">5 Morning Prayer Habits That Changed Everything for Me</td><td class="t-formula">[Number] [practices] that changed everything for me</td></tr>
+        <tr><td class="t-num">3</td><td class="t-title">What the Bible Really Says About Fear and Starting Over</td><td class="t-formula">What [source] really says about [topic]</td></tr>
+        <tr><td class="t-num">4</td><td class="t-title">I Spent 30 Days Reading My Bible Every Morning — Here's What I Learned</td><td class="t-formula">I did [practice] every [timeframe] — here's what I learned</td></tr>
+        <tr><td class="t-num">5</td><td class="t-title">Finding Your Purpose After 40 — A Faith-Based Guide</td><td class="t-formula">Finding your [thing] after [milestone] — a [angle] guide</td></tr>
+        <tr><td class="t-num">6</td><td class="t-title">When God Says Go — How I Finally Said Yes to My Purpose</td><td class="t-formula">When [belief] says [action] — how I [followed through]</td></tr>
+        <tr><td class="t-num">7</td><td class="t-title">The Devotional Habit That Transformed My Mental Health</td><td class="t-formula">The [habit] that transformed my [area of life]</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- NICHE: DIY & HOME -->
+  <div class="niche-section">
+    <div class="niche-header">
+      <span class="niche-emoji">🏠</span>
+      <span class="niche-title">DIY &amp; Home</span>
+      <span class="niche-count">7 templates</span>
+    </div>
+    <table class="templates-table">
+      <thead><tr><th>#</th><th>Title template</th><th>Formula</th></tr></thead>
+      <tbody>
+        <tr><td class="t-num">1</td><td class="t-title">How I Transformed My Living Room for Under $200</td><td class="t-formula">How I transformed [space] for under [$amount]</td></tr>
+        <tr><td class="t-num">2</td><td class="t-title">5 Home Decor Mistakes Everyone Makes (And How to Fix Them)</td><td class="t-formula">[Number] mistakes everyone makes (and how to fix them)</td></tr>
+        <tr><td class="t-num">3</td><td class="t-title">The Thrift Store Flip That Made Me $300 in One Weekend</td><td class="t-formula">The [method] that made me [$] in [timeframe]</td></tr>
+        <tr><td class="t-num">4</td><td class="t-title">How to Make Your Home Look Expensive on a Tight Budget</td><td class="t-formula">How to make [thing] look [adjective] on a tight budget</td></tr>
+        <tr><td class="t-num">5</td><td class="t-title">I Redecorated My Entire Bedroom for $100 — Here's How</td><td class="t-formula">I [did thing] for $[amount] — here's how</td></tr>
+        <tr><td class="t-num">6</td><td class="t-title">DIY Home Projects Every Beginner Can Actually Do</td><td class="t-formula">DIY [topic] every beginner can actually do</td></tr>
+        <tr><td class="t-num">7</td><td class="t-title">Before and After: My $500 Kitchen Makeover That Looks Like $5,000</td><td class="t-formula">Before and after: my $[amount] [project] that looks like $[bigger amount]</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- NICHE: PARENTING -->
+  <div class="niche-section">
+    <div class="niche-header">
+      <span class="niche-emoji">👶</span>
+      <span class="niche-title">Parenting</span>
+      <span class="niche-count">7 templates</span>
+    </div>
+    <table class="templates-table">
+      <thead><tr><th>#</th><th>Title template</th><th>Formula</th></tr></thead>
+      <tbody>
+        <tr><td class="t-num">1</td><td class="t-title">What Nobody Tells You About Parenting Teenagers</td><td class="t-formula">What nobody tells you about [topic]</td></tr>
+        <tr><td class="t-num">2</td><td class="t-title">5 Things I Stopped Doing as a Mom That Changed Everything</td><td class="t-formula">[Number] things I stopped doing as [role] that changed everything</td></tr>
+        <tr><td class="t-num">3</td><td class="t-title">How to Raise Confident Kids in a World Full of Comparison</td><td class="t-formula">How to [raise/build] [outcome] in a world full of [problem]</td></tr>
+        <tr><td class="t-num">4</td><td class="t-title">The Parenting Mistake I Made That I Wish I Could Take Back</td><td class="t-formula">The [topic] mistake I made that I wish I could take back</td></tr>
+        <tr><td class="t-num">5</td><td class="t-title">Empty Nest: How I Found Myself Again After My Kids Left Home</td><td class="t-formula">[Life stage]: how I [positive outcome] after [transition]</td></tr>
+        <tr><td class="t-num">6</td><td class="t-title">How to Talk to Your Kids About Hard Topics Without Shutting Down</td><td class="t-formula">How to talk to your kids about [topic] without [negative outcome]</td></tr>
+        <tr><td class="t-num">7</td><td class="t-title">3 Things I Do Every Day to Stay Connected to My Adult Children</td><td class="t-formula">[Number] things I do every day to [maintain relationship]</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- NICHE: MINDSET -->
+  <div class="niche-section">
+    <div class="niche-header">
+      <span class="niche-emoji">✨</span>
+      <span class="niche-title">Mindset &amp; Personal Growth</span>
+      <span class="niche-count">7 templates</span>
+    </div>
+    <table class="templates-table">
+      <thead><tr><th>#</th><th>Title template</th><th>Formula</th></tr></thead>
+      <tbody>
+        <tr><td class="t-num">1</td><td class="t-title">How I Finally Stopped Letting Fear Run My Life at 47</td><td class="t-formula">How I finally stopped letting [fear/habit] run my life at [age]</td></tr>
+        <tr><td class="t-num">2</td><td class="t-title">5 Mindset Shifts That Changed Everything for Me After 40</td><td class="t-formula">[Number] mindset shifts that changed everything after [milestone]</td></tr>
+        <tr><td class="t-num">3</td><td class="t-title">You Are Not Too Old — Here's the Proof</td><td class="t-formula">You are not [limiting belief] — here's the proof</td></tr>
+        <tr><td class="t-num">4</td><td class="t-title">The Morning Routine That Made Me a Different Person</td><td class="t-formula">The [habit/routine] that made me a different person</td></tr>
+        <tr><td class="t-num">5</td><td class="t-title">How to Stop Overthinking and Start Actually Living Your Life</td><td class="t-formula">How to stop [negative habit] and start [positive replacement]</td></tr>
+        <tr><td class="t-num">6</td><td class="t-title">What Starting Over at 50 Taught Me About Myself</td><td class="t-formula">What [experience] taught me about myself</td></tr>
+        <tr><td class="t-num">7</td><td class="t-title">I Said Yes to One Scary Thing Every Day for 30 Days</td><td class="t-formula">I [did brave thing] every day for [time] — what happened</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- NICHE: BEAUTY & STYLE -->
+  <div class="niche-section">
+    <div class="niche-header">
+      <span class="niche-emoji">💄</span>
+      <span class="niche-title">Beauty &amp; Style</span>
+      <span class="niche-count">7 templates</span>
+    </div>
+    <table class="templates-table">
+      <thead><tr><th>#</th><th>Title template</th><th>Formula</th></tr></thead>
+      <tbody>
+        <tr><td class="t-num">1</td><td class="t-title">How to Look Put Together Every Day Without Spending Hours Getting Ready</td><td class="t-formula">How to [look/feel] [adjective] without [effort/cost]</td></tr>
+        <tr><td class="t-num">2</td><td class="t-title">5 Makeup Mistakes That Are Making You Look Older</td><td class="t-formula">[Number] [topic] mistakes that are [negative outcome]</td></tr>
+        <tr><td class="t-num">3</td><td class="t-title">The Skincare Routine That Actually Worked for My 50-Year-Old Skin</td><td class="t-formula">The [routine] that actually worked for my [specific] skin</td></tr>
+        <tr><td class="t-num">4</td><td class="t-title">How to Dress for Your Body After 40 — No More Hiding</td><td class="t-formula">How to [do thing] after [milestone] — no more [hiding]</td></tr>
+        <tr><td class="t-num">5</td><td class="t-title">I Tried a Capsule Wardrobe for 30 Days — Honest Review</td><td class="t-formula">I tried [thing] for [time] — honest review</td></tr>
+        <tr><td class="t-num">6</td><td class="t-title">The One Product I Use Every Single Day and Will Never Stop</td><td class="t-formula">The one [product] I use every day and why I'll never stop</td></tr>
+        <tr><td class="t-num">7</td><td class="t-title">Gray Hair and Confidence — Why I Finally Stopped Dyeing My Hair</td><td class="t-formula">[Topic] and [value] — why I finally [decision]</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- NICHE: EDUCATION -->
+  <div class="niche-section">
+    <div class="niche-header">
+      <span class="niche-emoji">🎓</span>
+      <span class="niche-title">Education &amp; Learning</span>
+      <span class="niche-count">7 templates</span>
+    </div>
+    <table class="templates-table">
+      <thead><tr><th>#</th><th>Title template</th><th>Formula</th></tr></thead>
+      <tbody>
+        <tr><td class="t-num">1</td><td class="t-title">How I Learned [Skill] in 30 Days Starting From Zero</td><td class="t-formula">How I learned [skill] in [time] starting from zero</td></tr>
+        <tr><td class="t-num">2</td><td class="t-title">5 Free Resources I Used to Teach Myself [Topic]</td><td class="t-formula">[Number] free resources I used to teach myself [topic]</td></tr>
+        <tr><td class="t-num">3</td><td class="t-title">The Fastest Way to Learn [Skill] When You Have No Time</td><td class="t-formula">The fastest way to learn [skill] when you have no [resource]</td></tr>
+        <tr><td class="t-num">4</td><td class="t-title">What I Wish I Had Known Before Going Back to School at 45</td><td class="t-formula">What I wish I had known before [doing thing] at [age]</td></tr>
+        <tr><td class="t-num">5</td><td class="t-title">How to Learn Anything Online — A Beginner's Honest Guide</td><td class="t-formula">How to [do thing] — a beginner's honest guide</td></tr>
+        <tr><td class="t-num">6</td><td class="t-title">I Completed an Online Course Every Month for a Year — Here's What I Learned</td><td class="t-formula">I [did thing] every [timeframe] for [period] — here's what I learned</td></tr>
+        <tr><td class="t-num">7</td><td class="t-title">The Learning Method That Finally Made Things Stick for Me</td><td class="t-formula">The [method] that finally made [thing] stick for me</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- UNIVERSAL FORMULAS -->
+  <div class="universal-box">
+    <div class="section-label">BONUS</div>
+    <h2>6 universal title formulas</h2>
+    <p style="font-size:13px;color:rgba(255,255,255,0.8);margin-bottom:1rem;">Use these with any niche, any topic, any time.</p>
+    <ul class="formula-list">
+      <li>How to [achieve result] without [common sacrifice]</li>
+      <li>[Number] [things] that [audience] over 40 need to know about [topic]</li>
+      <li>I tried [thing] for [timeframe] — here is what happened</li>
+      <li>The [topic] mistake that [negative outcome] (and how to fix it)</li>
+      <li>What nobody tells you about [topic] when you are over 40</li>
+      <li>Stop [doing thing] if you want [desired outcome]</li>
+    </ul>
+  </div>
+
+  <!-- QUOTE -->
+  <div class="quote-box">
+    <p class="quote-text">"Your title gets them to click. Your content keeps them watching. Both matter. Master them one at a time."</p>
+    <p class="quote-attr">— Dee Dee Paradis</p>
+  </div>
+
+</div>
+
+<div class="page-footer">
+  Dee Dee Paradis &nbsp;•&nbsp; 7-Day YouTube Challenge &nbsp;•&nbsp; Use these as starting points — always make them your own
+</div>
+
+</body>
+</html>
