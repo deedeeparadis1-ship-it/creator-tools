@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube Channel Diagnostic - Dee Dee Paradis</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#2f3e5c;--navy-dark:#1e2d45;--navy-light:#3d5070;
+  --pink:#f5c8bf;--pink-text:#7a3028;--pink-dark:#e8a89d;--pink-light:#fdf0ee;
+  --off-white:#fdf8f7;--text:#1a1a1a;--muted:#5a5a5a;--border:#e8ddd9;
+  --r:10px;--rl:16px;
+}
+body{font-family:"DM Sans",sans-serif;background:var(--off-white);color:var(--text);min-height:100vh;}
+.topbar{background:var(--navy);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;}
+.brand{font-family:"Bebas Neue",sans-serif;color:white;font-size:22px;letter-spacing:.08em;}
+.steplbl{font-size:12px;color:rgba(255,255,255,.55);}
+.progwrap{height:4px;background:var(--navy-light);}
+.progfill{height:4px;background:var(--pink-dark);transition:width .5s ease;}
+.main{max-width:660px;margin:0 auto;padding:2.5rem 1.5rem 5rem;}
+.sec{display:none;}.sec.active{display:block;}
+.eyebrow{display:inline-block;font-family:"Bebas Neue",sans-serif;font-size:13px;letter-spacing:.2em;color:var(--pink-text);margin-bottom:1.25rem;border-top:2px solid var(--pink-dark);border-bottom:2px solid var(--pink-dark);padding:4px 16px;}
+.headline{font-family:"Bebas Neue",sans-serif;font-size:52px;line-height:1.05;color:var(--navy);margin-bottom:.5rem;letter-spacing:.02em;}
+.headline span{color:var(--pink-text);}
+.subhead{font-size:18px;color:var(--muted);line-height:1.65;margin-bottom:1.5rem;max-width:520px;margin-left:auto;margin-right:auto;}
+.proofrow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:1.5rem 0;}
+.proofcard{background:var(--navy);border-radius:var(--r);padding:1.25rem;}
+.proofcard .num{font-family:"Bebas Neue",sans-serif;font-size:38px;color:var(--pink);line-height:1;letter-spacing:.03em;}
+.proofcard .lbl{font-size:12px;color:rgba(255,255,255,.65);line-height:1.5;margin-top:4px;}
+.bodytxt{font-size:15px;color:var(--muted);line-height:1.8;text-align:left;margin-bottom:1.5rem;}
+.promise{background:var(--pink-light);border-left:4px solid var(--pink-dark);padding:1rem 1.25rem;border-radius:0 var(--r) var(--r) 0;font-size:15px;color:var(--pink-text);line-height:1.7;margin-bottom:1.25rem;font-weight:500;}
+.honorbadge{background:var(--navy);border-radius:var(--r);padding:1.25rem 1.5rem;margin-bottom:2rem;}
+.honorbadge .btitle{font-family:"Bebas Neue",sans-serif;font-size:18px;color:var(--pink);letter-spacing:.05em;margin-bottom:.4rem;}
+.honorbadge p{font-size:14px;color:rgba(255,255,255,.75);margin:0;line-height:1.65;}
+.sectag{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem;display:block;}
+h2{font-family:"Playfair Display",serif;font-size:26px;line-height:1.3;color:var(--navy);margin-bottom:.75rem;}
+h3{font-size:17px;font-weight:600;color:var(--navy);margin-bottom:.5rem;}
+p{font-size:15px;color:var(--muted);line-height:1.75;margin-bottom:1rem;}
+.qblock{margin-bottom:1.75rem;}
+.qlabel{display:block;font-size:15px;font-weight:600;color:var(--text);margin-bottom:.75rem;line-height:1.5;}
+.opts{display:flex;flex-direction:column;gap:8px;}
+.opt{display:flex;align-items:center;gap:12px;padding:12px 16px;background:white;border:1.5px solid var(--border);border-radius:var(--r);cursor:pointer;font-size:14px;color:var(--text);transition:all .15s;line-height:1.4;}
+.opt:hover{border-color:var(--pink-dark);background:var(--pink-light);}
+.opt.sel{border-color:var(--pink-dark);background:var(--pink-light);color:var(--pink-text);font-weight:500;}
+.opt input{accent-color:var(--pink-text);flex-shrink:0;}
+.howto{background:white;border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:1rem;}
+.howtitle{font-size:11px;font-weight:600;color:var(--navy);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;}
+.howto ol{padding-left:1.25rem;}
+.howto ol li{font-size:13px;color:var(--muted);line-height:1.9;}
+.infobox{background:var(--pink-light);border-left:3px solid var(--pink-dark);padding:.875rem 1rem;border-radius:0 var(--r) var(--r) 0;font-size:13.5px;color:var(--pink-text);line-height:1.65;margin-bottom:1rem;}
+.numinput{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:var(--r);font-size:14px;font-family:"DM Sans",sans-serif;color:var(--text);background:white;}
+.numinput:focus{outline:none;border-color:var(--pink-dark);}
+.screenshot-guide{background:white;border:1.5px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem;}
+.screenshot-guide .sg-title{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:.75rem;}
+.screenshot-guide .sg-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:.75rem;}
+.screenshot-guide .sg-thumb{background:var(--off-white);border:1px solid var(--border);border-radius:6px;padding:.75rem .5rem;text-align:center;}
+.screenshot-guide .sg-thumb .thumb-img{width:100%;height:44px;background:var(--navy-light);border-radius:4px;margin-bottom:6px;}
+.screenshot-guide .sg-thumb p{font-size:11px;color:var(--muted);margin:0;line-height:1.4;}
+.screenshot-guide .sg-note{font-size:12px;color:var(--muted);line-height:1.6;}
+.upzone{border:2px dashed var(--border);border-radius:var(--r);padding:2rem;text-align:center;cursor:pointer;transition:all .15s;background:white;}
+.upzone:hover{border-color:var(--pink-dark);background:var(--pink-light);}
+.upzone p{margin:0;font-size:14px;color:var(--muted);}
+.upzone .sub{font-size:12px;margin-top:4px;}
+.upzone input{display:none;}
+.upicon{width:40px;height:40px;margin:0 auto .75rem;background:var(--pink-light);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.upicon svg{width:20px;height:20px;stroke:var(--pink-text);fill:none;stroke-width:2;}
+.linkbtn{background:none;border:none;color:var(--pink-text);font-size:13px;cursor:pointer;font-family:"DM Sans",sans-serif;font-weight:500;padding:6px 0;text-decoration:underline;display:inline-block;margin-top:6px;}
+.devgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:1rem;}
+.devbtn{padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--r);font-size:13px;cursor:pointer;background:white;color:var(--text);font-family:"DM Sans",sans-serif;transition:all .15s;font-weight:500;}
+.devbtn:hover{border-color:var(--pink-dark);background:var(--pink-light);color:var(--pink-text);}
+.devinstr{display:none;background:var(--pink-light);border-radius:var(--r);padding:1rem 1.25rem;font-size:14px;color:var(--pink-text);line-height:1.7;margin-top:.75rem;}
+.uppreview{width:100%;border-radius:var(--r);border:1.5px solid var(--pink-dark);margin-top:.75rem;display:none;}
+.navrow{display:flex;justify-content:space-between;align-items:center;margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);}
+.navrow.right{justify-content:flex-end;}
+.btnext{background:var(--navy);color:white;border:none;border-radius:var(--r);padding:14px 32px;font-size:15px;font-weight:600;cursor:pointer;font-family:"DM Sans",sans-serif;transition:all .15s;}
+.btnext:hover{background:var(--navy-dark);transform:translateY(-1px);}
+.btnext.pink{background:var(--pink-dark);color:var(--navy-dark);}
+.btnext.pink:hover{background:var(--pink);color:var(--navy-dark);}
+.btnback{background:white;border:1.5px solid var(--border);border-radius:var(--r);padding:14px 24px;font-size:14px;cursor:pointer;color:var(--muted);font-family:"DM Sans",sans-serif;transition:all .15s;}
+.btnback:hover{border-color:var(--navy);color:var(--navy);}
+.loadwrap{text-align:center;padding:4rem 2rem;}
+.spinner{width:44px;height:44px;border:3px solid var(--border);border-top-color:var(--pink-dark);border-radius:50%;animation:spin .85s linear infinite;margin:0 auto 1.5rem;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loadwrap h3{color:var(--navy);margin-bottom:.5rem;font-size:20px;}
+.loadwrap p{color:var(--muted);font-size:14px;}
+.lsteps{list-style:none;margin:1.5rem auto;max-width:320px;text-align:left;}
+.lsteps li{font-size:13px;color:var(--muted);padding:6px 0 6px 24px;position:relative;border-bottom:1px solid var(--border);}
+.lsteps li:last-child{border-bottom:none;}
+.lsteps li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--border);position:absolute;left:0;top:11px;transition:background .3s;}
+.lsteps li.done::before{background:var(--pink-dark);}
+.lsteps li.active::before{background:var(--navy);animation:pulse 1s ease infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.acard{background:white;border:1.5px solid var(--border);border-radius:var(--rl);padding:1.5rem;margin-bottom:1rem;}
+.vidnum{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--pink-text);margin-bottom:.5rem;}
+.asec{margin-bottom:.875rem;}
+.alabel{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.375rem;}
+.alabel.good{color:#2a7a4f;}.alabel.bad{color:#7a3028;}.alabel.fix{color:var(--navy);}
+.atxt{font-size:14px;color:var(--muted);line-height:1.7;}
+.reshdr{background:var(--navy);border-radius:var(--rl);padding:2rem;margin-bottom:1.5rem;}
+.reshdr h1{font-family:"Bebas Neue",sans-serif;font-size:36px;color:white;letter-spacing:.03em;margin-bottom:.5rem;}
+.reshdr p{color:rgba(255,255,255,.65);margin:0;font-size:14px;}
+.rcard{background:white;border:1.5px solid var(--border);border-radius:var(--rl);padding:1.5rem;margin-bottom:1rem;}
+.rcard.primary{border-color:var(--pink-dark);border-width:2px;}
+.rtag{display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;padding:3px 10px;border-radius:20px;margin-bottom:.75rem;}
+.rtag.pt{background:var(--pink-light);color:var(--pink-text);}
+.rtag.st{background:#EEF2F7;color:var(--navy);}
+.rtitle{font-family:"Playfair Display",serif;font-size:19px;color:var(--navy);margin-bottom:.5rem;line-height:1.3;}
+.rbody{font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:1rem;}
+.fixlist{list-style:none;padding:0;border-top:1px solid var(--border);padding-top:.875rem;}
+.fixlist li{font-size:14px;color:var(--text);padding:5px 0 5px 22px;position:relative;line-height:1.55;}
+.fixlist li::before{content:"";width:6px;height:6px;background:var(--pink-dark);border-radius:50%;position:absolute;left:0;top:10px;}
+.auditcta{background:var(--navy);border-radius:var(--rl);padding:2rem;margin-top:1.5rem;text-align:center;}
+.auditcta h3{font-family:"Bebas Neue",sans-serif;font-size:28px;color:white;letter-spacing:.03em;margin-bottom:.75rem;font-weight:400;}
+.auditcta p{color:rgba(255,255,255,.7);font-size:14px;margin-bottom:1.5rem;}
+.auditbtn{background:var(--pink-dark);color:var(--navy-dark);border:none;border-radius:var(--r);padding:15px 36px;font-size:15px;font-weight:600;cursor:pointer;font-family:"DM Sans",sans-serif;transition:all .15s;}
+.auditbtn:hover{background:var(--pink);transform:translateY(-1px);}
+.chatwrap{margin-top:1.5rem;border:1.5px solid var(--border);border-radius:var(--rl);overflow:hidden;background:white;}
+.chathdr{background:var(--navy);padding:.875rem 1.25rem;font-size:14px;font-weight:600;color:white;}
+.chatmsgs{padding:1rem;min-height:140px;max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;}
+.cmsg{font-size:14px;line-height:1.65;padding:10px 14px;border-radius:var(--r);max-width:85%;}
+.cmsg.ai{background:var(--off-white);color:var(--text);align-self:flex-start;border:1px solid var(--border);}
+.cmsg.usr{background:var(--navy);color:white;align-self:flex-end;}
+.chatinrow{display:flex;gap:8px;padding:.875rem;border-top:1px solid var(--border);}
+.chatinrow input{flex:1;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--r);font-size:14px;font-family:"DM Sans",sans-serif;color:var(--text);background:var(--off-white);}
+.chatinrow input:focus{outline:none;border-color:var(--pink-dark);}
+.chatsend{background:var(--navy);color:white;border:none;border-radius:var(--r);padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;font-family:"DM Sans",sans-serif;}
+.saverow{text-align:center;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);}
+.savebtn{background:white;border:1.5px solid var(--border);border-radius:var(--r);padding:12px 24px;font-size:14px;font-weight:500;cursor:pointer;color:var(--muted);font-family:"DM Sans",sans-serif;transition:all .15s;}
+.savebtn:hover{border-color:var(--navy);color:var(--navy);}
+.savenote{font-size:12px;color:var(--muted);margin-top:.5rem;}
+@media(max-width:500px){.headline{font-size:38px}.proofrow{grid-template-columns:1fr}.devgrid{grid-template-columns:1fr}.screenshot-guide .sg-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Dee Dee Paradis</span>
+  <span class="steplbl" id="steplbl">Channel Diagnostic</span>
+</div>
+<div class="progwrap"><div class="progfill" id="prog" style="width:6%"></div></div>
+<div class="main">
+
+<div class="sec active" id="s-intro">
+  <div style="text-align:center;padding:1rem 0;">
+    <div class="eyebrow">Free YouTube Channel Diagnostic</div>
+    <div class="headline">Stop Guessing.<br>Start <span>Growing.</span></div>
+    <p class="subhead">You are posting. You are trying. But your videos are not getting the views or subscribers you deserve. Let us find out exactly why.</p>
+    <div class="proofrow">
+      <div class="proofcard"><div class="num">$50K+</div><div class="lbl">Earned from YouTube AdSense alone in 2 years</div></div>
+      <div class="proofcard"><div class="num">100+</div><div class="lbl">YouTube channels personally reviewed and diagnosed</div></div>
+    </div>
+    <p class="bodytxt">My name is Dee Dee Paradis. I have been where you are. I know what it feels like to post video after video and wonder why nothing is moving. But I figured it out, and in the process I started seeing the same patterns show up on stuck channels over and over again.<br><br>This tool is built on those patterns. You are going to plug in your real data, share your actual videos, and get specific feedback on what is holding your channel back. Not theory. Not generic tips. A real answer.</p>
+    <div class="promise">By the end of this you will know exactly what is wrong and what to fix first.</div>
+    <div class="honorbadge">
+      <div class="btitle">A heads up before you start.</div>
+      <p>I do not do feel good feedback. What you are about to get is the same honest assessment I give in a paid audit. If something is not working I am going to tell you exactly what it is and what to do about it. You deserve a real answer, not a pat on the back.</p>
+    </div>
+    <button class="btnext pink" style="width:100%;font-size:17px;padding:18px;" onclick="go('s-basics',1)">I am Ready. Let us Find Out.</button>
+    <p style="font-size:12px;color:var(--muted);margin-top:.75rem;">Takes about 5 minutes. No fluff.</p>
+  </div>
+</div>
+
+<div class="sec" id="s-basics">
+  <span class="sectag">Section 1 of 4 - About your channel</span>
+  <h2>Before we dig in, I need a little context.</h2>
+  <p>There is no right or wrong here. I just need the real picture so I can give you a real answer.</p>
+  <div class="qblock">
+    <span class="qlabel">How long has your channel been active?</span>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="age" value="new" onclick="pick(this)"> Less than 6 months</label>
+      <label class="opt"><input type="radio" name="age" value="mid" onclick="pick(this)"> 6 months to 1 year</label>
+      <label class="opt"><input type="radio" name="age" value="older" onclick="pick(this)"> 1 to 2 years</label>
+      <label class="opt"><input type="radio" name="age" value="veteran" onclick="pick(this)"> More than 2 years</label>
+    </div>
+  </div>
+  <div class="qblock">
+    <span class="qlabel">How many videos have you uploaded total?</span>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="videos" value="tiny" onclick="pick(this)"> 1 to 10</label>
+      <label class="opt"><input type="radio" name="videos" value="small" onclick="pick(this)"> 11 to 30</label>
+      <label class="opt"><input type="radio" name="videos" value="medium" onclick="pick(this)"> 31 to 60</label>
+      <label class="opt"><input type="radio" name="videos" value="large" onclick="pick(this)"> More than 60</label>
+    </div>
+  </div>
+  <div class="qblock">
+    <span class="qlabel">What is your channel about?</span>
+    <input type="text" class="numinput" id="niche" placeholder="e.g. crochet for beginners, cooking for busy moms, real estate tips...">
+  </div>
+  <div class="navrow">
+    <button class="btnback" onclick="go('s-intro',0)">Back</button>
+    <button class="btnext" onclick="go('s-data',2)">Next</button>
+  </div>
+</div>
+
+<div class="sec" id="s-data">
+  <span class="sectag">Section 2 of 4 - Your numbers</span>
+  <h2>Now let us look at your numbers.</h2>
+  <p>This is where most people never go and it is usually where the answers are hiding. I will tell you exactly where to find each one.</p>
+  <div class="qblock">
+    <span class="qlabel">What is your click through rate (CTR)?</span>
+    <div class="howto"><div class="howtitle">How to find it:</div><ol><li>Open YouTube Studio</li><li>Click Analytics in the left menu</li><li>Click the Reach tab at the top</li><li>Look for Click Through Rate</li><li>Set the date range to the last 90 days</li></ol></div>
+    <div class="infobox">Your CTR tells us how many people are actually clicking on your video when YouTube shows it to them. This is one of the first things I look at when a channel is stuck.</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="ctr" value="low" onclick="pick(this)"> Less than 2%</label>
+      <label class="opt"><input type="radio" name="ctr" value="ok" onclick="pick(this)"> 2% to 4%</label>
+      <label class="opt"><input type="radio" name="ctr" value="good" onclick="pick(this)"> 4% to 6%</label>
+      <label class="opt"><input type="radio" name="ctr" value="great" onclick="pick(this)"> 6% or higher</label>
+      <label class="opt"><input type="radio" name="ctr" value="lost" onclick="pick(this)"> I cannot find this number</label>
+    </div>
+  </div>
+  <div class="qblock">
+    <span class="qlabel">What is your average view duration?</span>
+    <div class="howto"><div class="howtitle">How to find it:</div><ol><li>Stay in YouTube Studio</li><li>Click Analytics in the left menu</li><li>Click the Engagement tab at the top</li><li>Look for Average View Duration</li></ol></div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="duration" value="very_low" onclick="pick(this)"> Less than 1 minute</label>
+      <label class="opt"><input type="radio" name="duration" value="low" onclick="pick(this)"> 1 to 2 minutes</label>
+      <label class="opt"><input type="radio" name="duration" value="ok" onclick="pick(this)"> 2 to 4 minutes</label>
+      <label class="opt"><input type="radio" name="duration" value="good" onclick="pick(this)"> 4 minutes or more</label>
+      <label class="opt"><input type="radio" name="duration" value="lost" onclick="pick(this)"> I cannot find this number</label>
+    </div>
+  </div>
+  <div class="qblock">
+    <span class="qlabel">What is your average video length?</span>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="length" value="short" onclick="pick(this)"> Under 5 minutes</label>
+      <label class="opt"><input type="radio" name="length" value="med" onclick="pick(this)"> 5 to 10 minutes</label>
+      <label class="opt"><input type="radio" name="length" value="long" onclick="pick(this)"> 10 to 20 minutes</label>
+      <label class="opt"><input type="radio" name="length" value="vlong" onclick="pick(this)"> Over 20 minutes</label>
+    </div>
+  </div>
+  <div class="qblock">
+    <span class="qlabel">What is your total number of impressions over the last 90 days?</span>
+    <div class="howto"><div class="howtitle">How to find it:</div><ol><li>Stay in YouTube Studio</li><li>Click Analytics in the left menu</li><li>Click the Reach tab at the top</li><li>Look for Impressions</li><li>Keep your date range at the last 90 days</li></ol></div>
+    <div class="infobox">If your impressions are low it means YouTube is not showing your videos to many people yet. If your impressions are high but your views are low, that points straight to your titles and thumbnails.</div>
+    <input type="number" class="numinput" id="impressions" placeholder="Type the number you see">
+  </div>
+  <div class="qblock">
+    <span class="qlabel">How many subscribers have you gained in the last 90 days?</span>
+    <div class="howto"><div class="howtitle">How to find it:</div><ol><li>Stay in YouTube Studio</li><li>Click Analytics in the left menu</li><li>Click the Audience tab at the top</li><li>Look for Subscribers</li></ol></div>
+    <div class="infobox">Subscribers are YouTube measure of trust. If people are watching but not subscribing it usually means your content is not giving them a strong enough reason to come back.</div>
+    <input type="number" class="numinput" id="subscribers" placeholder="Type the number you see">
+  </div>
+  <div class="navrow">
+    <button class="btnback" onclick="go('s-basics',1)">Back</button>
+    <button class="btnext" onclick="go('s-channel',3)">Next</button>
+  </div>
+</div>
+
+<div class="sec" id="s-channel">
+  <span class="sectag">Section 3 of 4 - Your videos</span>
+  <h2>Now let us actually look at your channel.</h2>
+  <p>Take a screenshot of your YouTube channel page showing your 3 most recent videos and upload it here. I will analyze your titles and thumbnails together as a package, the same way I do in a real audit.</p>
+  <div class="qblock">
+    <div class="screenshot-guide">
+      <div class="sg-title">Your screenshot should look something like this:</div>
+      <div class="sg-row">
+        <div class="sg-thumb">
+          <div class="thumb-img"></div>
+          <p>Thumbnail image visible</p>
+        </div>
+        <div class="sg-thumb">
+          <div class="thumb-img"></div>
+          <p>Thumbnail image visible</p>
+        </div>
+        <div class="sg-thumb">
+          <div class="thumb-img"></div>
+          <p>Thumbnail image visible</p>
+        </div>
+      </div>
+      <p class="sg-note">Go to your YouTube channel page. Make sure you can see 3 videos with their thumbnail images and the titles below them. Then take a screenshot of that view and upload it here.</p>
+    </div>
+    <div class="upzone" onclick="document.getElementById('chupload').click()">
+      <input type="file" id="chupload" accept="image/*" onchange="handleCh(this)">
+      <div class="upicon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+      <p>Click to upload your channel screenshot</p>
+      <p class="sub">One screenshot showing 3 recent videos</p>
+    </div>
+    <img id="upprev" class="uppreview" alt="Your uploaded screenshot">
+    <button class="linkbtn" onclick="document.getElementById('devhelp').style.display='block';this.style.display='none'">I do not know how to take a screenshot</button>
+    <div id="devhelp" style="display:none;margin-top:1rem;">
+      <p style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:.5rem;">No problem. What are you working on right now?</p>
+      <div class="devgrid">
+        <button class="devbtn" onclick="showDev('windows')">Windows computer</button>
+        <button class="devbtn" onclick="showDev('mac')">Mac computer</button>
+        <button class="devbtn" onclick="showDev('iphone')">iPhone</button>
+        <button class="devbtn" onclick="showDev('android')">Android phone</button>
+      </div>
+      <div class="devinstr" id="devinstr"></div>
+    </div>
+  </div>
+  <div class="navrow">
+    <button class="btnback" onclick="go('s-data',2)">Back</button>
+    <button class="btnext" onclick="go('s-mindset',4)">Next</button>
+  </div>
+</div>
+
+<div class="sec" id="s-mindset">
+  <span class="sectag">Section 4 of 4 - A few more questions</span>
+  <h2>Last section, I promise.</h2>
+  <p>These are questions most YouTube coaches never ask. But in my experience they are sometimes the most important ones.</p>
+  <div class="qblock">
+    <span class="qlabel">What type of videos are you mostly posting?</span>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="format" value="shorts" onclick="pick(this);document.getElementById('snote').style.display='block'"> Mostly Shorts (under 60 seconds)</label>
+      <label class="opt"><input type="radio" name="format" value="long" onclick="pick(this);document.getElementById('snote').style.display='none'"> Mostly long form videos (over 5 minutes)</label>
+      <label class="opt"><input type="radio" name="format" value="mix" onclick="pick(this);document.getElementById('snote').style.display='none'"> A mix of both</label>
+      <label class="opt"><input type="radio" name="format" value="unsure" onclick="pick(this);document.getElementById('snote').style.display='block'"> I am not sure what the difference is</label>
+    </div>
+    <div class="infobox" id="snote" style="display:none;margin-top:.75rem;">Just so you know, Shorts and long form videos grow your channel very differently. We will address this in your results.</div>
+  </div>
+  <div class="qblock">
+    <span class="qlabel">When you decide what your next video is about, how do you choose the topic?</span>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="topic" value="feel" onclick="pick(this)"> I post whatever feels right that week</label>
+      <label class="opt"><input type="radio" name="topic" value="data" onclick="pick(this)"> I look at what is already working on my channel</label>
+      <label class="opt"><input type="radio" name="topic" value="research" onclick="pick(this)"> I research what my audience is searching for</label>
+      <label class="opt"><input type="radio" name="topic" value="others" onclick="pick(this)"> I look at what other creators in my niche are doing</label>
+      <label class="opt"><input type="radio" name="topic" value="guess" onclick="pick(this)"> Honestly I am just guessing</label>
+    </div>
+  </div>
+  <div class="qblock">
+    <span class="qlabel">When you make a video about a problem your audience has, do you give them a clear solution by the end?</span>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="solution" value="always" onclick="pick(this)"> Yes always</label>
+      <label class="opt"><input type="radio" name="solution" value="sometimes" onclick="pick(this)"> Sometimes but not always</label>
+      <label class="opt"><input type="radio" name="solution" value="unsure" onclick="pick(this)"> Honestly I am not sure</label>
+      <label class="opt"><input type="radio" name="solution" value="no" onclick="pick(this)"> No, I mostly just talk about the problem</label>
+    </div>
+  </div>
+  <div class="qblock">
+    <span class="qlabel">When you watch your own videos back, do you...</span>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="selfwatch" value="never" onclick="pick(this)"> Never watch them back, it is too painful</label>
+      <label class="opt"><input type="radio" name="selfwatch" value="cringe" onclick="pick(this)"> Watch them but cringe the whole time</label>
+      <label class="opt"><input type="radio" name="selfwatch" value="ok" onclick="pick(this)"> Watch them and think they are pretty good</label>
+      <label class="opt"><input type="radio" name="selfwatch" value="improve" onclick="pick(this)"> Watch them and actively look for ways to improve</label>
+    </div>
+  </div>
+  <div class="qblock">
+    <span class="qlabel">When you are recording, do you...</span>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="recording" value="script" onclick="pick(this)"> Read from a script word for word</label>
+      <label class="opt"><input type="radio" name="recording" value="bullets" onclick="pick(this)"> Use bullet points as a guide but talk naturally</label>
+      <label class="opt"><input type="radio" name="recording" value="free" onclick="pick(this)"> Just talk freely without notes</label>
+      <label class="opt"><input type="radio" name="recording" value="freeze" onclick="pick(this)"> Freeze up and do a lot of retakes</label>
+    </div>
+  </div>
+  <div class="qblock">
+    <span class="qlabel">Have you ever had someone outside of your family watch your video and give you honest feedback?</span>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="feedback" value="yes_good" onclick="pick(this)"> Yes and they said I came across well</label>
+      <label class="opt"><input type="radio" name="feedback" value="yes_concerns" onclick="pick(this)"> Yes and they had some concerns</label>
+      <label class="opt"><input type="radio" name="feedback" value="no" onclick="pick(this)"> No, I have not done that yet</label>
+    </div>
+  </div>
+  <div class="qblock">
+    <span class="qlabel">How many videos have you posted in the last 90 days?</span>
+    <div class="infobox">Consistency is one of the most underrated growth factors on YouTube. Sometimes what looks like a growth problem is actually a volume and consistency problem.</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="volume" value="very_low" onclick="pick(this)"> 1 to 3</label>
+      <label class="opt"><input type="radio" name="volume" value="low" onclick="pick(this)"> 4 to 8</label>
+      <label class="opt"><input type="radio" name="volume" value="ok" onclick="pick(this)"> 9 to 15</label>
+      <label class="opt"><input type="radio" name="volume" value="high" onclick="pick(this)"> More than 15</label>
+    </div>
+  </div>
+  <div class="qblock">
+    <span class="qlabel">How often do you typically post?</span>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="frequency" value="frequent" onclick="pick(this)"> A few times a week</label>
+      <label class="opt"><input type="radio" name="frequency" value="weekly" onclick="pick(this)"> Once a week</label>
+      <label class="opt"><input type="radio" name="frequency" value="biweekly" onclick="pick(this)"> Every two weeks</label>
+      <label class="opt"><input type="radio" name="frequency" value="monthly" onclick="pick(this)"> Once a month or less</label>
+      <label class="opt"><input type="radio" name="frequency" value="random" onclick="pick(this)"> It is pretty random honestly</label>
+    </div>
+  </div>
+  <div class="navrow">
+    <button class="btnback" onclick="go('s-channel',3)">Back</button>
+    <button class="btnext pink" onclick="startAnalysis()">Analyze My Channel</button>
+  </div>
+</div>
+
+<div class="sec" id="s-loading">
+  <div class="loadwrap">
+    <div class="spinner"></div>
+    <h3>Analyzing your channel...</h3>
+    <p>This takes a moment because I am actually looking at your content.</p>
+    <ul class="lsteps" id="lsteps">
+      <li id="ls0">Reviewing your channel data</li>
+      <li id="ls1">Analyzing your titles and thumbnails</li>
+      <li id="ls2">Putting your diagnosis together</li>
+      <li id="ls3">Preparing your results</li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="s-analysis">
+  <span class="sectag">Title and thumbnail analysis</span>
+  <h2>Here is what I see on your channel.</h2>
+  <p>I went through each of your videos the same way I do in a real audit, titles and thumbnails together as a package.</p>
+  <div id="acards"></div>
+  <div class="navrow right">
+    <button class="btnext" onclick="go('s-results',8)">See my full diagnosis</button>
+  </div>
+</div>
+
+<div class="sec" id="s-results">
+  <div class="reshdr">
+    <h1>Here is What is Holding Your Channel Back</h1>
+    <p id="resintro"></p>
+  </div>
+  <div id="rcards"></div>
+  <div class="auditcta">
+    <h3 id="audithdr">Want Me to Actually Look at Your Channel?</h3>
+    <p id="auditbody">There is nothing like a second set of experienced eyes on your actual content. I will look at everything and tell you exactly what I see.</p>
+    <button class="auditbtn" onclick="alert('This will link to your Stan store audit booking page.')">Book Your Channel Audit - $97</button>
+  </div>
+  <div class="chatwrap">
+    <div class="chathdr">Have a question about your results? Ask me here.</div>
+    <div class="chatmsgs" id="chatmsgs">
+      <div class="cmsg ai">I have looked at everything you shared. What would you like to understand better about your results?</div>
+    </div>
+    <div class="chatinrow">
+      <input type="text" id="chatin" placeholder="Ask about any part of your results...">
+      <button class="chatsend" onclick="sendChat()">Send</button>
+    </div>
+  </div>
+  <div class="saverow">
+    <button class="savebtn" onclick="window.print()">Save or print my results</button>
+    <p class="savenote">Save this and bring it to your audit so we can dive right in.</p>
+    <div style="margin-top:1rem;">
+      <button class="btnback" onclick="go('s-analysis',7)" style="display:inline-block;">Back to title analysis</button>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+var ST = {};
+
+var DEV_HELP = {
+  windows: "Go to your YouTube channel page in your browser. Press Windows key plus Shift plus S to open the snipping tool. Drag to select the area showing your 3 most recent videos. Save to your Desktop. Then upload it here.",
+  mac: "Go to your YouTube channel page in your browser. Press Command plus Shift plus 4, then drag to select the area showing your 3 most recent videos. The screenshot saves automatically to your Desktop. Then upload it here.",
+  iphone: "Go to your YouTube channel page in Safari. Scroll until you can see your 3 most recent videos. Press the Side button and Volume Up button at the same time. The screenshot saves to your Photos. Then come back here and upload it.",
+  android: "Go to your YouTube channel page in Chrome. Scroll until you can see your 3 most recent videos. Press the Power button and Volume Down button at the same time. The screenshot saves to your Gallery. Then come back here and upload it."
+};
+
+function go(id, idx) {
+  document.querySelectorAll(".sec").forEach(function(s) { s.classList.remove("active"); });
+  document.getElementById(id).classList.add("active");
+  var labels = ["","Step 1 of 4","Step 2 of 4","Step 3 of 4","Step 4 of 4","Almost there...","Analyzing...","Analysis","Your Results","Your Results"];
+  document.getElementById("prog").style.width = Math.max(6, Math.round(((idx||0)/9)*100)) + "%";
+  document.getElementById("steplbl").textContent = labels[idx||0] || "Channel Diagnostic";
+  window.scrollTo(0,0);
+}
+
+function pick(input) {
+  document.querySelectorAll("input[name=" + input.name + "]").forEach(function(i) {
+    i.closest(".opt").classList.remove("sel");
+  });
+  input.closest(".opt").classList.add("sel");
+  ST[input.name] = input.value;
+}
+
+function handleCh(input) {
+  var file = input.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    ST.imgB64 = e.target.result.split(",")[1];
+    var prev = document.getElementById("upprev");
+    prev.src = e.target.result;
+    prev.style.display = "block";
+  };
+  reader.readAsDataURL(file);
+}
+
+function showDev(device) {
+  var el = document.getElementById("devinstr");
+  el.textContent = DEV_HELP[device] || "";
+  el.style.display = "block";
+}
+
+function animSteps(cb) {
+  var steps = document.querySelectorAll("#lsteps li");
+  var i = 0;
+  function next() {
+    if (i > 0) { steps[i-1].classList.remove("active"); steps[i-1].classList.add("done"); }
+    if (i < steps.length) { steps[i].classList.add("active"); i++; setTimeout(next, 1800); }
+    else { setTimeout(cb, 600); }
+  }
+  next();
+}
+
+function startAnalysis() {
+  go("s-loading", 6);
+  ST.niche = document.getElementById("niche").value || "YouTube";
+  animSteps(function() {
+    runAnalysis().then(function() {
+      buildResults();
+      go("s-analysis", 7);
+    });
+  });
+}
+
+function getPrompt() {
+  return [
+    "Please analyze the YouTube titles and thumbnails visible in this channel screenshot for a creator in the niche: " + ST.niche + ".",
+    "",
+    "For each of the 3 videos visible, analyze the title and thumbnail TOGETHER as a package. Use this exact format:",
+    "",
+    "VIDEO [number]: [title as shown]",
+    "WHAT IS WORKING: [specific feedback on what is effective]",
+    "WHAT IS NOT WORKING: [specific honest feedback on problems]",
+    "WHAT TO CHANGE: [specific actionable recommendation]",
+    "",
+    "Standards to apply:",
+    "Titles should be under 55 characters or they get cut off in search.",
+    "Titles should not repeat what the thumbnail already says - they work as a package.",
+    "Titles should speak to the viewer problem, not be vague or cute.",
+    "Thumbnails should have a clear focal point - face or main subject.",
+    "No busy backgrounds competing with the subject.",
+    "Bold readable text only, no curly fonts.",
+    "2 to 3 words max on thumbnail text, not too many colors.",
+    "Talking head videos look better with darker backgrounds so the person stands out.",
+    "The title and thumbnail together should give a reason to click.",
+    "Call out the specific audience when possible - over 40, beginners, women, etc.",
+    "Leave a curiosity gap - do not give away the punchline in the title.",
+    "Do not repeat the same words in title and thumbnail.",
+    "",
+    "Be warm, direct, and specific. Sound like a knowledgeable friend giving real feedback."
+  ].join("\n");
+}
+
+async function runAnalysis() {
+  var content = [];
+  if (ST.imgB64) {
+    content.push({ type: "image", source: { type: "base64", media_type: "image/png", data: ST.imgB64 } });
+  }
+  content.push({ type: "text", text: getPrompt() });
+  try {
+    var res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 2000,
+        system: "You are Dee Dee Paradis, a YouTube educator who has made over $50,000 from AdSense alone and reviewed over 100 YouTube channels. Warm, direct, conversational. Analyze titles and thumbnails together as a package. Be specific and honest.",
+        messages: [{ role: "user", content: content }]
+      })
+    });
+    var data = await res.json();
+    var text = (data.content||[]).filter(function(b){return b.type==="text";}).map(function(b){return b.text;}).join("");
+    ST.analysisText = text;
+    renderAnalysis(text);
+  } catch(e) {
+    ST.analysisText = "Analysis unavailable. Please check your internet connection and try again.";
+    renderAnalysis(ST.analysisText);
+  }
+}
+
+function renderAnalysis(text) {
+  var container = document.getElementById("acards");
+  container.innerHTML = "";
+  var blocks = text.split(/VIDEO\s+\d+:/i).filter(function(b){return b.trim();});
+  if (!blocks.length) { container.innerHTML = "<div class='acard'><p>" + text + "</p></div>"; return; }
+  blocks.forEach(function(block, i) {
+    var div = document.createElement("div");
+    div.className = "acard";
+    var tm = block.match(/^[^\n]*/);
+    var title = tm ? tm[0].replace(/["\[\]]/g,"").trim() : "Video "+(i+1);
+    var wm = block.match(/WHAT IS WORKING:([\s\S]*?)(?=WHAT IS NOT WORKING:|$)/i);
+    var nm = block.match(/WHAT IS NOT WORKING:([\s\S]*?)(?=WHAT TO CHANGE:|$)/i);
+    var fm = block.match(/WHAT TO CHANGE:([\s\S]*?)(?=VIDEO\s+\d+:|$)/i);
+    var h = "<div class='vidnum'>Video "+(i+1)+"</div><h3>"+title+"</h3>";
+    if (wm) h += "<div class='asec'><div class='alabel good'>What is working</div><div class='atxt'>"+wm[1].trim()+"</div></div>";
+    if (nm) h += "<div class='asec'><div class='alabel bad'>What is not working</div><div class='atxt'>"+nm[1].trim()+"</div></div>";
+    if (fm) h += "<div class='asec'><div class='alabel fix'>What to change</div><div class='atxt'>"+fm[1].trim()+"</div></div>";
+    div.innerHTML = h;
+    container.appendChild(div);
+  });
+}
+
+function buildResults() {
+  var cards = [], primarySet = false, auditSpecific = false;
+  if (ST.ctr==="low") { cards.push({primary:true,label:"Titles and thumbnails",title:"Your titles and thumbnails are costing you clicks.",body:"Your CTR is under 2%, which means YouTube is showing your videos but people are not clicking on them. The title and thumbnail analysis above shows you exactly what to fix.",fixes:["Start with the video that has the lowest views and apply the specific fixes from the analysis","Clean up your thumbnail - bold text only, no busy backgrounds, clear focal point","Make sure your title speaks directly to your viewer problem","Keep titles under 55 characters so they do not get cut off","Stop repeating the same words in your title and thumbnail - they should complete each other"]}); primarySet=true; }
+  if (ST.duration==="very_low"||ST.duration==="low") { cards.push({primary:!primarySet,label:"Video engagement",title:"People are clicking but leaving too soon.",body:"Your average view duration tells me people are not staying for your content. This usually means your video is not hooking them fast enough at the start or it is losing momentum partway through.",fixes:["Hook them in the first 15 seconds - tell them exactly what they are going to get","Cut anything before you get to the point","Make sure every section of your video earns the next one"]}); if(!primarySet)primarySet=true; }
+  if (ST.format==="shorts"||ST.format==="unsure") { cards.push({primary:!primarySet,label:"Content strategy",title:"Shorts alone will not grow your channel the way you want.",body:"Shorts and long form videos grow your channel very differently. Shorts can get views but they do not build the kind of loyal audience that subscribes and comes back.",fixes:["Start mixing in long form videos of at least 5 to 8 minutes","Use Shorts to drive people to your long form content, not as your main strategy","Pick one core topic and build your long form content around it"]}); if(!primarySet)primarySet=true; }
+  if (ST.solution==="no"||ST.solution==="sometimes") { cards.push({primary:!primarySet,label:"Content structure",title:"Your videos talk about the problem but do not give the way out.",body:"People come to YouTube to solve problems. If they finish your video without a clear answer or next step, they will not come back and they will not subscribe.",fixes:["End every video with a clear and specific action they can take","Do not just talk about the problem - walk them through the fix","If it is a complex topic, give them the first step and promise the rest"]}); if(!primarySet)primarySet=true; }
+  if (ST.topic==="feel"||ST.topic==="guess") { cards.push({primary:!primarySet,label:"Content strategy",title:"Your content strategy needs more intention.",body:"Posting whatever feels right is one of the most common reasons channels stay stuck. YouTube rewards channels that consistently serve a specific audience.",fixes:["Look at which of your videos got the most views and make more like those","Research what your audience is actually searching for before planning your next video","Pick a lane and stay in it"]}); if(!primarySet)primarySet=true; }
+  if ((ST.selfwatch==="never"||ST.selfwatch==="cringe")&&(ST.recording==="script"||ST.recording==="freeze")&&ST.feedback==="no") { auditSpecific=true; cards.push({primary:false,label:"Camera presence",title:"Your on-camera delivery may be affecting how people connect with you.",body:"Based on your answers, camera presence is worth looking at. This is the one thing this tool cannot fully diagnose because it requires actually watching you.",fixes:["Watch your last video back with the sound off - what does your body language say?","Try recording with bullet points instead of a full script so you sound more natural","Record a short practice video just for yourself and watch it honestly"]}); }
+  if (ST.volume==="very_low"||ST.frequency==="random"||ST.frequency==="monthly") { cards.push({primary:false,label:"Consistency",title:"Your posting consistency is working against you.",body:"YouTube rewards channels that show up regularly. If you are posting once a month or randomly, the algorithm does not have enough signal to know who to show your videos to.",fixes:["Commit to a minimum of one video per week to start","Batch record so you always have content ready to go","A consistent schedule builds audience expectations - they start to look for you"]}); }
+  if (!cards.length) { auditSpecific=true; cards.push({primary:true,label:"Overall diagnosis",title:"Your numbers look okay but something deeper may be going on.",body:"Your data does not point to one obvious issue which usually means the problem is in the content itself - the positioning, the structure, or how you come across on camera.",fixes:["Have someone outside your circle watch one of your videos and give you honest feedback","Compare your channel to 3 channels in your niche that are growing and look for real differences","A channel audit would let me look at everything with fresh eyes and tell you exactly what I see"]}); }
+
+  var container = document.getElementById("rcards");
+  container.innerHTML = "";
+  cards.forEach(function(c) {
+    var div = document.createElement("div");
+    div.className = "rcard"+(c.primary?" primary":"");
+    var h = "<div class='rtag "+(c.primary?"pt":"st")+"'>"+(c.primary?"Primary issue - ":"")+c.label+"</div>";
+    h += "<div class='rtitle'>"+c.title+"</div><div class='rbody'>"+c.body+"</div>";
+    h += "<ul class='fixlist'>"+c.fixes.map(function(f){return "<li>"+f+"</li>";}).join("")+"</ul>";
+    div.innerHTML = h;
+    container.appendChild(div);
+  });
+
+  document.getElementById("resintro").textContent = cards.length>1
+    ? "I found "+cards.length+" things showing up in your channel. Your biggest issue is at the top but read through all of them because they are connected."
+    : "Here is what your data is telling us.";
+
+  if (auditSpecific) {
+    document.getElementById("audithdr").textContent = "Some of This Needs Eyes on Your Actual Content.";
+    document.getElementById("auditbody").textContent = "Based on your results, I would love to actually watch your videos and tell you exactly what I see. Send me your results when you book so I am already familiar with your data going in.";
+  }
+
+  ST.context = "Analysis: " + (ST.analysisText||"none") + " | Diagnosis: " + cards.map(function(c){return c.label+": "+c.title;}).join(", ");
+}
+
+async function sendChat() {
+  var input = document.getElementById("chatin");
+  var msg = input.value.trim();
+  if (!msg) return;
+  input.value = "";
+  var msgs = document.getElementById("chatmsgs");
+  var ud = document.createElement("div"); ud.className="cmsg usr"; ud.textContent=msg; msgs.appendChild(ud);
+  var td = document.createElement("div"); td.className="cmsg ai"; td.textContent="Thinking..."; msgs.appendChild(td);
+  msgs.scrollTop = msgs.scrollHeight;
+  try {
+    var res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 600,
+        system: "You are Dee Dee Paradis, a YouTube educator. Warm, direct, conversational. Keep responses concise and practical. Context: " + (ST.context||"No context yet."),
+        messages: [{role:"user",content:msg}]
+      })
+    });
+    var data = await res.json();
+    td.textContent = (data.content||[]).filter(function(b){return b.type==="text";}).map(function(b){return b.text;}).join("") || "Something went wrong. Try again.";
+  } catch(e) {
+    td.textContent = "Something went wrong. Try asking again in a moment.";
+  }
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+document.getElementById("chatin").addEventListener("keydown", function(e) {
+  if (e.key==="Enter") sendChat();
+});
+</script>
+</body>
+</html>
