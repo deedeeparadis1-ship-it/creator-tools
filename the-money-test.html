@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Money Test — Dee Dee Paradis</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #2f3e5c;
+    --coral: #f7a493;
+    --cream: #fbf4ec;
+    --coral-light: #fde8e3;
+    --coral-dark: #c4614f;
+    --navy-light: #4a5f82;
+    --navy-lighter: #e8ecf3;
+    --text-dark: #2a2a2a;
+    --text-mid: #555;
+    --text-light: #888;
+    --white: #ffffff;
+    --border: #e0d8d0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 0 80px;
+  }
+
+  .header {
+    background: var(--navy);
+    padding: 56px 56px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 260px;
+    height: 260px;
+    background: var(--coral);
+    opacity: 0.12;
+    border-radius: 50%;
+  }
+
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px;
+    left: 30%;
+    width: 160px;
+    height: 160px;
+    background: var(--coral);
+    opacity: 0.07;
+    border-radius: 50%;
+  }
+
+  .header-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 16px;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .header h1 span {
+    color: var(--coral);
+  }
+
+  .header-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.72);
+    max-width: 480px;
+    line-height: 1.65;
+    position: relative;
+  }
+
+  .header-byline {
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+  }
+
+  .byline-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--coral);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  .byline-text {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .byline-text strong {
+    color: rgba(255,255,255,0.9);
+    font-weight: 500;
+    display: block;
+    font-size: 14px;
+  }
+
+  .intro-box {
+    background: var(--white);
+    border-left: 4px solid var(--coral);
+    padding: 28px 32px;
+    margin: 40px 48px;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .intro-box p {
+    color: var(--text-mid);
+    font-size: 14.5px;
+    line-height: 1.75;
+  }
+
+  .intro-box p + p {
+    margin-top: 12px;
+  }
+
+  .intro-box strong {
+    color: var(--navy);
+    font-weight: 500;
+  }
+
+  .section {
+    margin: 0 48px 48px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1.5px solid var(--border);
+  }
+
+  .section-number {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .section-title-block h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+
+  .section-title-block p {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  .question-block {
+    margin-bottom: 28px;
+  }
+
+  .question-label {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+
+  .q-num {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--coral-dark);
+    background: var(--coral-light);
+    border-radius: 4px;
+    padding: 2px 8px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    letter-spacing: 0.04em;
+  }
+
+  .question-label p {
+    font-size: 14.5px;
+    color: var(--text-dark);
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  .answer-area {
+    width: 100%;
+    min-height: 80px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text-dark);
+    background: var(--white);
+    resize: vertical;
+    line-height: 1.6;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  .answer-area:focus {
+    border-color: var(--navy-light);
+  }
+
+  .answer-area::placeholder {
+    color: #bbb;
+    font-style: italic;
+  }
+
+  .prompt-box {
+    background: var(--navy-lighter);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 8px 0 12px;
+  }
+
+  .prompt-box .prompt-label {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--navy-light);
+    margin-bottom: 8px;
+  }
+
+  .prompt-box p {
+    font-size: 13.5px;
+    color: var(--navy);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  .divider {
+    height: 1.5px;
+    background: var(--border);
+    margin: 40px 48px;
+  }
+
+  .next-box {
+    background: var(--navy);
+    margin: 48px 48px 0;
+    border-radius: 12px;
+    padding: 40px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .next-box::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 180px;
+    height: 180px;
+    background: var(--coral);
+    opacity: 0.1;
+    border-radius: 50%;
+  }
+
+  .next-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .next-box p {
+    font-size: 14.5px;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.7;
+    margin-bottom: 12px;
+    position: relative;
+  }
+
+  .next-box .cta-link {
+    display: inline-block;
+    margin-top: 20px;
+    background: var(--coral);
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 14px 32px;
+    border-radius: 6px;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    position: relative;
+  }
+
+  .tip-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--coral-light);
+    color: var(--coral-dark);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  @media print {
+    body { background: white; }
+    .answer-area { border: 1px solid #ccc; min-height: 60px; }
+    .next-box .cta-link { background: #2f3e5c; }
+  }
+
+  @media (max-width: 600px) {
+    .header { padding: 40px 28px 36px; }
+    .header h1 { font-size: 38px; }
+    .intro-box, .section, .divider, .next-box { margin-left: 20px; margin-right: 20px; }
+    .next-box { padding: 28px 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <p class="header-label">Dee Dee Paradis — YouTube Business Tools</p>
+    <h1>The <span>Money</span> Test</h1>
+    <p class="header-sub">A self-guided tool for YouTube creators who are ready to stop guessing and start building something that actually makes money.</p>
+    <div class="header-byline">
+      <div class="byline-dot">D</div>
+      <div class="byline-text">
+        <strong>Dee Dee Paradis</strong>
+        YouTube Business Coach for creators over 40
+      </div>
+    </div>
+  </div>
+
+  <div class="intro-box">
+    <p><strong>This is not a quiz.</strong> There are no right or wrong answers. The goal is to get honest with yourself about what you're building and whether it has a real path to income.</p>
+    <p>Set aside 20–30 minutes. Answer every question as if nobody is going to read it but you. The more honest you are, the more useful this becomes.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">1</div>
+      <div class="section-title-block">
+        <h2>Your niche</h2>
+        <p>Does what you're building have real money potential?</p>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q1</span>
+        <p>In one sentence, what is your channel about and who is it for?</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q2</span>
+        <p>Do you genuinely want to build a business around this topic, or does it just feel like a good idea right now? What's the difference for you?</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q3</span>
+        <p>Have you made any money from this topic yet — even a small amount? If yes, how? If no, what's been stopping you from testing it?</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q4</span>
+        <p>If you had to explain to a stranger exactly how your channel makes money, what would you say? If you can't answer that clearly, what's missing?</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q5</span>
+        <p>Is there someone already making real money in this niche? Who are they and what are they selling?</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q6</span>
+        <p>What do you know about this topic that your viewer doesn't know yet? Be specific.</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q7</span>
+        <p>On a scale of 1–10, how committed are you to this niche for the next 12 months regardless of how slow it feels? What would make you quit?</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">2</div>
+      <div class="section-title-block">
+        <h2>Your journey</h2>
+        <p>Your experience is your offer — but only if you can find it.</p>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q1</span>
+        <p>Think back to when you were exactly where your viewer is right now. What was the one thing you were most desperate for help with? Not generally — specifically.</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q2</span>
+        <p>If someone had offered you exactly that help at that moment, what would you have paid for it? $50? $500? $2,000? Why that number?</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q3</span>
+        <p>What did you figure out the hard way that you wish someone had just told you? Write it all down. Don't edit yourself.</p>
+      </div>
+      <textarea class="answer-area" style="min-height: 110px;" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q4</span>
+        <p>What mistakes did you make that your viewer is probably making right now? What would it be worth to them to avoid those mistakes?</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q5</span>
+        <p>What do people in your life already ask you for help with related to this topic? What do they say when you help them?</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q6</span>
+        <p>If you could sit down with your ideal viewer for one hour and solve one specific problem for them, what would that problem be and what would you do together in that hour?</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q7</span>
+        <p>What part of your journey are you most confident you could help someone else navigate? Why that part specifically?</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">3</div>
+      <div class="section-title-block">
+        <h2>Your market</h2>
+        <p>What's already selling and where's the gap?</p>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q1</span>
+        <p>Name three to five channels in your niche that are a level or two above where you are right now. Not the massive ones — the ones whose audience looks like yours.</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q2</span>
+        <p>Go to each of those channels and pick five to ten of their videos. You don't need to watch them. Open the description box under each video and look for links. Click on those links and see where they take you. Are they selling a course? A coaching program? A community? A digital product? Write down everything you find.</p>
+      </div>
+      <textarea class="answer-area" style="min-height: 110px;" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q3</span>
+        <p>Look for patterns across all the channels you researched. What keeps showing up consistently? Remember — if a creator is promoting something across multiple videos over a long period of time, it's because it's selling.</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q4</span>
+        <p>Now go to the comments on their most popular videos. What are people asking for that isn't being answered? What frustrations keep coming up over and over?</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q5</span>
+        <p>Is there something your audience needs that nobody in your niche seems to be offering? What is it and why do you think it's missing?</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q6</span>
+        <p>What do you offer or know that the channels you just researched don't seem to cover? That's your potential gap.</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q7</span>
+        <p>Run this prompt in ChatGPT or Claude and write down what comes back:</p>
+      </div>
+      <div class="prompt-box">
+        <p class="prompt-label">AI Prompt — copy and paste this</p>
+        <p>"I have a YouTube channel in the [your niche] space. My target audience is [describe your viewer]. What are the top five problems this audience would pay to have solved?"</p>
+      </div>
+      <textarea class="answer-area" placeholder="What surprised you? What confirmed what you already suspected?"></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q8</span>
+        <p>Now run this prompt and write down the results:</p>
+      </div>
+      <div class="prompt-box">
+        <p class="prompt-label">AI Prompt — copy and paste this</p>
+        <p>"What words and phrases does this audience use when they search for help with these problems?"</p>
+      </div>
+      <textarea class="answer-area" placeholder="Do these words match the language you're using in your titles and content? If not, what needs to change?"></textarea>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">4</div>
+      <div class="section-title-block">
+        <h2>Your offer</h2>
+        <p>Turning everything above into something real.</p>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q1</span>
+        <p>Based on everything you just wrote down, what is the one problem you are most qualified to help your audience solve? Be as specific as possible.</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q2</span>
+        <p>What would solving that problem actually change for your viewer? What does their life or business look like before working with you and after?</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q3</span>
+        <p>Now it's time to build your MVP — your minimum viable product. Your MVP is the smallest possible version of your offer that you can put in front of someone right now without spending months building it first. It could be a single coaching call, a simple PDF guide, a template, a checklist, or a short workshop. What is the simplest version of your solution that would still give your viewer a real result?</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q4</span>
+        <p>What would you charge for your MVP? Write down a number. Then ask yourself — would you have paid that amount when you needed this solution most?</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q5</span>
+        <p>How would you get your MVP in front of people this week? A mention in your next video? A link in your description? A post in your community? Write down one specific action you could take in the next 48 hours to test it.</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q6</span>
+        <p>What's stopping you from doing that right now? Be honest.</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-label">
+        <span class="q-num">Q7</span>
+        <p>If you knew for certain that ten people would pay you for this offer next month, what would you do differently starting tomorrow?</p>
+      </div>
+      <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="next-box">
+    <h3>What to do next</h3>
+    <p>Read back through everything you just wrote. Look for the themes. The things that kept coming up across all four sections — that's where your offer lives.</p>
+    <p>If your answers feel clear and you know what your next move is, go make it. Don't wait for perfect. Launch your MVP and see what happens. One person paying you for something is worth more than six months of planning.</p>
+    <p>If your answers still feel muddy or you're not sure what you should be selling, that's okay too. It means you need a different kind of help — someone to look at your specific situation and tell you exactly what to do next.</p>
+    <p>That's what <strong style="color: var(--coral);">YouTube Launch and Grow</strong> is for. In three months we'll get clear on your offer, build your content system, and set up real income streams for your channel. Completely individualized to where you are right now.</p>
+    <a href="#" class="cta-link">Book a free discovery call →</a>
+  </div>
+
+</div>
+</body>
+</html>
