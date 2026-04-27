@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Your Unique Angle — Dee Dee Paradis</title>
+<link href="https://fonts.googleapis.com/css2?family=Chewy&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #99e17a;
+    --green-light: #bfecac;
+    --yellow: #ffde59;
+    --yellow-light: #ffeb99;
+    --red: #f47c7c;
+    --red-light: #ff9999;
+    --blue: #99c5ff;
+    --blue-light: #c2dcff;
+    --purple: #cea8f0;
+    --purple-light: #e2cbff;
+    --text-dark: #2a2a2a;
+    --text-mid: #555;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito Sans', sans-serif;
+    background: #fff9f0;
+    color: var(--text-dark);
+  }
+
+  .page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 48px 32px 64px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .header .badge {
+    display: inline-block;
+    background: var(--yellow);
+    color: var(--text-dark);
+    font-family: 'Chewy', cursive;
+    font-size: 14px;
+    letter-spacing: 1px;
+    padding: 6px 18px;
+    border-radius: 30px;
+    margin-bottom: 16px;
+  }
+
+  .header h1 {
+    font-family: 'Chewy', cursive;
+    font-size: 52px;
+    line-height: 1.1;
+    color: var(--text-dark);
+    margin-bottom: 12px;
+  }
+
+  .header h1 span { color: var(--red); }
+
+  .header p {
+    font-size: 17px;
+    color: var(--text-mid);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .divider {
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(to right, var(--green), var(--yellow), var(--red), var(--blue), var(--purple));
+    margin: 32px 0;
+  }
+
+  .intro-box {
+    background: var(--blue-light);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 40px;
+  }
+
+  .intro-box p { font-size: 16px; line-height: 1.7; color: var(--text-dark); }
+  .intro-box p + p { margin-top: 12px; }
+  .intro-box strong { font-weight: 700; }
+
+  .section { margin-bottom: 44px; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .step-bubble {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Chewy', cursive;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .step-1 .step-bubble { background: var(--green); }
+  .step-2 .step-bubble { background: var(--yellow); }
+  .step-3 .step-bubble { background: var(--red); }
+  .step-4 .step-bubble { background: var(--blue); }
+  .step-5 .step-bubble { background: var(--purple); }
+
+  .section-header h2 {
+    font-family: 'Chewy', cursive;
+    font-size: 26px;
+    line-height: 1.2;
+    color: var(--red);
+  }
+
+  .teaching {
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.7;
+    margin-bottom: 14px;
+    padding-left: 58px;
+  }
+
+  .teaching strong { color: var(--text-dark); font-weight: 700; }
+
+  .example-pill {
+    display: inline-block;
+    background: var(--yellow-light);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--text-mid);
+    margin-bottom: 14px;
+    margin-left: 58px;
+    line-height: 1.5;
+  }
+
+  .write-area { margin-left: 58px; }
+
+  .write-area label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-mid);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .write-area textarea {
+    width: 100%;
+    border: 2px solid #e0d8d0;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 15px;
+    color: var(--text-dark);
+    background: #fff;
+    resize: vertical;
+    min-height: 90px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+  }
+
+  .write-area textarea:focus { outline: none; border-color: var(--red); }
+  .write-area textarea::placeholder { color: #bbb; font-style: italic; }
+
+  .prompt-block {
+    background: #fff;
+    border: 2px dashed #e0d8d0;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-left: 58px;
+    margin-bottom: 8px;
+  }
+
+  .prompt-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--red);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .ai-badge {
+    background: var(--red-light);
+    color: #8a2222;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 700;
+  }
+
+  .prompt-text {
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.7;
+    font-style: italic;
+    margin-bottom: 12px;
+    background: #faf8f5;
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+
+  .prompt-text strong { font-style: normal; color: var(--red); font-weight: 700; }
+
+  .copy-row { display: flex; align-items: center; gap: 12px; }
+
+  .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--text-dark);
+    color: #fff;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 9px 18px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    white-space: nowrap;
+  }
+
+  .copy-btn:hover { background: #444; }
+  .copy-btn:active { transform: scale(0.97); }
+  .copy-btn.copied { background: #2a7a2a; }
+
+  .copy-hint { font-size: 13px; color: #aaa; font-style: italic; }
+
+  .arc-box {
+    background: #fff;
+    border: 2px solid #e0d8d0;
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-left: 58px;
+    margin-bottom: 14px;
+  }
+
+  .arc-box h3 {
+    font-family: 'Chewy', cursive;
+    font-size: 20px;
+    margin-bottom: 16px;
+    color: var(--red);
+  }
+
+  .arc-steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .arc-step { border-radius: 12px; padding: 14px 16px; }
+  .arc-step.belief { background: var(--green-light); }
+  .arc-step.crack { background: var(--yellow-light); }
+  .arc-step.story { background: var(--blue-light); }
+  .arc-step.newview { background: var(--red-light); }
+
+  .arc-step .arc-label {
+    font-family: 'Chewy', cursive;
+    font-size: 15px;
+    margin-bottom: 6px;
+    display: block;
+    color: var(--text-dark);
+  }
+
+  .arc-step textarea {
+    width: 100%;
+    border: none;
+    background: rgba(255,255,255,0.6);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text-dark);
+    resize: vertical;
+    min-height: 70px;
+    line-height: 1.5;
+  }
+
+  .arc-step textarea:focus { outline: none; background: rgba(255,255,255,0.95); }
+  .arc-step textarea::placeholder { color: #aaa; font-style: italic; }
+
+  .title-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-left: 58px;
+    margin-bottom: 14px;
+  }
+
+  .title-box {
+    border-radius: 12px;
+    padding: 14px 16px;
+    background: #fff;
+    border: 2px solid #e0d8d0;
+  }
+
+  .title-box label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-mid);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .title-box input {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #e0d8d0;
+    padding: 6px 0;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 15px;
+    color: var(--text-dark);
+    background: transparent;
+  }
+
+  .title-box input:focus { outline: none; border-bottom-color: var(--red); }
+  .char-hint { font-size: 12px; color: #bbb; margin-top: 4px; font-style: italic; }
+
+  .thumbnail-options {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-left: 58px;
+    margin-bottom: 14px;
+  }
+
+  .thumb-box {
+    flex: 1;
+    min-width: 140px;
+    border-radius: 12px;
+    padding: 14px 16px;
+    background: #fff;
+    border: 2px solid #e0d8d0;
+  }
+
+  .thumb-box label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-mid);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .thumb-box input {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #e0d8d0;
+    padding: 6px 0;
+    font-family: 'Chewy', cursive;
+    font-size: 18px;
+    color: var(--text-dark);
+    background: transparent;
+  }
+
+  .thumb-box input:focus { outline: none; border-bottom-color: var(--red); }
+
+  .reminder-box {
+    background: var(--green-light);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-left: 58px;
+    margin-top: 6px;
+  }
+
+  .reminder-box p { font-size: 15px; line-height: 1.6; color: var(--text-dark); }
+
+  .cta-section {
+    background: var(--purple);
+    border-radius: 20px;
+    padding: 40px 32px;
+    text-align: center;
+    margin-top: 48px;
+  }
+
+  .cta-section h2 {
+    font-family: 'Chewy', cursive;
+    font-size: 34px;
+    color: var(--text-dark);
+    margin-bottom: 12px;
+  }
+
+  .cta-section p {
+    font-size: 16px;
+    color: #3a2550;
+    line-height: 1.6;
+    max-width: 480px;
+    margin: 0 auto 24px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--text-dark);
+    color: #fff;
+    font-family: 'Chewy', cursive;
+    font-size: 20px;
+    padding: 14px 36px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: transform 0.15s, background 0.15s;
+    letter-spacing: 0.5px;
+  }
+
+  .cta-btn:hover { background: #444; transform: scale(1.03); }
+
+  .cta-sub {
+    font-size: 13px;
+    color: #6a4a8a;
+    margin-top: 14px;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 36px;
+    font-size: 13px;
+    color: #bbb;
+  }
+
+  .footer strong {
+    font-family: 'Chewy', cursive;
+    font-size: 16px;
+    color: var(--text-mid);
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="badge">FREE WORKSHEET</div>
+    <h1>Find Your<br><span>Unique Angle</span></h1>
+    <p>Stop saying what everyone else is saying. This worksheet helps you find the video idea that only YOU can make.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="intro-box">
+    <p>The creators who grow aren't always the most polished or the most consistent. They're the ones brave enough to say something <strong>different</strong> -- something that comes from their own experience, their own story, their own worldview.</p>
+    <p>You have that. Work through each step below. At every step you'll find a <strong>ready-made AI prompt</strong> you can copy and paste into ChatGPT, Claude, or any AI tool you already use. It'll help you generate ideas so you're never staring at a blank box wondering what to write.</p>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="section step-1">
+    <div class="section-header">
+      <div class="step-bubble">1</div>
+      <h2>What does everyone in your niche keep saying?</h2>
+    </div>
+    <p class="teaching">Start by listening. What's the advice that gets repeated over and over in your space? The "wisdom" everyone seems to agree on? Write down 3-5 things you hear constantly. These are your windows -- and one of them might be ready for a brick.</p>
+    <div class="example-pill">Example: "Just be consistent and you'll grow." / "You need to go viral to get subscribers."</div>
+    <div class="write-area">
+      <label>Common advice in your niche</label>
+      <textarea placeholder="Write the advice everyone keeps giving..."></textarea>
+    </div>
+    <div class="prompt-block">
+      <div class="prompt-label">
+        AI Prompt to copy
+        <span class="ai-badge">USE IN CHATGPT OR CLAUDE</span>
+      </div>
+      <div class="prompt-text">I make YouTube videos about <strong>[your niche]</strong>. List the most common advice people give in this space that gets repeated over and over. Then tell me which ones might be worth challenging with a contrarian take.</div>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="copyPrompt(this, 'I make YouTube videos about [your niche]. List the most common advice people give in this space that gets repeated over and over. Then tell me which ones might be worth challenging with a contrarian take.')">Copy Prompt</button>
+        <span class="copy-hint">Then paste it into ChatGPT or Claude</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="section step-2">
+    <div class="section-header">
+      <div class="step-bubble">2</div>
+      <h2>What have YOU tried that didn't work the way they said?</h2>
+    </div>
+    <p class="teaching">This is where your real story lives. Think about the advice from Step 1. Did any of it fall flat for you? Did you follow the rules and still not get the result? <strong>That gap between what they promised and what you experienced is gold.</strong> You're not complaining -- you're being honest. And your audience needs that honesty.</p>
+    <div class="example-pill">Example: "I posted consistently for 6 months and barely grew. Consistency alone wasn't the answer."</div>
+    <div class="write-area">
+      <label>What didn't work the way they said it would?</label>
+      <textarea placeholder="Be specific. What did you try? What happened?"></textarea>
+    </div>
+    <div class="prompt-block">
+      <div class="prompt-label">
+        AI Prompt to copy
+        <span class="ai-badge">USE IN CHATGPT OR CLAUDE</span>
+      </div>
+      <div class="prompt-text">I tried <strong>[what you tried]</strong> in my YouTube channel about <strong>[your niche]</strong> and it didn't work the way everyone said it would. Help me turn that experience into a contrarian video angle my audience would find interesting and relatable.</div>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="copyPrompt(this, 'I tried [what you tried] in my YouTube channel about [your niche] and it didn\'t work the way everyone said it would. Help me turn that experience into a contrarian video angle my audience would find interesting and relatable.')">Copy Prompt</button>
+        <span class="copy-hint">Then paste it into ChatGPT or Claude</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="section step-3">
+    <div class="section-header">
+      <div class="step-bubble">3</div>
+      <h2>What have you figured out that surprised even you?</h2>
+    </div>
+    <p class="teaching">Now flip it. What DID work -- especially if it was unexpected? What did you discover by actually doing the thing, not just reading about it? <strong>The best contrarian takes aren't manufactured. They come from your own experience.</strong> Think about a result you got that made you go, "Wait -- that actually worked?"</p>
+    <div class="example-pill">Example: "I made money on YouTube before I even hit 1,000 subscribers -- which everyone said was impossible."</div>
+    <div class="write-area">
+      <label>What surprised you? What worked that shouldn't have?</label>
+      <textarea placeholder="What did you discover that went against the grain?"></textarea>
+    </div>
+    <div class="prompt-block">
+      <div class="prompt-label">
+        AI Prompt to copy
+        <span class="ai-badge">USE IN CHATGPT OR CLAUDE</span>
+      </div>
+      <div class="prompt-text">Here's something that surprised me in my own YouTube journey: <strong>[what surprised you]</strong>. My channel is about <strong>[your niche]</strong> and my audience is <strong>[who you serve]</strong>. Help me figure out if this could be a strong contrarian video idea, what the hook might be, and why people would click on it.</div>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="copyPrompt(this, 'Here\'s something that surprised me in my own YouTube journey: [what surprised you]. My channel is about [your niche] and my audience is [who you serve]. Help me figure out if this could be a strong contrarian video idea, what the hook might be, and why people would click on it.')">Copy Prompt</button>
+        <span class="copy-hint">Then paste it into ChatGPT or Claude</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="section step-4">
+    <div class="section-header">
+      <div class="step-bubble">4</div>
+      <h2>Build your video arc</h2>
+    </div>
+    <p class="teaching">Every great contrarian video follows the same simple structure: <strong>Belief, Crack, Story, New View.</strong> Start with what your viewer already believes. Show them where it breaks down. Use your own story as the proof. Then give them a new way to see it. Fill in the boxes below -- then use the AI prompt to help flesh it out.</p>
+    <div class="arc-box">
+      <h3>Your video arc</h3>
+      <div class="arc-steps">
+        <div class="arc-step belief">
+          <span class="arc-label">Belief -- what they think is true</span>
+          <textarea placeholder="The common belief your viewer holds..."></textarea>
+        </div>
+        <div class="arc-step crack">
+          <span class="arc-label">Crack -- where it breaks down</span>
+          <textarea placeholder="Where does that belief fall apart?"></textarea>
+        </div>
+        <div class="arc-step story">
+          <span class="arc-label">Story -- your real experience</span>
+          <textarea placeholder="What actually happened for you?"></textarea>
+        </div>
+        <div class="arc-step newview">
+          <span class="arc-label">New View -- the better way</span>
+          <textarea placeholder="What should they believe instead?"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="prompt-block">
+      <div class="prompt-label">
+        AI Prompt to copy
+        <span class="ai-badge">USE IN CHATGPT OR CLAUDE</span>
+      </div>
+      <div class="prompt-text">Help me build a YouTube video arc using this structure: Belief, Crack, Story, New View. My video topic is <strong>[your topic]</strong>. My audience is <strong>[who you serve]</strong>. The common belief I want to challenge is <strong>[the belief]</strong>. My personal experience is <strong>[your story]</strong>. Fill in each section with specific, engaging suggestions.</div>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="copyPrompt(this, 'Help me build a YouTube video arc using this structure: Belief, Crack, Story, New View. My video topic is [your topic]. My audience is [who you serve]. The common belief I want to challenge is [the belief]. My personal experience is [your story]. Fill in each section with specific, engaging suggestions.')">Copy Prompt</button>
+        <span class="copy-hint">Then paste it into ChatGPT or Claude</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="section step-5">
+    <div class="section-header">
+      <div class="step-bubble">5</div>
+      <h2>Turn it into a title and thumbnail</h2>
+    </div>
+    <p class="teaching">Your title should create a little tension. Make the viewer think, <em>"Wait -- really? That can't be right."</em> Then they click to find out. Keep your title under 55 characters. Your thumbnail text should be 1-3 words that tease without giving it all away. <strong>You're not clickbaiting -- you're opening a loop.</strong></p>
+
+    <div class="title-grid">
+      <div class="title-box">
+        <label>Title Option 1</label>
+        <input type="text" placeholder="Write your first title idea..." maxlength="60">
+        <div class="char-hint">Keep it under 55 characters</div>
+      </div>
+      <div class="title-box">
+        <label>Title Option 2</label>
+        <input type="text" placeholder="Try a different angle..." maxlength="60">
+        <div class="char-hint">Keep it under 55 characters</div>
+      </div>
+    </div>
+
+    <div class="thumbnail-options">
+      <div class="thumb-box">
+        <label>Thumbnail Text 1</label>
+        <input type="text" placeholder="1-3 words">
+      </div>
+      <div class="thumb-box">
+        <label>Thumbnail Text 2</label>
+        <input type="text" placeholder="1-3 words">
+      </div>
+      <div class="thumb-box">
+        <label>Thumbnail Text 3</label>
+        <input type="text" placeholder="1-3 words">
+      </div>
+    </div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">
+        AI Prompt to copy
+        <span class="ai-badge">USE IN CHATGPT OR CLAUDE</span>
+      </div>
+      <div class="prompt-text">I'm making a YouTube video for an audience of <strong>[who you serve]</strong>. The video topic is <strong>[your topic]</strong> and my contrarian angle is <strong>[your angle]</strong>. Give me 5 title options that are each under 55 characters, create curiosity or tension, and match my contrarian angle. Also give me 5 thumbnail text options of 1-3 words each that tease without giving the answer away.</div>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="copyPrompt(this, 'I\'m making a YouTube video for an audience of [who you serve]. The video topic is [your topic] and my contrarian angle is [your angle]. Give me 5 title options that are each under 55 characters, create curiosity or tension, and match my contrarian angle. Also give me 5 thumbnail text options of 1-3 words each that tease without giving the answer away.')">Copy Prompt</button>
+        <span class="copy-hint">Then paste it into ChatGPT or Claude</span>
+      </div>
+    </div>
+
+    <div class="reminder-box">
+      <p>Quick reminder: your thumbnail text should create curiosity or tension -- not give the answer away. The title does the explaining. The thumbnail makes them feel something and want to click.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="cta-section">
+    <h2>Ready to go deeper?</h2>
+    <p>Come join us in the Confident Creator Circle -- a community of creators over 40 who are building real businesses on YouTube. We cover content, tech, confidence, and income together.</p>
+    <a class="cta-btn" href="https://www.skool.com/confidentcreatorcircle" target="_blank">Join the Confident Creator Circle</a>
+    <p class="cta-sub">Created by Dee Dee Paradis &nbsp;|&nbsp; YouTube Creator and Educator</p>
+  </div>
+
+  <div class="footer">
+    <strong>Dee Dee Paradis</strong><br>
+    Helping people over 40 build a real business on YouTube.
+  </div>
+
+</div>
+<script>
+function copyPrompt(btn, text) {
+  navigator.clipboard.writeText(text).catch(function() {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  }).finally ? navigator.clipboard.writeText(text).then(done).catch(done) : done();
+
+  function done() {
+    var orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = orig;
+      btn.classList.remove('copied');
+    }, 2000);
+  }
+}
+
+document.querySelectorAll('.copy-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var promptText = btn.closest('.prompt-block').querySelector('.prompt-text').innerText;
+    navigator.clipboard.writeText(promptText).then(function() {
+      showCopied(btn);
+    }).catch(function() {
+      var ta = document.createElement('textarea');
+      ta.value = promptText;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showCopied(btn);
+    });
+  });
+});
+
+function showCopied(btn) {
+  var orig = btn.textContent;
+  btn.textContent = 'Copied!';
+  btn.classList.add('copied');
+  setTimeout(function() {
+    btn.textContent = orig;
+    btn.classList.remove('copied');
+  }, 2000);
+}
+</script>
+</body>
+</html>
