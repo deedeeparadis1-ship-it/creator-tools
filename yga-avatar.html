@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>YGA · Avatar One Pager</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:wght@400;600;700;800&family=Caveat:wght@500;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --coral: #f47c7c;
+    --coral-dark: #d45f5f;
+    --coral-light: rgba(244,124,124,0.08);
+    --green: #99e17a;
+    --yellow: #ffde59;
+    --blue: #99c5ff;
+    --purple: #cea8f0;
+    --ink: #1e1624;
+    --body: #3a3445;
+    --muted: #7a7188;
+    --border: rgba(244,124,124,0.15);
+    --paper: #faf7f4;
+    --paper2: #f3ede6;
+  }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 48px 24px;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 40px rgba(244,124,124,0.06), 0 1px 3px rgba(0,0,0,0.04);
+    padding: 52px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--coral), var(--yellow), var(--green), var(--blue), var(--purple));
+  }
+
+  .page::after {
+    content: 'YGA';
+    position: absolute;
+    bottom: -20px; right: -10px;
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    font-size: 120px;
+    color: rgba(244,124,124,0.04);
+    letter-spacing: -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .tag {
+    font-family: 'Caveat', cursive;
+    font-size: 15px;
+    color: var(--coral);
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  h1 {
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    font-size: 32px;
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 4px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--coral);
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 36px;
+    font-weight: 600;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 32px 0;
+  }
+
+  /* Who they are */
+  .who-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+
+  .who-card {
+    border: 1.5px solid var(--border);
+    padding: 16px 18px;
+    background: var(--coral-light);
+  }
+
+  .who-card .label {
+    font-family: 'Caveat', cursive;
+    font-size: 13px;
+    color: var(--coral);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+
+  .who-card p {
+    font-size: 13px;
+    color: var(--body);
+    line-height: 1.55;
+    font-weight: 600;
+  }
+
+  /* Section headings */
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .section-head h2 {
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--ink);
+  }
+
+  .section-head h2 em {
+    font-style: italic;
+    color: var(--coral);
+  }
+
+  .section-num {
+    font-family: 'Caveat', cursive;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--coral);
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* Pain points */
+  .pain-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 36px;
+  }
+
+  .pain-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 16px;
+    border-left: 3px solid var(--coral);
+    background: var(--coral-light);
+  }
+
+  .pain-item .emoji {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .pain-item .pain-body {}
+  .pain-item .pain-title {
+    font-weight: 800;
+    font-size: 13px;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+
+  .pain-item .pain-desc {
+    font-size: 12.5px;
+    color: var(--body);
+    line-height: 1.55;
+  }
+
+  /* What they want */
+  .want-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 36px;
+  }
+
+  .want-card {
+    border: 1.5px solid var(--border);
+    padding: 14px 16px;
+    text-align: center;
+  }
+
+  .want-card .want-icon {
+    font-size: 22px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .want-card .want-label {
+    font-weight: 800;
+    font-size: 12px;
+    color: var(--ink);
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+
+  .want-card .want-sub {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* What they've tried */
+  .tried-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 36px;
+  }
+
+  .tried-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12.5px;
+    color: var(--body);
+    line-height: 1.45;
+    font-weight: 600;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    background: var(--paper);
+  }
+
+  .tried-item::before {
+    content: '✗';
+    color: var(--coral);
+    font-weight: 800;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* The deciding line */
+  .deciding {
+    background: var(--ink);
+    color: #fff;
+    padding: 20px 24px;
+    position: relative;
+    margin-bottom: 36px;
+  }
+
+  .deciding .deciding-label {
+    font-family: 'Caveat', cursive;
+    font-size: 14px;
+    color: var(--coral);
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .deciding p {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.92);
+  }
+
+  .deciding p strong {
+    color: var(--yellow);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  /* Positioning line */
+  .positioning {
+    border: 2px solid var(--coral);
+    padding: 18px 22px;
+  }
+
+  .positioning .pos-label {
+    font-family: 'Caveat', cursive;
+    font-size: 14px;
+    color: var(--coral);
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .positioning p {
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  .positioning p strong {
+    color: var(--coral);
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 40px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-brand {
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .footer-brand em {
+    color: var(--coral);
+    font-style: italic;
+  }
+
+  .footer-note {
+    font-family: 'Caveat', cursive;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 620px) {
+    .page { padding: 36px 28px; }
+    .who-grid, .want-grid, .tried-list { grid-template-columns: 1fr; }
+    h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <span class="tag">YouTube Growth Accelerator · Internal Reference</span>
+  <h1>Your Ideal <em>Avatar</em></h1>
+  <p class="subtitle">Who YGA is built for and what they actually need</p>
+
+  <div class="section-head">
+    <div class="section-num">1</div>
+    <h2>Who They <em>Are</em></h2>
+  </div>
+  <div class="who-grid">
+    <div class="who-card">
+      <div class="label">Role</div>
+      <p>Coach, course creator, or community owner. They have an existing business with a real offer they're already selling.</p>
+    </div>
+    <div class="who-card">
+      <div class="label">Platform</div>
+      <p>Likely already on Skool or inside other paid communities. Comfortable paying for good information.</p>
+    </div>
+    <div class="who-card">
+      <div class="label">Experience</div>
+      <p>Not a YouTube beginner. They know what YouTube is. They just haven't made it work for their business yet.</p>
+    </div>
+    <div class="who-card">
+      <div class="label">Situation</div>
+      <p>Dependent on one or two platforms for their audience. They've felt the instability. They want a traffic source they control.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-head">
+    <div class="section-num">2</div>
+    <h2>Their Real <em>Pain Points</em></h2>
+  </div>
+  <div class="pain-list">
+    <div class="pain-item">
+      <span class="emoji">⏳</span>
+      <div class="pain-body">
+        <div class="pain-title">They know they need YouTube but keep putting it off</div>
+        <div class="pain-desc">The intention is there. The execution isn't. Something else always takes priority, and they've been saying "I'll start soon" for months.</div>
+      </div>
+    </div>
+    <div class="pain-item">
+      <span class="emoji">📉</span>
+      <div class="pain-body">
+        <div class="pain-title">Their current platform can disappear overnight</div>
+        <div class="pain-desc">They've watched reach drop, algorithms shift, or accounts get flagged. They're building on rented land and they know it.</div>
+      </div>
+    </div>
+    <div class="pain-item">
+      <span class="emoji">🎯</span>
+      <div class="pain-body">
+        <div class="pain-title">They've tried posting videos and nothing happened</div>
+        <div class="pain-desc">They made content. Maybe a few videos, maybe more. It didn't convert. They didn't know why, so they stopped.</div>
+      </div>
+    </div>
+    <div class="pain-item">
+      <span class="emoji">🧩</span>
+      <div class="pain-body">
+        <div class="pain-title">They don't have a real YouTube strategy</div>
+        <div class="pain-desc">They've watched YouTube advice videos made for creators chasing views. That's not their goal. They need a strategy built backwards from their offer.</div>
+      </div>
+    </div>
+    <div class="pain-item">
+      <span class="emoji">⚙️</span>
+      <div class="pain-body">
+        <div class="pain-title">They don't have time to figure it out from scratch</div>
+        <div class="pain-desc">They run a real business. They can't spend months testing what works. They need a path that makes sense from day one.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-head">
+    <div class="section-num">3</div>
+    <h2>What They Actually <em>Want</em></h2>
+  </div>
+  <div class="want-grid">
+    <div class="want-card">
+      <span class="want-icon">💼</span>
+      <div class="want-label">Clients and community members from YouTube</div>
+      <div class="want-sub">Not views. Not subscribers. Buyers.</div>
+    </div>
+    <div class="want-card">
+      <span class="want-icon">📈</span>
+      <div class="want-label">A traffic source they own and compound over time</div>
+      <div class="want-sub">Content that keeps working long after they hit publish.</div>
+    </div>
+    <div class="want-card">
+      <span class="want-icon">🔍</span>
+      <div class="want-label">To be found by people already looking for what they sell</div>
+      <div class="want-sub">Search intent, not scrolling strangers.</div>
+    </div>
+    <div class="want-card">
+      <span class="want-icon">🏆</span>
+      <div class="want-label">Authority in their market</div>
+      <div class="want-sub">YouTube positions them differently. They feel it. They want that.</div>
+    </div>
+    <div class="want-card">
+      <span class="want-icon">🗺️</span>
+      <div class="want-label">A clear, doable plan</div>
+      <div class="want-sub">Not theory. A real roadmap they can follow without a team.</div>
+    </div>
+    <div class="want-card">
+      <span class="want-icon">⚡</span>
+      <div class="want-label">Speed without shortcuts</div>
+      <div class="want-sub">They want results faster than figuring it out alone. Not hacks.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-head">
+    <div class="section-num">4</div>
+    <h2>What They've Already <em>Tried</em></h2>
+  </div>
+  <div class="tried-list">
+    <div class="tried-item">Generic YouTube advice designed for creators, not business owners</div>
+    <div class="tried-item">Posting videos without a funnel or a call to action</div>
+    <div class="tried-item">Courses that taught them editing but not strategy</div>
+    <div class="tried-item">Watching competitors and copying what looks like it's working</div>
+    <div class="tried-item">Starting and stopping because consistency felt impossible</div>
+    <div class="tried-item">Relying entirely on Instagram, Facebook, or TikTok for reach</div>
+  </div>
+
+  <div class="deciding">
+    <span class="deciding-label">The moment they decide to join YGA</span>
+    <p>They're not looking for someone to teach them YouTube basics. They're looking for someone who <strong>speaks their language</strong>, understands that views don't pay the bills, and can show them exactly how to use YouTube as a <strong>client and community acquisition tool</strong> for a business that already exists.</p>
+  </div>
+
+  <div class="positioning">
+    <span class="pos-label">Channel Positioning Statement</span>
+    <p>I help <strong>coaches, course creators, and community owners</strong> use YouTube to drive traffic to their offer and fill their community so they can <strong>stop relying on platforms they don't own.</strong></p>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">YouTube Growth <em>Accelerator</em></div>
+    <div class="footer-note">Internal · Strategy Reference</div>
+  </div>
+
+</div>
+</body>
+</html>
