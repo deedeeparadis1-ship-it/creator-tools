@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Make It, Price It, Sell It — Your Digital Product Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #2f3e5c;
+    --coral: #f7a493;
+    --cream: #fbf4ec;
+    --navy-light: #3d5070;
+    --coral-light: #fac4b9;
+    --coral-dark: #e8856f;
+    --text-dark: #1e2a3a;
+    --text-mid: #4a5568;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-dark);
+    line-height: 1.7;
+  }
+
+  /* HEADER */
+  .header {
+    background-color: var(--navy);
+    padding: 60px 40px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: var(--coral);
+    opacity: 0.12;
+  }
+
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -40px;
+    width: 250px; height: 250px;
+    border-radius: 50%;
+    background: var(--coral);
+    opacity: 0.08;
+  }
+
+  .header-tag {
+    display: inline-block;
+    background: var(--coral);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 900;
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header h1 span {
+    color: var(--coral);
+  }
+
+  .header-sub {
+    color: rgba(255,255,255,0.75);
+    font-size: 16px;
+    font-weight: 300;
+    max-width: 500px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header-byline {
+    margin-top: 28px;
+    color: var(--coral-light);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* CONTENT */
+  .container {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* INTRO STRIP */
+  .intro-strip {
+    background: var(--navy);
+    padding: 28px 40px;
+    margin-bottom: 0;
+  }
+
+  .intro-strip p {
+    color: rgba(255,255,255,0.85);
+    font-size: 15px;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* SECTIONS */
+  .section {
+    padding: 48px 0 32px;
+    border-bottom: 1px solid rgba(47,62,92,0.1);
+  }
+
+  .section:last-of-type {
+    border-bottom: none;
+  }
+
+  .section-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--coral);
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 50%;
+    margin-bottom: 14px;
+  }
+
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .section p {
+    font-size: 15px;
+    color: var(--text-mid);
+    margin-bottom: 14px;
+    line-height: 1.75;
+  }
+
+  .section p strong {
+    color: var(--navy);
+    font-weight: 600;
+  }
+
+  /* CALLOUT BOX */
+  .callout {
+    background: white;
+    border-left: 4px solid var(--coral);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+
+  .callout p {
+    margin-bottom: 0;
+    font-size: 15px;
+    color: var(--text-dark);
+  }
+
+  .callout strong {
+    color: var(--navy);
+  }
+
+  /* PRICING TABLE */
+  .pricing-grid {
+    display: grid;
+    gap: 14px;
+    margin: 24px 0;
+  }
+
+  .pricing-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: start;
+    box-shadow: 0 2px 8px rgba(47,62,92,0.06);
+  }
+
+  .pricing-card.highlight {
+    border: 2px solid var(--coral);
+    background: #fff8f6;
+  }
+
+  .pricing-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--navy);
+    color: white;
+    border-radius: 8px;
+    padding: 10px 14px;
+    min-width: 80px;
+    text-align: center;
+  }
+
+  .pricing-card.highlight .pricing-badge {
+    background: var(--coral);
+  }
+
+  .pricing-badge .range {
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .pricing-badge .label {
+    font-size: 10px;
+    font-weight: 400;
+    opacity: 0.8;
+    margin-top: 3px;
+    letter-spacing: 0.5px;
+  }
+
+  .pricing-info h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .pricing-card.highlight .pricing-info h4::after {
+    content: ' ⭐ Sweet Spot';
+    font-size: 12px;
+    color: var(--coral-dark);
+    font-weight: 500;
+  }
+
+  .pricing-info p {
+    font-size: 13.5px;
+    color: var(--text-mid);
+    margin-bottom: 0;
+    line-height: 1.6;
+  }
+
+  /* TIPS LIST */
+  .tips-list {
+    list-style: none;
+    margin: 20px 0;
+    display: grid;
+    gap: 12px;
+  }
+
+  .tips-list li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
+
+  .tips-list li .bullet {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    background: var(--coral-light);
+    border-radius: 50%;
+    margin-top: 2px;
+  }
+
+  .tips-list li .bullet svg {
+    width: 11px;
+    height: 11px;
+    stroke: var(--coral-dark);
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* TWO COLUMN */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .method-card {
+    background: white;
+    border-radius: 10px;
+    padding: 22px 20px;
+    box-shadow: 0 2px 8px rgba(47,62,92,0.06);
+  }
+
+  .method-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  .method-card .method-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+
+  .method-card.canva .method-tag {
+    background: var(--navy);
+    color: white;
+  }
+
+  .method-card.claude .method-tag {
+    background: var(--coral);
+    color: white;
+  }
+
+  .method-card p {
+    font-size: 13.5px;
+    color: var(--text-mid);
+    margin-bottom: 10px;
+    line-height: 1.65;
+  }
+
+  .method-card .pro, .method-card .con {
+    font-size: 13px;
+    display: flex;
+    gap: 6px;
+    margin-bottom: 4px;
+    align-items: flex-start;
+  }
+
+  .method-card .pro { color: #2d7a4f; }
+  .method-card .con { color: #c0533a; }
+
+  /* THREE PLACES */
+  .places-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 24px 0;
+  }
+
+  .place-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px 18px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(47,62,92,0.06);
+  }
+
+  .place-number {
+    width: 36px;
+    height: 36px;
+    background: var(--navy);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0 auto 12px;
+  }
+
+  .place-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  .place-card p {
+    font-size: 13px;
+    color: var(--text-mid);
+    margin-bottom: 0;
+    line-height: 1.6;
+  }
+
+  /* TROUBLESHOOT */
+  .troubleshoot-grid {
+    display: grid;
+    gap: 14px;
+    margin: 24px 0;
+  }
+
+  .trouble-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px 24px;
+    box-shadow: 0 2px 8px rgba(47,62,92,0.06);
+  }
+
+  .trouble-card h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 8px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .trouble-card h4 .icon {
+    font-size: 16px;
+  }
+
+  .trouble-card p {
+    font-size: 14px;
+    color: var(--text-mid);
+    margin-bottom: 0;
+    line-height: 1.65;
+  }
+
+  /* PRICING TIPS */
+  .pricing-tips {
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 28px 30px;
+    margin: 24px 0;
+  }
+
+  .pricing-tips h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: white;
+    margin-bottom: 16px;
+  }
+
+  .pricing-tips ul {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+
+  .pricing-tips ul li {
+    color: rgba(255,255,255,0.85);
+    font-size: 14.5px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    line-height: 1.6;
+  }
+
+  .pricing-tips ul li::before {
+    content: '→';
+    color: var(--coral);
+    font-weight: 700;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+
+  /* CTA FOOTER */
+  .cta-footer {
+    background: var(--coral);
+    padding: 50px 40px;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .cta-footer h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+
+  .cta-footer p {
+    color: rgba(255,255,255,0.9);
+    font-size: 15px;
+    max-width: 480px;
+    margin: 0 auto 28px;
+    line-height: 1.7;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--navy);
+    color: white;
+    text-decoration: none;
+    padding: 16px 36px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(47,62,92,0.3);
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(47,62,92,0.4);
+  }
+
+  .cta-tagline {
+    margin-top: 16px;
+    color: rgba(255,255,255,0.75);
+    font-size: 13px;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--navy);
+    padding: 24px 40px;
+    text-align: center;
+  }
+
+  .footer p {
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+  }
+
+  .footer a {
+    color: var(--coral-light);
+    text-decoration: none;
+  }
+
+  @media (max-width: 600px) {
+    .header h1 { font-size: 30px; }
+    .two-col { grid-template-columns: 1fr; }
+    .places-grid { grid-template-columns: 1fr; }
+    .header { padding: 40px 24px 36px; }
+    .intro-strip { padding: 24px; }
+    .section { padding: 36px 0 24px; }
+    .pricing-tips { padding: 22px 20px; }
+    .cta-footer { padding: 40px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-tag">Free Resource</div>
+  <h1>Make It. Price It. <span>Sell It.</span></h1>
+  <p class="header-sub">Your complete guide to creating and selling digital products on YouTube</p>
+  <p class="header-byline">By Dee Dee Paradis &nbsp;|&nbsp; Confident Creator Circle</p>
+</div>
+
+<!-- INTRO STRIP -->
+<div class="intro-strip">
+  <div class="container">
+    <p>This guide walks you through every step we covered in the video -- plus answers to the questions most people have right after they watch. Save it, work through it, and come back when you're ready to launch.</p>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+
+  <!-- STEP 1: YOUR IDEA -->
+  <div class="section">
+    <div class="section-number">1</div>
+    <h2>How to Come Up With Your Product Idea</h2>
+    <p>You don't need a new idea. You need to pay attention to the one that's already in front of you.</p>
+    <p>Start here: <strong>What do people ask you about all the time?</strong> Not what you think they should ask -- what they actually ask. In your comments, your DMs, your conversations. What's the thing you answer almost automatically because you've done it so many times?</p>
+    <p>That's your product.</p>
+
+    <div class="callout">
+      <p><strong>Quick exercise:</strong> Write down the last 3 questions you were asked by a viewer, client, or follower. Look for the pattern. That pattern is your product idea.</p>
+    </div>
+
+    <ul class="tips-list">
+      <li>
+        <span class="bullet"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>
+        <span>If you're a coach -- what's the first thing clients always need before they can move forward?</span>
+      </li>
+      <li>
+        <span class="bullet"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>
+        <span>If you're a course creator -- what do people ask before they even buy your course?</span>
+      </li>
+      <li>
+        <span class="bullet"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>
+        <span>If you're a YouTube creator -- what have you figured out that you wish someone had handed you?</span>
+      </li>
+      <li>
+        <span class="bullet"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>
+        <span>The more specific the problem, the better it sells. "How to write a YouTube description" will outsell "YouTube tips" every time.</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- STEP 2: WHAT MAKES IT SELL -->
+  <div class="section">
+    <div class="section-number">2</div>
+    <h2>What Makes a Digital Product Actually Sell</h2>
+    <p>Not every idea turns into a product that sells. Here's the difference.</p>
+
+    <ul class="tips-list">
+      <li>
+        <span class="bullet"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>
+        <span><strong>It solves a real, specific problem.</strong> Not a vague problem. Not a problem you invented. Something your viewer is experiencing right now and wants gone.</span>
+      </li>
+      <li>
+        <span class="bullet"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>
+        <span><strong>It's easy to consume.</strong> A 3-page checklist that someone actually uses beats a 40-page ebook they never open. Shorter and actionable wins.</span>
+      </li>
+      <li>
+        <span class="bullet"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>
+        <span><strong>It matches your content.</strong> The product should feel like a natural next step from the video. If they watched a video on YouTube descriptions, the product should go deeper on that exact thing.</span>
+      </li>
+      <li>
+        <span class="bullet"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>
+        <span><strong>It's priced correctly.</strong> See the next section for the full breakdown.</span>
+      </li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>Free vs. Paid:</strong> Not every digital product needs a price tag. Free products (lead magnets) build your email list and earn trust. Paid products build your income. You need both working together.</p>
+    </div>
+  </div>
+
+  <!-- STEP 3: PRICING -->
+  <div class="section">
+    <div class="section-number">3</div>
+    <h2>How to Price It</h2>
+    <p>Pricing is where most people either undercharge out of fear or overprice before they've built enough trust. Here's how the tiers actually work in the online digital product world.</p>
+
+    <div class="pricing-grid">
+      <div class="pricing-card highlight">
+        <div class="pricing-badge">
+          <span class="range">$5–$19</span>
+          <span class="label">Ultra Low</span>
+        </div>
+        <div class="pricing-info">
+          <h4>Where Most Creators Should Start</h4>
+          <p>This is your testing ground. Low resistance, easy to grab, and works well from YouTube, Reels, and email. Start here to validate your idea, get your first buyers, and build confidence before you move up in price. You need volume to make real money at this tier, but the data you collect is worth it.</p>
+        </div>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pricing-badge">
+          <span class="range">$20–$49</span>
+          <span class="label">Low Ticket</span>
+        </div>
+        <div class="pricing-info">
+          <h4>For More Experienced Sellers or High-Impact Products</h4>
+          <p>This range works best once you have some proof and trust built with your audience -- or when your product solves a high-intensity pain point and delivers a fast result. It still feels like an easy yes, but buyers expect more and you need to deliver it.</p>
+        </div>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pricing-badge">
+          <span class="range">$50–$299</span>
+          <span class="label">Mid Ticket</span>
+        </div>
+        <div class="pricing-info">
+          <h4>Mini Courses, Workshops, In-Depth Guides</h4>
+          <p>These sell well but require a warmer audience -- someone who has watched you for a while and trusts you. You can absolutely sell mid ticket from YouTube, but it takes more runway to build that trust first.</p>
+        </div>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pricing-badge">
+          <span class="range">$300+</span>
+          <span class="label">High Ticket</span>
+        </div>
+        <div class="pricing-info">
+          <h4>Coaching, Done-For-You, Premium Programs</h4>
+          <p>Requires a strong relationship, proven results, and a clear transformation. This isn't where you start -- it's where you go once your audience knows and trusts you deeply.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pricing-tips">
+      <h3>Pricing Tips That Actually Matter</h3>
+      <ul>
+        <li>Start in the $5–$19 range if you're just launching. Test your idea, get your first buyers, and collect proof before you move up.</li>
+        <li>Don't price by how long it took you to make it. Price by how much the problem costs your buyer to leave unsolved.</li>
+        <li>Round numbers feel arbitrary. $27, $37, $47 convert better than $25, $35, $45.</li>
+        <li>If it's not selling, price is rarely the problem. Usually it's the title, the description, or who's seeing it.</li>
+        <li>You can always raise your price as your audience grows and your trust builds. Start accessible, move up intentionally.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- STEP 4: HOW TO CREATE IT -->
+  <div class="section">
+    <div class="section-number">4</div>
+    <h2>Two Ways to Create It</h2>
+    <p>There's no one right way to build a digital product. Here are the two approaches I use -- pick the one that fits your time and your product.</p>
+
+    <div class="two-col">
+      <div class="method-card canva">
+        <div class="method-tag">Option 1</div>
+        <h4>Canva + AI</h4>
+        <p>Use AI to help you map out the structure and figure out the best order for your content first, then bring it into Canva to design. You write the copy -- AI just helps you get organized before you start.</p>
+        <p class="pro">✓ More design flexibility</p>
+        <p class="pro">✓ Polished, branded look</p>
+        <p class="pro">✓ Great for visual products</p>
+        <p class="con">✗ Takes several hours</p>
+        <p class="con">✗ More decisions to make</p>
+      </div>
+      <div class="method-card claude">
+        <div class="method-tag">Option 2</div>
+        <h4>Claude AI Artifact</h4>
+        <p>Tell Claude what to build -- the topic, sections, what to cover. It creates a formatted, designed document. You review and refine.</p>
+        <p class="pro">✓ Significantly faster</p>
+        <p class="pro">✓ Sometimes under an hour</p>
+        <p class="pro">✓ Great for low ticket products</p>
+        <p class="con">✗ Less custom design control</p>
+        <p class="con">✗ May need refinement</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p>Neither option is wrong. It comes down to how much time you have and what level of design your product needs. For most low ticket products, the Claude artifact approach is more than good enough.</p>
+    </div>
+  </div>
+
+  <!-- STEP 5: GET YOUR LINK -->
+  <div class="section">
+    <div class="section-number">5</div>
+    <h2>How to Get Your Link and Set Up Checkout</h2>
+    <p>Once your product is created, you need two things: a place to host the file and a checkout page. Here's how to keep it simple.</p>
+
+    <ul class="tips-list">
+      <li>
+        <span class="bullet"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>
+        <span><strong>Upload your file</strong> to a platform like Stan, Kajabi, or Systeme.io. These handle the checkout and file delivery automatically.</span>
+      </li>
+      <li>
+        <span class="bullet"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>
+        <span><strong>Set your price</strong> on the platform. Someone pays, they get the file. That's it.</span>
+      </li>
+      <li>
+        <span class="bullet"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>
+        <span><strong>Copy your product link.</strong> This is the link you're going to put everywhere.</span>
+      </li>
+      <li>
+        <span class="bullet"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>
+        <span><strong>For free products</strong> -- connect to your email system so every download adds someone to your list automatically.</span>
+      </li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>I use Stan.</strong> It's simple, clean, and takes minutes to set up. Upload your file, set your price, get your link. Done.</p>
+    </div>
+  </div>
+
+  <!-- STEP 6: 3 PLACES -->
+  <div class="section">
+    <div class="section-number">6</div>
+    <h2>Three Places to Put Your Link on YouTube</h2>
+    <p>Most creators put their link in one place and wonder why no one clicks it. Use all three of these -- every single time.</p>
+
+    <div class="places-grid">
+      <div class="place-card">
+        <div class="place-number">1</div>
+        <h4>In the Video</h4>
+        <p>Mention it on camera, naturally. Tell them what it is, why they need it, and where to get it. Keep it conversational -- not salesy.</p>
+      </div>
+      <div class="place-card">
+        <div class="place-number">2</div>
+        <h4>Pinned Comment</h4>
+        <p>Pin a comment with your link right after you publish. This is one of the most clicked spots on any video. Most creators skip it completely.</p>
+      </div>
+      <div class="place-card">
+        <div class="place-number">3</div>
+        <h4>Above the Fold</h4>
+        <p>Put your link in the first 2 lines of your description -- before "show more." If they have to click to see it, most won't.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 7: WHAT IF IT DOESN'T SELL -->
+  <div class="section">
+    <div class="section-number">7</div>
+    <h2>What to Do If It Doesn't Sell Right Away</h2>
+    <p>This happens to almost everyone and it doesn't mean your product is bad. It usually means something upstream needs adjusting. Here's what to check first.</p>
+
+    <div class="troubleshoot-grid">
+      <div class="trouble-card">
+        <h4><span class="icon">🔍</span> Check your traffic first</h4>
+        <p>How many people are actually seeing the video? If your views are low, not enough people have had the chance to buy. This isn't a product problem -- it's a visibility problem. Work on your title and thumbnail before you change anything about the product itself.</p>
+      </div>
+      <div class="trouble-card">
+        <h4><span class="icon">🎯</span> Check if the product matches the video</h4>
+        <p>The product has to feel like the natural next step from what they just watched. If someone watches a video on on-camera confidence and you offer them a YouTube SEO guide, there's a mismatch. The tighter the connection between the video and the product, the higher the conversion.</p>
+      </div>
+      <div class="trouble-card">
+        <h4><span class="icon">💬</span> Check how you're talking about it</h4>
+        <p>Are you actually telling people what it is, who it's for, and what problem it solves? A lot of creators mention their product almost apologetically -- too quickly, too vaguely, or buried at the end. Your CTA needs to be clear and confident. Say what it is. Say why they need it. Tell them where to get it.</p>
+      </div>
+      <div class="trouble-card">
+        <h4><span class="icon">💰</span> Check the price</h4>
+        <p>If you're getting clicks but no purchases, the price might be the friction point. Try dropping it slightly and see if conversions change. If you're getting no clicks at all, price probably isn't the issue -- go back to visibility and messaging first.</p>
+      </div>
+      <div class="trouble-card">
+        <h4><span class="icon">⏳</span> Give it time</h4>
+        <p>YouTube is a long game. A video that gets 50 views today might get 5,000 views six months from now when YouTube starts pushing it. Don't pull a product because it didn't sell in the first week. Put it out, keep creating, and let YouTube do its job.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- CTA FOOTER -->
+<div class="cta-footer">
+  <h2>Ready to Keep Going?</h2>
+  <p>Come join us inside the Confident Creator Circle -- a free community for YouTube creators who are building a real business, not just a channel. Get support, accountability, and strategy from people who are doing exactly what you're doing.</p>
+  <a href="https://www.skool.com/content-creator-circle-1570/about" class="cta-btn" target="_blank">Join the Confident Creator Circle →</a>
+  <p class="cta-tagline">Free to join. No credit card. Just real support.</p>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>Created by <a href="https://www.skool.com/content-creator-circle-1570/about">Dee Dee Paradis</a> &nbsp;|&nbsp; Confident Creator Circle &nbsp;|&nbsp; All rights reserved.</p>
+</div>
+
+</body>
+</html>
