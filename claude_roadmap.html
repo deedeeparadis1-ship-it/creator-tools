@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Claude Roadmap — Confident Creator Circle</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #99e17a;
+    --green-light: #bfecac;
+    --yellow: #ffde59;
+    --yellow-light: #ffeb99;
+    --coral: #f47c7c;
+    --coral-light: #ff9999;
+    --coral-deep: #d94f4f;
+    --blue: #99c5ff;
+    --blue-light: #c2dcff;
+    --purple: #cea8f0;
+    --purple-light: #e2cbf6;
+    --white: #ffffff;
+    --off-white: #f8f5ff;
+    --text: #2a2a2a;
+    --gray: #6b7280;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--purple);
+    padding: 60px 40px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 280px; height: 280px;
+    background: var(--purple-light);
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -70px; right: -50px;
+    width: 300px; height: 300px;
+    background: var(--blue-light);
+    border-radius: 50%;
+    opacity: 0.35;
+  }
+  .hero-circle-mid {
+    position: absolute;
+    top: 20px; right: 12%;
+    width: 130px; height: 130px;
+    background: var(--green-light);
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--white);
+    color: #6a28c0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    border-radius: 20px;
+    margin-bottom: 22px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 5vw, 54px);
+    font-weight: 900;
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 14px;
+  }
+  .hero h1 span { color: var(--white); }
+  .hero-sub {
+    font-size: 16px;
+    color: rgba(42,42,42,0.8);
+    position: relative;
+    z-index: 1;
+    max-width: 560px;
+    margin: 0 auto 28px;
+    line-height: 1.6;
+  }
+  .hero-pills {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-pill {
+    background: rgba(255,255,255,0.65);
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* PROGRESS COUNTER */
+  .progress-strip {
+    background: var(--white);
+    border-bottom: 1px solid #ede8f5;
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .progress-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray);
+  }
+  .progress-text span {
+    color: #6a28c0;
+    font-size: 15px;
+  }
+  .progress-track {
+    flex: 1;
+    max-width: 340px;
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--purple), var(--green));
+    border-radius: 10px;
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+  .reset-btn {
+    background: none;
+    border: 2px solid #e5e7eb;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+  .reset-btn:hover { border-color: var(--coral); color: var(--coral-deep); }
+
+  /* CONTENT */
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 28px 80px;
+  }
+
+  /* PHASE HEADER */
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    margin-top: 52px;
+  }
+  .phase-header:first-child { margin-top: 0; }
+  .phase-num {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--text);
+    flex-shrink: 0;
+  }
+  .phase-info h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .phase-info p {
+    font-size: 13px;
+    color: var(--gray);
+  }
+
+  /* STEP CARDS */
+  .step-card {
+    background: var(--white);
+    border-radius: 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+  }
+  .step-card:hover { box-shadow: 0 6px 28px rgba(0,0,0,0.09); }
+  .step-card.completed { opacity: 0.75; }
+
+  .step-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 22px 24px;
+  }
+
+  /* CHECKBOX */
+  .check-wrap {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .check-wrap input[type="checkbox"] {
+    display: none;
+  }
+  .check-box {
+    width: 26px; height: 26px;
+    border-radius: 8px;
+    border: 2.5px solid #d1d5db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    background: var(--white);
+  }
+  .check-wrap input:checked + .check-box {
+    border-color: transparent;
+    color: var(--white);
+  }
+
+  .step-content { flex: 1; }
+  .step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .step-icon { font-size: 18px; }
+  .step-desc {
+    font-size: 14px;
+    color: #374151;
+    line-height: 1.7;
+  }
+
+  /* PROMPT BOX */
+  .prompt-box {
+    margin: 0 24px 20px;
+    background: #faf5ff;
+    border-radius: 14px;
+    border-left: 4px solid var(--purple);
+    padding: 16px 18px;
+  }
+  .prompt-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #6a28c0;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .prompt-text {
+    font-size: 13px;
+    line-height: 1.75;
+    color: #374151;
+    font-style: italic;
+    margin-bottom: 10px;
+    padding: 10px 14px;
+    background: var(--white);
+    border-radius: 10px;
+    border: 1px solid #ede8f5;
+  }
+  .prompt-text:last-child { margin-bottom: 0; }
+  .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--purple-light);
+    border: none;
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6a28c0;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+  .copy-btn:hover { background: var(--purple); color: var(--white); }
+
+  /* TIP BOX */
+  .tip-box {
+    margin: 0 24px 20px;
+    background: var(--yellow-light);
+    border-radius: 14px;
+    padding: 14px 18px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .tip-icon { font-size: 18px; flex-shrink: 0; }
+  .tip-text { font-size: 13px; color: #374151; line-height: 1.7; }
+  .tip-text strong { font-weight: 600; }
+
+  /* LEFT BORDER COLORS BY PHASE */
+  .phase-1 .step-card { border-left: 5px solid var(--green); }
+  .phase-2 .step-card { border-left: 5px solid var(--yellow); }
+  .phase-3 .step-card { border-left: 5px solid var(--coral); }
+  .phase-4 .step-card { border-left: 5px solid var(--blue); }
+  .phase-5 .step-card { border-left: 5px solid var(--purple); }
+  .phase-6 .step-card { border-left: 5px solid var(--green); }
+
+  .phase-1 .prompt-box { border-left-color: var(--green); background: #f4fff0; }
+  .phase-1 .prompt-label { color: #3a7e1e; }
+  .phase-1 .copy-btn { background: var(--green-light); color: #3a7e1e; }
+  .phase-1 .copy-btn:hover { background: var(--green); }
+
+  .phase-2 .prompt-box { border-left-color: var(--yellow); background: #fffdf0; }
+  .phase-2 .prompt-label { color: #8a6a00; }
+  .phase-2 .copy-btn { background: var(--yellow-light); color: #8a6a00; }
+  .phase-2 .copy-btn:hover { background: var(--yellow); color: var(--text); }
+
+  .phase-3 .prompt-box { border-left-color: var(--coral); background: #fff5f5; }
+  .phase-3 .prompt-label { color: var(--coral-deep); }
+  .phase-3 .copy-btn { background: var(--coral-light); color: var(--coral-deep); }
+  .phase-3 .copy-btn:hover { background: var(--coral); color: var(--white); }
+
+  .phase-4 .prompt-box { border-left-color: var(--blue); background: #f0f7ff; }
+  .phase-4 .prompt-label { color: #1a5ca8; }
+  .phase-4 .copy-btn { background: var(--blue-light); color: #1a5ca8; }
+  .phase-4 .copy-btn:hover { background: var(--blue); color: var(--text); }
+
+  .phase-5 .prompt-box { border-left-color: var(--purple); background: #faf5ff; }
+  .phase-5 .prompt-label { color: #6a28c0; }
+  .phase-5 .copy-btn { background: var(--purple-light); color: #6a28c0; }
+  .phase-5 .copy-btn:hover { background: var(--purple); color: var(--text); }
+
+  .phase-6 .prompt-box { border-left-color: var(--green); background: #f4fff0; }
+  .phase-6 .prompt-label { color: #3a7e1e; }
+  .phase-6 .copy-btn { background: var(--green-light); color: #3a7e1e; }
+  .phase-6 .copy-btn:hover { background: var(--green); }
+
+  /* STEP DIVIDER */
+  .phase-divider {
+    height: 3px;
+    border-radius: 10px;
+    margin: 48px 0 0;
+  }
+
+  /* COMPLETION BANNER */
+  .completion-banner {
+    display: none;
+    background: linear-gradient(135deg, var(--green), var(--yellow));
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    margin-top: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .completion-banner::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+  }
+  .completion-banner h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .completion-banner p {
+    font-size: 16px;
+    color: rgba(42,42,42,0.75);
+    position: relative;
+    z-index: 1;
+  }
+  .completion-banner.visible { display: block; }
+
+  /* CTA BOTTOM */
+  .cta-section {
+    background: linear-gradient(135deg, var(--purple), var(--blue));
+    border-radius: 24px;
+    padding: 48px 40px;
+    text-align: center;
+    margin-top: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+  }
+  .cta-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 4vw, 34px);
+    font-weight: 900;
+    color: var(--white);
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  .cta-section p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.8);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* COMPLETED STEP STYLE */
+  .step-card.completed .step-title {
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-circle-mid"></div>
+  <div class="hero-badge">Confident Creator Circle · Resource</div>
+  <h1>Your <span>Claude</span> Roadmap</h1>
+  <p class="hero-sub">Go from using Claude randomly to running your entire creator business with it. Work through this step by step -- check things off as you go.</p>
+  <div class="hero-pills">
+    <span class="hero-pill">6 phases</span>
+    <span class="hero-pill">✅ Checkboxes included</span>
+    <span class="hero-pill">📋 Copy-and-paste prompts</span>
+    <span class="hero-pill">Go at your own pace</span>
+  </div>
+</div>
+
+<!-- PROGRESS STRIP -->
+<div class="progress-strip">
+  <div class="progress-text">Your progress: <span id="prog-count">0</span> of <span id="total-count">0</span> steps complete</div>
+  <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+  <button class="reset-btn" onclick="resetAll()">Reset</button>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- PHASE 1 -->
+  <div class="phase-1">
+    <div class="phase-header">
+      <div class="phase-num" style="background:#bfecac">1</div>
+      <div class="phase-info">
+        <h2>Get Set Up Right</h2>
+        <p>Before you build anything, make sure you're on the right plan and understand what you're working with</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box" style="--check-color:#99e17a">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">💻</span> Create your Claude account</div>
+          <div class="step-desc">Go to claude.ai and sign up. The free plan works but it has limits. For your business, Claude Pro is worth it -- you get more messages, faster responses, and access to Projects which is what this whole roadmap is built around.</div>
+        </div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-icon">💡</div>
+        <div class="tip-text"><strong>Which plan?</strong> If you're using Claude for your business -- writing content, building resources, working on your community -- go Pro. You'll hit the free limit fast and it breaks your workflow.</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">🧠</span> Understand what Projects actually do</div>
+          <div class="step-desc">Regular Claude conversations have zero memory. Every chat starts from scratch and Claude has no idea who you are. A Project fixes that. It gives Claude a permanent brief about your business that lives across every conversation inside that project. This is the thing that changes everything.</div>
+        </div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-icon">💡</div>
+        <div class="tip-text"><strong>Think of it this way:</strong> A regular Claude chat is like calling a stranger for help. A Project is like working with someone who's been on your team for months and knows exactly how you work.</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">🗺️</span> Map out your business areas</div>
+          <div class="step-desc">Before you build your first project, take 5 minutes and list every part of your business that Claude could help with. Each area that needs different context should be its own project. Don't try to put everything in one.</div>
+        </div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-label">📋 Try this prompt first</div>
+        <div class="prompt-text">"I run a [describe your business in 1-2 sentences]. Help me figure out which areas of my business should each have their own Claude Project. Give me a list with a one-line description of what each project would be used for."</div>
+        <button class="copy-btn" onclick="copyPrompt(this)">📋 Copy prompt</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-divider" style="background:linear-gradient(90deg, var(--green), var(--yellow))"></div>
+
+  <!-- PHASE 2 -->
+  <div class="phase-2">
+    <div class="phase-header">
+      <div class="phase-num" style="background:#ffeb99">2</div>
+      <div class="phase-info">
+        <h2>Build Your First Project</h2>
+        <p>Pick one area and set it up properly -- this is where the magic starts</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">🎯</span> Choose which project to start with</div>
+          <div class="step-desc">Don't try to set up all your projects at once. Pick the one area where you need the most help right now and start there. Get one project working well before you add more.</div>
+        </div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-icon">💡</div>
+        <div class="tip-text"><strong>Good starting points:</strong> Content creation (scripts, titles, thumbnails) is a great first project because you'll use it constantly and see results fast.</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">📝</span> Create your project in Claude</div>
+          <div class="step-desc">Click "Projects" in the left sidebar, then "New Project." Give it a clear name that matches what it does. Then open the Project Instructions panel -- this is where you tell Claude who you are, what this project is for, and how you want it to behave.</div>
+        </div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-icon">💡</div>
+        <div class="tip-text"><strong>Name it clearly:</strong> "Scripts and Titles" not "Content." "Coaching Clients" not "Work." The more specific the name, the more you'll instinctively go to the right project.</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">✍️</span> Write your project instructions</div>
+          <div class="step-desc">Your project instructions are the brief Claude reads before every single conversation inside this project. The better your instructions, the better everything Claude produces. Don't skip this step and don't rush it. Use the prompt below to get Claude to help you write them.</div>
+        </div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-label">📋 Use this prompt to write your project instructions</div>
+        <div class="prompt-text">"I need to write the project instructions for a Claude Project called [project name]. This project is for [describe exactly what you'll use it for]. I [describe your business, your audience, your tone, and any specific things Claude should always know or always do in this project]. Write me a full set of project instructions I can paste in. Make them detailed and specific."</div>
+        <button class="copy-btn" onclick="copyPrompt(this)">📋 Copy prompt</button>
+      </div>
+      <div class="tip-box">
+        <div class="tip-icon">💡</div>
+        <div class="tip-text"><strong>What to include in your instructions:</strong> Who you are, who your audience is, your tone of voice, what this project is for, anything Claude should never do, and any specific formats or styles you always want.</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">📂</span> Add knowledge to your project</div>
+          <div class="step-desc">Projects let you upload files and paste in text that Claude can reference. This is called Project Knowledge. Add things like your brand guide, your bio, past content examples, a list of your offers, or anything Claude should always be able to reference in this project.</div>
+        </div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-label">📋 Try this prompt to figure out what to add</div>
+        <div class="prompt-text">"I've set up a Claude Project for [project name]. What documents, files, or information should I add to the Project Knowledge section so Claude always has the right context? I [describe your business briefly]."</div>
+        <button class="copy-btn" onclick="copyPrompt(this)">📋 Copy prompt</button>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">🎬</span> Add video transcripts to your project knowledge</div>
+          <div class="step-desc">This is a powerful move most people miss. Copy the transcript from any YouTube video in your niche -- yours or someone else's -- and paste it into your project knowledge. Then ask Claude to analyze it and pull out what's most relevant to your business. It's like having a research assistant who watches videos for you.</div>
+        </div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-label">📋 Use this prompt after pasting in a transcript</div>
+        <div class="prompt-text">"I've just pasted in a transcript from a video in my niche. I [describe your business and audience]. Analyze this transcript and pull out: 1) The key topics and angles that are relevant to my audience, 2) Any content ideas I could create based on what this covers, 3) Gaps or questions this video didn't answer that I could address."</div>
+        <button class="copy-btn" onclick="copyPrompt(this)">📋 Copy prompt</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-divider" style="background:linear-gradient(90deg, var(--yellow), var(--coral))"></div>
+
+  <!-- PHASE 3 -->
+  <div class="phase-3">
+    <div class="phase-header">
+      <div class="phase-num" style="background:#ff9999">3</div>
+      <div class="phase-info">
+        <h2>Learn to Talk to Claude</h2>
+        <p>The quality of what you get back is directly tied to the quality of what you ask</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">🎯</span> Be specific -- always</div>
+          <div class="step-desc">Vague prompts get vague answers. The more context you give Claude, the better the output. Tell it who this is for, what format you want, what tone to use, and what you're trying to accomplish. Don't assume it already knows -- even inside a project, the more you give it, the more it gives back.</div>
+        </div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-label">📋 Vague vs. specific -- see the difference</div>
+        <div class="prompt-text">❌ Vague: "Write me a YouTube title."</div>
+        <div class="prompt-text">✅ Specific: "Write me 10 YouTube title options for a video about [topic]. My audience is [describe them]. My channel is about [niche]. The video covers [main points]. I want titles that feel [tone -- conversational, punchy, etc.] and avoid clickbait."</div>
+        <button class="copy-btn" onclick="copyPrompt(this)">📋 Copy the specific version</button>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">🔄</span> Iterate -- don't restart</div>
+          <div class="step-desc">When Claude gives you something that's close but not quite right, don't start over. Stay in the same conversation and give feedback. Claude holds the full context of your conversation and gets better with each round. Treat it like a back-and-forth with a real collaborator.</div>
+        </div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-label">📋 Prompts for refining output</div>
+        <div class="prompt-text">"This is close but [what's not working]. Can you try again and make it more [specific direction]?"</div>
+        <div class="prompt-text">"I like option 3 best. Can you give me 5 more variations in that same direction?"</div>
+        <div class="prompt-text">"The tone is off -- it sounds too formal. Rewrite this the way I'd actually say it in a video."</div>
+        <button class="copy-btn" onclick="copyPrompt(this)">📋 Copy these</button>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">📄</span> Give Claude examples to work from</div>
+          <div class="step-desc">One of the fastest ways to get Claude to match your style is to show it something you've already written that you love. Paste in a piece of your own content and tell Claude to match that voice and format going forward.</div>
+        </div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-label">📋 Use this prompt to train Claude on your style</div>
+        <div class="prompt-text">"Here's a piece of content I wrote that I'm really happy with: [paste your content]. Study the tone, the sentence length, the word choices, and the overall feel. From now on in this project, write everything in this voice unless I tell you otherwise."</div>
+        <button class="copy-btn" onclick="copyPrompt(this)">📋 Copy prompt</button>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">💬</span> Know when to start a new chat vs. stay in the same one</div>
+          <div class="step-desc">Inside a project, stay in the same chat when you're working on one thing and want Claude to keep the full context. Start a new chat when you're switching to a completely different task -- Claude reads everything in the conversation, so a long messy chat can slow things down.</div>
+        </div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-icon">💡</div>
+        <div class="tip-text"><strong>Rule of thumb:</strong> One task = one chat. Finish your script in one chat. Start a new chat when you move to writing titles. This keeps Claude focused.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-divider" style="background:linear-gradient(90deg, var(--coral), var(--blue))"></div>
+
+  <!-- PHASE 4 -->
+  <div class="phase-4">
+    <div class="phase-header">
+      <div class="phase-num" style="background:#c2dcff">4</div>
+      <div class="phase-info">
+        <h2>Build Your First Artifact</h2>
+        <p>This is where Claude goes from assistant to creator -- and where things get really fun</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">🎨</span> Understand what an artifact is</div>
+          <div class="step-desc">An artifact is a fully designed, interactive HTML file that Claude builds for you. It's not just text -- it's a real visual resource with colors, layouts, checkboxes, buttons, and your branding. You can use them as lead magnets, community resources, low ticket products, or tools for your audience. The roadmap you're reading right now is an artifact.</div>
+        </div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-icon">💡</div>
+        <div class="tip-text"><strong>Examples of artifacts you can build:</strong> A YouTube channel checklist, a content planner, a swipe file, a title generator guide, a mini course resource, a worksheet, a tracker -- anything your audience would find useful.</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">🎁</span> Build your first lead magnet artifact</div>
+          <div class="step-desc">A lead magnet is something valuable you give away for free in exchange for an email address. Claude can build you a beautiful, branded, interactive one in minutes. Think checklists, swipe files, planners, guides -- anything that solves one specific problem for your audience.</div>
+        </div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-label">📋 Use this prompt to build a lead magnet</div>
+        <div class="prompt-text">"Build me an interactive HTML lead magnet for my audience. I [describe your audience and their main pain point]. The lead magnet should be a [checklist / swipe file / guide / planner] about [specific topic]. Use these brand colors: [paste your hex codes]. Make it visually beautiful, interactive where possible, and something they'll actually want to save and use. Include my name [your name] and brand [your brand name] in the design."</div>
+        <button class="copy-btn" onclick="copyPrompt(this)">📋 Copy prompt</button>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">💰</span> Build a low ticket product artifact</div>
+          <div class="step-desc">A low ticket product is something you sell for a small amount -- usually anywhere from a few dollars to around $47. It's a great way to start monetizing before you have a big course or program. Claude can build you a polished, professional resource that looks like you spent days on it.</div>
+        </div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-label">📋 Use this prompt to build a low ticket product</div>
+        <div class="prompt-text">"Build me a professional, interactive HTML resource I can sell as a low ticket product. My audience is [describe them] and their biggest problem is [specific problem]. I want this to be a [type of resource -- workbook, swipe file, toolkit, planner, guide] that helps them [specific outcome]. Use these brand colors: [hex codes]. Make it look high quality and worth paying for -- I want them to feel like they got way more than they paid for."</div>
+        <button class="copy-btn" onclick="copyPrompt(this)">📋 Copy prompt</button>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">⬇️</span> Download your artifact</div>
+          <div class="step-desc">When Claude builds your artifact, you'll see it appear in the chat. Look for the download button in the top right corner of the artifact panel. Click it and save the file to your computer. It will save as an .html file.</div>
+        </div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-icon">💡</div>
+        <div class="tip-text"><strong>Always preview it first:</strong> Open the downloaded file in your browser (just double-click it) to see exactly what your audience will see. Make sure everything looks right before you share it.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-divider" style="background:linear-gradient(90deg, var(--blue), var(--purple))"></div>
+
+  <!-- PHASE 5 -->
+  <div class="phase-5">
+    <div class="phase-header">
+      <div class="phase-num" style="background:#e2cbf6">5</div>
+      <div class="phase-info">
+        <h2>Share It With the World</h2>
+        <p>A beautiful artifact sitting on your computer helps nobody -- here's how to get it live</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">🔗</span> Understand why artifacts need a hosted link</div>
+          <div class="step-desc">HTML files aren't like PDFs. You can't just attach them to an email or upload them directly to Skool or Stan and have them work properly. They need to be hosted somewhere online so they render correctly when someone opens them. That hosted link is what you share everywhere.</div>
+        </div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-icon">💡</div>
+        <div class="tip-text"><strong>What works and what doesn't:</strong> Google Drive reformats them. Stan and Skool need a link to somewhere anyway. GitHub Pages hosts them perfectly and it's free -- that's the solution.</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">🐙</span> Set up GitHub Pages (coming in the next video)</div>
+          <div class="step-desc">GitHub Pages is a free hosting service that's perfect for HTML artifacts. It sounds technical but I'm going to show you exactly how I set it up -- using Claude to walk me through the whole thing. You don't need to know anything about coding. The next dedicated video covers this start to finish.</div>
+        </div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-icon">🎬</div>
+        <div class="tip-text"><strong>Next video coming:</strong> How to host your Claude artifacts on GitHub Pages -- I'll show you how I get Claude to set the whole thing up for me. No tech experience needed.</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">🛒</span> Add your link to Stan and Skool</div>
+          <div class="step-desc">Once your artifact is hosted and you have a live link, you can add it anywhere. Put it in your Stan store as a free or paid product. Link to it in your Skool community classroom. Share it in a post. Put it in your YouTube video description. The link is what travels -- the hosted file is what they actually see.</div>
+        </div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-label">📋 Use this prompt to write your Stan listing description</div>
+        <div class="prompt-text">"Write me a short product description for my Stan store for a [describe your artifact]. My audience is [describe them]. The artifact helps them [specific outcome]. Keep it conversational and benefit-focused -- what will they be able to do after they have this?"</div>
+        <button class="copy-btn" onclick="copyPrompt(this)">📋 Copy prompt</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-divider" style="background:linear-gradient(90deg, var(--purple), var(--green))"></div>
+
+  <!-- PHASE 6 -->
+  <div class="phase-6">
+    <div class="phase-header">
+      <div class="phase-num" style="background:#bfecac">6</div>
+      <div class="phase-info">
+        <h2>Make It a Habit</h2>
+        <p>The creators who get the most from Claude are the ones who use it every single day</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">📅</span> Build your remaining projects</div>
+          <div class="step-desc">Now that you know how projects work and you've got one running well, go build the rest. Every area of your business that needs different context gets its own project. Set them up one at a time, write good instructions for each, and add the relevant knowledge files.</div>
+        </div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-label">📋 Use this prompt for each new project you set up</div>
+        <div class="prompt-text">"I'm setting up a new Claude Project for [project name]. This project is specifically for [what you'll use it for]. Here's everything Claude needs to know to work well in this project: [describe your business, your audience for this area, your tone, specific goals, things to always do, things to never do]. Write me complete project instructions I can paste directly into the Claude Project instructions panel."</div>
+        <button class="copy-btn" onclick="copyPrompt(this)">📋 Copy prompt</button>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">⚡</span> Use Claude before you sit down to create</div>
+          <div class="step-desc">Before you record a video, open your Scripts project and brainstorm with Claude. Before you write a community post, open your CCC project and talk through ideas. Claude works best when it's part of your process from the start, not something you bring in at the end to clean things up.</div>
+        </div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-label">📋 A daily content planning prompt to get you started</div>
+        <div class="prompt-text">"I'm planning my content for this week. My channel is about [niche] and my audience is [describe them]. Based on what we've worked on together and what you know about my business, suggest 5 video ideas for this week. For each one, give me a working title, a one-line hook, and the main point the video would make."</div>
+        <button class="copy-btn" onclick="copyPrompt(this)">📋 Copy prompt</button>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">🔁</span> Update your project instructions as your business evolves</div>
+          <div class="step-desc">Your business changes. Your offers change, your audience gets more specific, your tone develops. Go back into your project instructions every few months and update them to reflect where you are now. Fresh instructions mean better output.</div>
+        </div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-label">📋 Use this prompt to refresh your instructions</div>
+        <div class="prompt-text">"Here are my current project instructions: [paste them in]. A lot has changed in my business since I wrote these. Here's what's different now: [describe what's changed]. Update my project instructions to reflect where I am today. Keep what's still relevant and rewrite the rest."</div>
+        <button class="copy-btn" onclick="copyPrompt(this)">📋 Copy prompt</button>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-top">
+        <label class="check-wrap"><input type="checkbox" onchange="updateProgress(this)"><div class="check-box">✓</div></label>
+        <div class="step-content">
+          <div class="step-title"><span class="step-icon">🚀</span> Keep building -- you've got the foundation</div>
+          <div class="step-desc">You now know how to set up projects, write great instructions, prompt Claude well, build artifacts, and share them. Everything else is just practice. The more you use it, the faster and better it gets. You're not using Claude randomly anymore -- you're running your business with it.</div>
+        </div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-icon">🎉</div>
+        <div class="tip-text"><strong>You've got this.</strong> Every creator in the Confident Creator Circle started exactly where you are. The ones who move fastest are the ones who just start -- even imperfectly.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPLETION BANNER -->
+  <div class="completion-banner" id="completion-banner">
+    <h2>🎉 You did it!</h2>
+    <p>You've completed the full Claude roadmap. You're not using Claude randomly anymore -- you're running your business with it.</p>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h2>Got questions? Bring them to the community.</h2>
+    <p>Share what you built, ask what you're stuck on, and cheer each other on inside the Confident Creator Circle.</p>
+  </div>
+
+</div>
+
+<script>
+  // Set checkbox colors dynamically
+  document.querySelectorAll('.check-wrap').forEach(wrap => {
+    const card = wrap.closest('.step-card');
+    const phase = card.closest('[class^="phase-"]') || card.closest('[class*=" phase-"]');
+    const colors = {
+      'phase-1': '#99e17a',
+      'phase-2': '#ffde59',
+      'phase-3': '#f47c7c',
+      'phase-4': '#99c5ff',
+      'phase-5': '#cea8f0',
+      'phase-6': '#99e17a'
+    };
+    let color = '#cea8f0';
+    if (phase) {
+      for (const [cls, col] of Object.entries(colors)) {
+        if (phase.classList.contains(cls)) { color = col; break; }
+      }
+    }
+    wrap.querySelector('.check-box').dataset.color = color;
+  });
+
+  const totalSteps = document.querySelectorAll('input[type="checkbox"]').length;
+  document.getElementById('total-count').textContent = totalSteps;
+
+  // Load saved state
+  const saved = JSON.parse(localStorage.getItem('claudeRoadmap') || '{}');
+  document.querySelectorAll('input[type="checkbox"]').forEach((cb, i) => {
+    if (saved[i]) {
+      cb.checked = true;
+      styleCheck(cb);
+    }
+  });
+  updateProgress();
+
+  function styleCheck(cb) {
+    const box = cb.nextElementSibling;
+    const color = box.dataset.color || '#cea8f0';
+    if (cb.checked) {
+      box.style.background = color;
+      box.style.borderColor = color;
+      box.style.color = '#fff';
+      cb.closest('.step-card').classList.add('completed');
+    } else {
+      box.style.background = '#fff';
+      box.style.borderColor = '#d1d5db';
+      box.style.color = 'transparent';
+      cb.closest('.step-card').classList.remove('completed');
+    }
+  }
+
+  function updateProgress(cb) {
+    if (cb) styleCheck(cb);
+    const all = document.querySelectorAll('input[type="checkbox"]');
+    let done = 0;
+    const state = {};
+    all.forEach((c, i) => { if (c.checked) { done++; state[i] = true; } });
+    localStorage.setItem('claudeRoadmap', JSON.stringify(state));
+    document.getElementById('prog-count').textContent = done;
+    const pct = totalSteps > 0 ? (done / totalSteps) * 100 : 0;
+    document.getElementById('prog-fill').style.width = pct + '%';
+    if (done === totalSteps && totalSteps > 0) {
+      document.getElementById('completion-banner').classList.add('visible');
+    } else {
+      document.getElementById('completion-banner').classList.remove('visible');
+    }
+  }
+
+  function resetAll() {
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      cb.checked = false;
+      styleCheck(cb);
+    });
+    localStorage.removeItem('claudeRoadmap');
+    updateProgress();
+  }
+
+  function copyPrompt(btn) {
+    const box = btn.closest('.prompt-box');
+    const texts = box.querySelectorAll('.prompt-text');
+    let combined = '';
+    texts.forEach(t => combined += t.textContent.trim() + '\n\n');
+    navigator.clipboard.writeText(combined.trim()).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = '✅ Copied!';
+      setTimeout(() => btn.textContent = orig, 2000);
+    });
+  }
+</script>
+</body>
+</html>
