@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube to Your First $1K -- Beta Program</title>
+<link href="https://fonts.googleapis.com/css2?family=Sour+Gummy:wght@400;700;900&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #99e17a;
+    --green-light: #bfecac;
+    --yellow: #ffde59;
+    --yellow-light: #ffeb99;
+    --coral: #f47c7c;
+    --coral-light: #ff9999;
+    --blue: #99c5ff;
+    --blue-light: #c2dcff;
+    --purple: #cea8f0;
+    --purple-light: #e2cbf6;
+    --dark: #1a1a1a;
+    --body: #3a3a3a;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #f9f9f6;
+    color: var(--body);
+    line-height: 1.6;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--white);
+    padding: 60px 24px 48px;
+    text-align: center;
+    border-bottom: 3px solid var(--green);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    background: var(--yellow-light);
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -40px;
+    width: 160px; height: 160px;
+    background: var(--green-light);
+    border-radius: 50%;
+    opacity: 0.4;
+  }
+
+  .badge {
+    display: inline-block;
+    background: var(--yellow);
+    color: var(--dark);
+    font-family: 'Sour Gummy', cursive;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-family: 'Sour Gummy', cursive;
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 900;
+    color: var(--dark);
+    line-height: 1.1;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero h1 span {
+    color: var(--coral);
+  }
+
+  .hero p {
+    font-size: clamp(16px, 2vw, 19px);
+    color: var(--body);
+    max-width: 580px;
+    margin: 0 auto 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .price-tag {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--green);
+    border-radius: 20px;
+    padding: 20px 40px;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .price-tag .was {
+    font-size: 14px;
+    text-decoration: line-through;
+    color: #666;
+    font-weight: 500;
+  }
+
+  .price-tag .amount {
+    font-family: 'Sour Gummy', cursive;
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--dark);
+    line-height: 1;
+  }
+
+  .price-tag .label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--dark);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--coral);
+    color: var(--white);
+    font-family: 'Sour Gummy', cursive;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 18px 48px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 0 #c45a5a;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 #c45a5a;
+  }
+
+  .spots {
+    margin-top: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--coral);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* SECTIONS */
+  .section {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 48px 24px;
+  }
+
+  .section-title {
+    font-family: 'Sour Gummy', cursive;
+    font-size: clamp(24px, 4vw, 32px);
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 24px;
+  }
+
+  /* FOR YOU BLOCK */
+  .for-you {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 36px;
+    border: 2px solid var(--green-light);
+    margin-bottom: 12px;
+  }
+
+  .check-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .check-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .check-list li .icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .icon-green { background: var(--green); }
+  .icon-red { background: var(--coral-light); }
+
+  /* WHAT YOU GET */
+  .gets-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .get-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 24px 28px;
+    border-left: 5px solid var(--green);
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .get-card:nth-child(2) { border-left-color: var(--yellow); }
+  .get-card:nth-child(3) { border-left-color: var(--blue); }
+  .get-card:nth-child(4) { border-left-color: var(--purple); }
+
+  .get-emoji {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  .get-card h3 {
+    font-family: 'Sour Gummy', cursive;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+
+  .get-card p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 36px;
+    border: 2px solid var(--blue-light);
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .timeline-item:last-child { margin-bottom: 0; }
+
+  .timeline-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Sour Gummy', cursive;
+    font-weight: 700;
+    font-size: 16px;
+    flex-shrink: 0;
+    color: var(--dark);
+  }
+
+  .dot-1 { background: var(--green); }
+  .dot-2 { background: var(--yellow); }
+  .dot-3 { background: var(--blue); }
+  .dot-4 { background: var(--purple); }
+
+  .timeline-content h3 {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--dark);
+    margin-bottom: 2px;
+  }
+
+  .timeline-content p {
+    font-size: 14px;
+    color: #777;
+  }
+
+  /* ABOUT */
+  .about-block {
+    background: var(--yellow-light);
+    border-radius: 24px;
+    padding: 36px;
+    text-align: center;
+  }
+
+  .about-block p {
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .about-block strong {
+    color: var(--dark);
+    font-weight: 600;
+  }
+
+  /* BOTTOM CTA */
+  .bottom-cta {
+    background: var(--green);
+    padding: 60px 24px;
+    text-align: center;
+  }
+
+  .bottom-cta h2 {
+    font-family: 'Sour Gummy', cursive;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 900;
+    color: var(--dark);
+    margin-bottom: 12px;
+  }
+
+  .bottom-cta p {
+    color: #3a3a3a;
+    font-size: 16px;
+    margin-bottom: 32px;
+    max-width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .bottom-cta .cta-btn {
+    background: var(--coral);
+    color: var(--white);
+    box-shadow: 0 4px 0 #c45a5a;
+  }
+
+  .bottom-cta .cta-btn:hover {
+    box-shadow: 0 6px 0 #c45a5a;
+  }
+
+  .bottom-cta .spots {
+    color: var(--dark);
+    margin-top: 16px;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 2px;
+    background: linear-gradient(to right, var(--green-light), var(--blue-light), var(--purple-light));
+    max-width: 200px;
+    margin: 0 auto;
+    border-radius: 100px;
+  }
+
+  @media (max-width: 480px) {
+    .price-tag { padding: 16px 28px; }
+    .for-you, .timeline { padding: 24px; }
+    .get-card { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">Beta Program -- Limited to 5 Spots</div>
+  <h1>YouTube to Your<br><span>First $1K</span></h1>
+  <p>A 90 day beta program for YouTube creators who are ready to stop just making content and start making money from it.</p>
+  <div class="price-tag">
+    <span class="was">Regular price: $497</span>
+    <span class="amount">$197</span>
+    <span class="label">Beta Price</span>
+  </div>
+  <br>
+  <a href="https://buy.stripe.com/aFa28rcLS1sI4PR5D3a7C02" class="cta-btn">Yes, I'm In -- Grab My Spot</a>
+  <p class="spots">Only 5 spots available. Content goes live May 18.</p>
+</div>
+
+<!-- IS THIS FOR YOU -->
+<div class="section">
+  <h2 class="section-title">Is this for you?</h2>
+  <div class="for-you">
+    <ul class="check-list">
+      <li>
+        <span class="icon icon-green">✓</span>
+        <span>You already have a YouTube channel and you're creating content consistently</span>
+      </li>
+      <li>
+        <span class="icon icon-green">✓</span>
+        <span>You see your channel as a business, not a hobby</span>
+      </li>
+      <li>
+        <span class="icon icon-green">✓</span>
+        <span>You have real knowledge, experience, or expertise that other people would pay to learn from</span>
+      </li>
+      <li>
+        <span class="icon icon-green">✓</span>
+        <span>But you have no idea how to turn any of it into actual income yet</span>
+      </li>
+      <li>
+        <span class="icon icon-red">✗</span>
+        <span>This is NOT for hobby creators or people who just want more views and subscribers</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- WHAT YOU GET -->
+<div class="section">
+  <h2 class="section-title">Here's what you get</h2>
+  <div class="gets-grid">
+    <div class="get-card">
+      <span class="get-emoji">🗺️</span>
+      <div>
+        <h3>A Clear Path to Your First $1K</h3>
+        <p>Course content that walks you through exactly what to do and in what order -- from figuring out what to offer to actually making the sale.</p>
+      </div>
+    </div>
+    <div class="get-card">
+      <span class="get-emoji">📞</span>
+      <div>
+        <h3>Biweekly Group Coaching Calls</h3>
+        <p>Live calls with Dee Dee every two weeks to get unstuck, ask questions, and keep moving forward.</p>
+      </div>
+    </div>
+    <div class="get-card">
+      <span class="get-emoji">💬</span>
+      <div>
+        <h3>Community Access Between Calls</h3>
+        <p>Direct access to Dee Dee and your fellow beta members inside the community. You won't be doing this alone.</p>
+      </div>
+    </div>
+    <div class="get-card">
+      <span class="get-emoji">🎯</span>
+      <div>
+        <h3>90 Days to Make It Happen</h3>
+        <p>A real deadline with real support. You have 90 days to get to your first $1K with Dee Dee in your corner the whole way.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- TIMELINE -->
+<div class="section">
+  <h2 class="section-title">How it works</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot dot-1">1</div>
+      <div class="timeline-content">
+        <h3>Grab your spot today</h3>
+        <p>Pay $197 and you're in. Only 5 spots available at this price.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot dot-2">2</div>
+      <div class="timeline-content">
+        <h3>Course content drops May 18</h3>
+        <p>You'll get access to the first module and we'll start working through the framework together.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot dot-3">3</div>
+      <div class="timeline-content">
+        <h3>First live call May 20</h3>
+        <p>We kick things off together as a group. This is where we get clear on where you are and where you're going.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot dot-4">4</div>
+      <div class="timeline-content">
+        <h3>90 days to your first $1K</h3>
+        <p>We work through the framework together with biweekly calls and community support the whole way.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<div class="section">
+  <h2 class="section-title">Why Dee Dee</h2>
+  <div class="about-block">
+    <p>Dee Dee Paradis is a YouTube creator and educator who helps people over 40 build a real online business from what they already know. <strong>She monetized her first YouTube channel in 5 months and her second in 13 weeks.</strong> She's not teaching theory. She's teaching the exact path she's walked -- and is still walking -- in real time.</p>
+  </div>
+</div>
+
+<!-- BOTTOM CTA -->
+<div class="bottom-cta">
+  <h2>Ready to make your<br>first $1K?</h2>
+  <p>5 spots. $197. 90 days. Content goes live May 18 and the first call is May 20.</p>
+  <a href="https://buy.stripe.com/aFa28rcLS1sI4PR5D3a7C02" class="cta-btn">Yes, I'm In -- Grab My Spot</a>
+  <p class="spots">Only 5 beta spots available at this price</p>
+</div>
+
+</body>
+</html>
