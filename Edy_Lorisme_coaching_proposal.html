@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube Coaching Proposal</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --rose: #C4897B;
+    --rose-light: #E8C4BB;
+    --rose-pale: #F5EAE7;
+    --rose-deep: #9B6358;
+    --cream: #FAF7F4;
+    --warm-white: #FFFDFB;
+    --charcoal: #1B2A4A;
+    --text: #3D3330;
+    --text-muted: #7A6B67;
+    --text-light: #A89C99;
+    --border: #E8D8D4;
+    --gold: #C4A882;
+    --gold-light: #F0E6D6;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .hero {
+    background: var(--charcoal);
+    padding: 72px 40px 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(196,137,123,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; right: -40px;
+    width: 350px; height: 350px;
+    background: radial-gradient(circle, rgba(196,168,130,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose-light);
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 6vw, 56px);
+    font-weight: 300;
+    color: var(--warm-white);
+    line-height: 1.15;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--rose-light);
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    color: var(--text-light);
+    max-width: 480px;
+    margin: 0 auto 32px;
+    font-weight: 300;
+  }
+
+  .hero-divider {
+    width: 48px;
+    height: 1px;
+    background: var(--rose);
+    margin: 0 auto;
+    opacity: 0.6;
+  }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .section {
+    padding: 56px 0;
+  }
+
+  .section + .section {
+    border-top: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 400;
+    color: var(--charcoal);
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--rose-deep);
+  }
+
+  .body-text {
+    color: var(--text-muted);
+    font-weight: 300;
+    margin-bottom: 16px;
+    max-width: 640px;
+  }
+
+  .body-text:last-child { margin-bottom: 0; }
+
+  /* PACKAGES */
+  .packages {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  .package-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    position: relative;
+    transition: box-shadow 0.2s;
+  }
+
+  .package-card:hover {
+    box-shadow: 0 8px 32px rgba(196,137,123,0.1);
+  }
+
+  .package-card.featured {
+    border-color: var(--rose);
+    background: linear-gradient(135deg, #FFFDFB 0%, #FDF2EF 100%);
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: -12px;
+    left: 32px;
+    background: var(--rose);
+    color: white;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+  }
+
+  .package-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .package-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--charcoal);
+    line-height: 1.2;
+  }
+
+  .package-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--rose-deep);
+    white-space: nowrap;
+  }
+
+  .package-freq {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text-light);
+    font-weight: 300;
+    margin-top: 2px;
+  }
+
+  .package-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 300;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .package-includes {
+    list-style: none;
+    margin-bottom: 24px;
+  }
+
+  .package-includes li {
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 300;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .package-includes li:last-child { border-bottom: none; }
+
+  .check {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--rose-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--rose-deep);
+    font-size: 10px;
+  }
+
+  .btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: var(--rose);
+    color: white;
+    border: 1px solid var(--rose);
+  }
+
+  .btn-primary:hover {
+    background: var(--rose-deep);
+    border-color: var(--rose-deep);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--rose-deep);
+    border: 1px solid var(--rose-light);
+  }
+
+  .btn-outline:hover {
+    background: var(--rose-pale);
+    border-color: var(--rose);
+  }
+
+  /* PROPOSAL DETAIL */
+  .proposal-intro {
+    background: var(--charcoal);
+    border-radius: 16px;
+    padding: 40px;
+    margin-bottom: 40px;
+  }
+
+  .proposal-intro p {
+    color: rgba(255,255,255,0.75);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 12px;
+  }
+
+  .proposal-intro p:last-child { margin-bottom: 0; }
+
+  .proposal-intro .quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--rose-light);
+    line-height: 1.4;
+    margin-bottom: 20px;
+  }
+
+  /* ROADMAP */
+  .roadmap { margin-top: 8px; }
+
+  .phase-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 32px 0 12px;
+  }
+
+  .phase-label:first-child { margin-top: 0; }
+
+  .week-item {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+
+  .week-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .week-header:hover { background: var(--rose-pale); }
+
+  .week-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--rose-pale);
+    border: 1px solid var(--rose-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--rose-deep);
+    flex-shrink: 0;
+  }
+
+  .week-title-wrap { flex: 1; }
+
+  .week-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--charcoal);
+  }
+
+  .week-sub {
+    font-size: 12px;
+    color: var(--text-light);
+    font-weight: 300;
+    margin-top: 2px;
+  }
+
+  .week-chevron {
+    font-size: 11px;
+    color: var(--text-light);
+    transition: transform 0.2s;
+  }
+
+  .week-chevron.open { transform: rotate(180deg); }
+
+  .week-body {
+    display: none;
+    padding: 0 20px 18px 66px;
+  }
+
+  .week-body.open { display: block; }
+
+  .week-body ul {
+    list-style: none;
+  }
+
+  .week-body ul li {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 300;
+    padding: 5px 0;
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.6;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .week-body ul li:last-child { border-bottom: none; }
+
+  .week-body ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--rose-light);
+  }
+
+  /* INCLUDED / NOT INCLUDED */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 8px;
+  }
+
+  @media (max-width: 560px) {
+    .two-col { grid-template-columns: 1fr; }
+    .package-top { flex-direction: column; }
+    .hero { padding: 56px 24px 48px; }
+  }
+
+  .info-box {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  .info-box-title {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .info-box.included .info-box-title { color: var(--rose-deep); }
+  .info-box.not-included .info-box-title { color: var(--text-light); }
+
+  .info-list { list-style: none; }
+
+  .info-list li {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-muted);
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .info-list li:last-child { border-bottom: none; }
+
+  .info-list li::before {
+    position: absolute;
+    left: 0;
+    top: 9px;
+    font-size: 11px;
+  }
+
+  .info-box.included .info-list li::before {
+    content: '✓';
+    color: var(--rose);
+  }
+
+  .info-box.not-included .info-list li::before {
+    content: '–';
+    color: var(--text-light);
+  }
+
+  /* GUARANTEE */
+  .guarantee-box {
+    background: var(--gold-light);
+    border: 1px solid var(--gold);
+    border-radius: 16px;
+    padding: 32px;
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  .guarantee-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .guarantee-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--charcoal);
+    margin-bottom: 12px;
+  }
+
+  .guarantee-text {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 300;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* EMAIL */
+  .email-box {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-top: 8px;
+  }
+
+  .email-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--rose-pale);
+    border: 1px solid var(--rose-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .email-content h3 {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--charcoal);
+    margin-bottom: 6px;
+  }
+
+  .email-content p {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--charcoal);
+    padding: 48px 40px;
+    text-align: center;
+  }
+
+  .footer p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 300;
+  }
+
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--rose-light);
+    margin-bottom: 8px;
+  }
+
+  .divider-line {
+    width: 40px;
+    height: 1px;
+    background: var(--rose);
+    margin: 28px auto;
+    opacity: 0.4;
+  }
+
+  .loom-note {
+    background: var(--rose-pale);
+    border-left: 3px solid var(--rose);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  .comparison-note {
+    background: var(--charcoal);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-top: 8px;
+  }
+
+  .comparison-note p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .comparison-note strong {
+    color: var(--rose-light);
+    font-weight: 500;
+  }
+
+  /* animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero h1, .hero-eyebrow, .hero-sub {
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .hero-eyebrow { animation-delay: 0.1s; }
+  .hero h1 { animation-delay: 0.2s; }
+  .hero-sub { animation-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">A Personalized Coaching Proposal for Edy Lorisme</div>
+  <h1>Your Message Deserves<br>to Be <em>Heard</em></h1>
+  <p class="hero-sub">An 8-week YouTube coaching program built around you -- your mission, your audience, your goals.</p>
+  <div class="hero-divider"></div>
+</div>
+
+<!-- PACKAGES -->
+<div class="container">
+  <div class="section">
+    <div class="section-label">Choose Your Path</div>
+    <div class="section-title">Select the program<br>that's right for <em>you</em></div>
+    <p class="body-text">Every option below includes real coaching -- not just a course and a prayer. Here's what each one looks like.</p>
+
+    <div class="packages">
+
+      <!-- $497 -->
+      <div class="package-card">
+        <div class="package-top">
+          <div>
+            <div class="package-name">YouTube Growth Accelerator</div>
+            <div class="package-freq">Every other week · 8 weeks</div>
+          </div>
+          <div style="text-align:right">
+            <div class="package-price">$497</div>
+          </div>
+        </div>
+        <div class="package-desc">A solid foundation for creators who want structured guidance and accountability on a bi-weekly cadence.</div>
+        <ul class="package-includes">
+          <li><span class="check">✓</span> 4 x 1:1 coaching calls (60 min each)</li>
+          <li><span class="check">✓</span> Email access with limited response between sessions</li>
+          <li><span class="check">✓</span> General YouTube channel guidance</li>
+        </ul>
+        <a href="https://buy.stripe.com/5kQ8wP9zG6N2eqrfdDa7C00" class="btn btn-outline">Get Started for $497</a>
+      </div>
+
+      <!-- $897 -->
+      <div class="package-card">
+        <div class="package-top">
+          <div>
+            <div class="package-name">YouTube Growth Accelerator Elite</div>
+            <div class="package-freq">Every week · 8 weeks</div>
+          </div>
+          <div style="text-align:right">
+            <div class="package-price">$897</div>
+          </div>
+        </div>
+        <div class="package-desc">More touchpoints, more momentum. Weekly calls keep you accountable and moving forward consistently.</div>
+        <ul class="package-includes">
+          <li><span class="check">✓</span> 8 x 1:1 coaching calls (60 min each)</li>
+          <li><span class="check">✓</span> Email access with limited response between sessions</li>
+          <li><span class="check">✓</span> General YouTube channel guidance</li>
+        </ul>
+        <a href="https://buy.stripe.com/fZu3cv5jq0oE5TV9Tja7C01" class="btn btn-outline">Get Started for $897</a>
+      </div>
+
+      <!-- $2500 FEATURED -->
+      <div class="package-card featured">
+        <div class="featured-badge">Most Personalized</div>
+        <div class="package-top">
+          <div>
+            <div class="package-name">VIP YouTube Growth<br>Accelerator Program</div>
+            <div class="package-freq">Every week · 8 weeks · Fully personalized</div>
+          </div>
+          <div style="text-align:right">
+            <div class="package-price">$2,500</div>
+          </div>
+        </div>
+        <div class="package-desc">This is not a standard coaching package. Everything is built around you -- your mission, your audience, your specific challenges. Nothing generic about it.</div>
+        <ul class="package-includes">
+          <li><span class="check">✓</span> 8 x 1:1 coaching calls (60 min each)</li>
+          <li><span class="check">✓</span> Loom video feedback between calls on your videos and thumbnails</li>
+          <li><span class="check">✓</span> Done-for-you thumbnails (up to 6) with full walkthroughs</li>
+          <li><span class="check">✓</span> Full channel audit at week 8</li>
+          <li><span class="check">✓</span> Direct email access -- 24-hour response Mon-Fri</li>
+          <li><span class="check">✓</span> Flexible 8-week roadmap that moves at your pace</li>
+          <li><span class="check">✓</span> Option to continue at $1,000/month after week 8</li>
+        </ul>
+        <a href="https://buy.stripe.com/fZu28rdPW3AQ5TV1mNa7C03" class="btn btn-primary">Enroll in the VIP Program</a>
+        <p style="font-size:12px;color:var(--text-light);text-align:center;margin-top:12px;font-weight:300;">Once payment is received, you'll hear from me within 48 hours with your intake form and next steps.</p>
+      </div>
+
+    </div>
+
+    <div class="comparison-note" style="margin-top:20px">
+      <p>The $497 and $897 programs include coaching calls and limited access to me between sessions. The <strong>VIP Program</strong> is something entirely different -- it's high-touch, fully personalized, and built around your specific mission and audience. There's no comparison.</p>
+    </div>
+
+  </div>
+
+  <!-- WHAT THIS IS -->
+  <div class="section">
+    <div class="section-label">The VIP Program in Detail</div>
+    <div class="section-title">What this program<br><em>actually</em> is</div>
+
+    <div class="proposal-intro">
+      <div class="quote">"You have something important to say. Let's make sure the world can hear it."</div>
+      <p>This is a hands-on, personalized 8-week coaching program built specifically for you and your mission. You're not getting a generic program or a course with no support. You're getting a real partner who's going to be in it with you every step of the way -- someone who will watch your videos, give you real feedback, help you build your thumbnails, and make sure your channel actually reflects the message you're trying to get out to your people.</p>
+    </div>
+
+    <div class="loom-note">
+      <strong>What's a Loom?</strong> Loom is a free video tool that lets me record my screen and talk you through feedback on your videos, thumbnails, or anything else -- so you can watch it on your own time, pause it, rewind it, and actually absorb it. It's like having me sitting right next to you, even when we're not on a call.
+    </div>
+
+  </div>
+
+  <!-- ROADMAP -->
+  <div class="section">
+    <div class="section-label">The 8-Week Roadmap</div>
+    <div class="section-title">A guide, not a <em>rigid schedule</em></div>
+    <p class="body-text">These phases keep us moving forward with purpose. But if something comes up that needs attention before we planned for it, just give me a heads-up before our call so I can prepare and make sure we use our time well. Your progress drives the schedule, not the other way around.</p>
+
+    <div class="roadmap">
+
+      <div class="phase-label">Phase 1 -- Foundation</div>
+
+      <div class="week-item">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-num">1</div>
+          <div class="week-title-wrap">
+            <div class="week-title">Clarity and Channel Setup</div>
+            <div class="week-sub">Your message, your audience, your foundation</div>
+          </div>
+          <span class="week-chevron">▼</span>
+        </div>
+        <div class="week-body">
+          <ul>
+            <li>Define your message, your audience, and what success looks like for you</li>
+            <li>Audit your channel together -- banner, about section, profile photo, everything a new viewer sees first</li>
+            <li>Talk about why you keep deleting your videos and change that habit for good</li>
+            <li>Set a realistic posting goal -- 1 video per week to start</li>
+            <li>Review any footage you've already recorded so nothing goes to waste</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="week-item">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-num">2</div>
+          <div class="week-title-wrap">
+            <div class="week-title">Content Strategy and Filming</div>
+            <div class="week-sub">What to talk about and how to show up on camera</div>
+          </div>
+          <span class="week-chevron">▼</span>
+        </div>
+        <div class="week-body">
+          <ul>
+            <li>Build your content plan -- what topics, what format, how long</li>
+            <li>Work on camera comfort and natural delivery</li>
+            <li>Talk through filming outside at community events -- phone setup, audio, what to capture</li>
+            <li>Answer any outstanding tech questions</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase-label">Phase 2 -- Skills Building</div>
+
+      <div class="week-item">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-num">3</div>
+          <div class="week-title-wrap">
+            <div class="week-title">Editing and Publishing</div>
+            <div class="week-sub">Getting comfortable with "good enough"</div>
+          </div>
+          <span class="week-chevron">▼</span>
+        </div>
+        <div class="week-body">
+          <ul>
+            <li>By week 3 you should have your first video -- or 3 or 4 -- recorded and edited. We'll review them together and I'll tell you exactly what to fix and what to leave alone</li>
+            <li>Teach the 80/20 rule of editing -- what viewers actually care about and what they don't</li>
+            <li>Walk through how to upload properly -- title, description, tags, end screens, everything</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="week-item">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-num">4</div>
+          <div class="week-title-wrap">
+            <div class="week-title">Thumbnails, Part 1 (Done for You)</div>
+            <div class="week-sub">Your first thumbnails, built together</div>
+          </div>
+          <span class="week-chevron">▼</span>
+        </div>
+        <div class="week-body">
+          <ul>
+            <li>I create your first thumbnails and walk you through every decision -- font, color, photo, text</li>
+            <li>You learn by watching, then you try one yourself</li>
+            <li>Feedback on your attempt delivered via Loom</li>
+            <li>You'll need to send me good photos of yourself for this -- we'll talk about what works</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="week-item">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-num">5</div>
+          <div class="week-title-wrap">
+            <div class="week-title">Editing Confidence and Content Flow</div>
+            <div class="week-sub">Building your rhythm</div>
+          </div>
+          <span class="week-chevron">▼</span>
+        </div>
+        <div class="week-body">
+          <ul>
+            <li>Review your editing habits -- are you improving? Are you still over-cutting?</li>
+            <li>Check in on your community footage -- are you getting what you need out in the field?</li>
+            <li>Make sure you're building a real, sustainable posting rhythm</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="week-item">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-num">6</div>
+          <div class="week-title-wrap">
+            <div class="week-title">Thumbnails, Part 2 (Done for You)</div>
+            <div class="week-sub">Handing the wheel over to you</div>
+          </div>
+          <span class="week-chevron">▼</span>
+        </div>
+        <div class="week-body">
+          <ul>
+            <li>Round two of done-for-you thumbnails with more of the process handed off to you</li>
+            <li>By the end of this session you should feel confident creating your own</li>
+            <li>Going forward I'll review and give feedback -- but you'll be driving</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase-label">Phase 3 -- Momentum</div>
+
+      <div class="week-item">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-num">7</div>
+          <div class="week-title-wrap">
+            <div class="week-title">Audience and Income</div>
+            <div class="week-sub">Planting the seeds for monetization</div>
+          </div>
+          <span class="week-chevron">▼</span>
+        </div>
+        <div class="week-body">
+          <ul>
+            <li>Look at your analytics together -- what's getting clicks, what's not</li>
+            <li>Talk through YouTube Partner Program requirements and what you're working toward</li>
+            <li>Explore monetization options that fit your mission -- memberships, Super Thanks, and more</li>
+            <li>Talk about how to engage your viewers and build a real community around your message</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase-label">Phase 4 -- Review and Decision</div>
+
+      <div class="week-item">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-num">8</div>
+          <div class="week-title-wrap">
+            <div class="week-title">Full Channel Audit</div>
+            <div class="week-sub">Celebrate, evaluate, decide what's next</div>
+          </div>
+          <span class="week-chevron">▼</span>
+        </div>
+        <div class="week-body">
+          <ul>
+            <li>Step back and look at everything -- thumbnails, videos, analytics, posting habits, growth</li>
+            <li>Celebrate how far you've come -- eight weeks ago you had zero published videos</li>
+            <li>Look honestly at what still needs work and what you've got on your own</li>
+            <li>Decide together whether you want to continue with ongoing monthly support</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- INCLUDED / NOT INCLUDED -->
+  <div class="section">
+    <div class="section-label">Full Transparency</div>
+    <div class="section-title">What's included and<br>what's <em>not</em></div>
+    <div class="two-col">
+      <div class="info-box included">
+        <div class="info-box-title">Included</div>
+        <ul class="info-list">
+          <li>Weekly 1:1 coaching calls</li>
+          <li>Loom video feedback between calls</li>
+          <li>Up to 6 done-for-you thumbnails</li>
+          <li>Thumbnail teaching and feedback</li>
+          <li>Full channel audit at week 8</li>
+          <li>Direct email access, 24-hr response</li>
+          <li>Flexible roadmap built around you</li>
+        </ul>
+      </div>
+      <div class="info-box not-included">
+        <div class="info-box-title">Not Included</div>
+        <ul class="info-list">
+          <li>Creole language content review*</li>
+          <li>Video editing on your behalf</li>
+          <li>More than 6 done-for-you thumbnails</li>
+        </ul>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--text-light);margin-top:16px;font-weight:300;font-style:italic;">*On the Creole piece -- I'm not a Creole speaker, so I can't review the content of what you're saying. What I can do is evaluate your delivery, your energy, your pacing, and your structure. That's a significant part of what makes a great YouTube video, and it's where I'll add real value.</p>
+  </div>
+
+  <!-- EMAIL ACCESS -->
+  <div class="section">
+    <div class="section-label">Between Sessions</div>
+    <div class="section-title">You're never just<br><em>waiting</em> for the next call</div>
+    <div class="email-box">
+      <div class="email-icon">✉️</div>
+      <div class="email-content">
+        <h3>Direct Email Access</h3>
+        <p>You'll have my direct email for the full 8 weeks. I respond within 24 hours, Monday through Friday. Use it for questions, quick wins you want to share, or things that come up between calls. If something needs dedicated time in our next session, just let me know in advance so I can come prepared and we make the most of our time together.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUARANTEE -->
+  <div class="section">
+    <div class="section-label">My Promise to You</div>
+    <div class="section-title">I stand behind<br>this <em>completely</em></div>
+    <div class="guarantee-box">
+      <div class="guarantee-icon">🤝</div>
+      <div class="guarantee-title">The Two-Session Guarantee</div>
+      <p class="guarantee-text">If after our first two sessions together this isn't the right fit, I'll refund your investment minus the cost of the sessions completed. I show up prepared and ready to help from day one -- and I expect you to as well. If we both do that and it still isn't working, we'll make it right.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER CTA -->
+<div class="footer">
+  <div class="footer-name">Dee Dee Paradis</div>
+  <p>YouTube Creator, Educator, and Coach for creators over 40</p>
+  <div class="divider-line"></div>
+  <p>Questions? Reach out before enrolling. I want to make sure this is the right fit for you.</p>
+</div>
+
+<script>
+function toggleWeek(header) {
+  const body = header.nextElementSibling;
+  const chevron = header.querySelector('.week-chevron');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+</script>
+
+</body>
+</html>
