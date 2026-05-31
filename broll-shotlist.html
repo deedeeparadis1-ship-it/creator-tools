@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B-Roll Shot List — Print Version</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #ffffff;
+    color: #1a1a1a;
+  }
+
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 36px 32px 48px;
+  }
+
+  /* HEADER */
+  .header {
+    border: 3px solid #1a1a1a;
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  .header p {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+  }
+
+  .meta-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .meta-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .field-line {
+    width: 150px;
+    border-bottom: 1.5px solid #1a1a1a;
+    height: 16px;
+  }
+
+  /* SECTION */
+  .shotlist-section {
+    margin-bottom: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .section-sub {
+    font-size: 10px;
+    font-weight: 600;
+    color: #888;
+    margin-left: 4px;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1.5px;
+    background: #1a1a1a;
+  }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #555;
+    text-align: left;
+    padding: 7px 10px;
+    border-bottom: 2px solid #1a1a1a;
+  }
+
+  td {
+    padding: 9px 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 12px;
+    vertical-align: middle;
+  }
+
+  .col-check { width: 32px; text-align: center; }
+  .col-shot { width: 200px; }
+  .col-angles { width: 175px; }
+  .col-notes { }
+
+  .checkbox {
+    width: 13px; height: 13px;
+    border: 1.5px solid #aaa;
+    border-radius: 3px;
+    display: inline-block;
+  }
+
+  .angle-checks {
+    display: flex;
+    gap: 10px;
+  }
+
+  .angle-check {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #444;
+  }
+
+  .mini-box {
+    width: 11px; height: 11px;
+    border: 1.5px solid #aaa;
+    border-radius: 2px;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  .write-line {
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    height: 18px;
+  }
+
+  /* REMINDER BOX */
+  .reminder {
+    border: 1.5px solid #1a1a1a;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 16px;
+  }
+
+  .reminder-col {
+    flex: 1;
+    font-size: 11px;
+    font-weight: 600;
+    color: #444;
+    line-height: 1.5;
+  }
+
+  .reminder-col strong {
+    display: block;
+    font-size: 11px;
+    font-weight: 900;
+    color: #1a1a1a;
+    margin-bottom: 3px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* PRINT BUTTON */
+  .screen-only {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .print-btn {
+    display: inline-block;
+    background: #1a1a1a;
+    color: #ffffff;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    padding: 14px 28px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    margin-bottom: 8px;
+    display: block;
+    width: 100%;
+  }
+
+  .print-btn:hover { opacity: 0.8; }
+
+  .back-link {
+    display: block;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #888;
+    text-decoration: none;
+    margin-top: 10px;
+  }
+
+  .back-link:hover { color: #1a1a1a; }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 28px;
+    padding-top: 14px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: #aaa;
+  }
+
+  /* PRINT */
+  @media print {
+    .screen-only { display: none !important; }
+    body { background: white; }
+    .page { padding: 20px 24px; max-width: 100%; }
+
+    th { color: #333; }
+    .section-label { color: #1a1a1a; }
+    .angle-check { color: #333; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- SCREEN: PRINT BUTTON + BACK LINK -->
+  <div class="screen-only">
+    <button class="print-btn" onclick="window.print()">🖨️ Print This Sheet</button>
+    <a class="back-link" href="https://resources.deedeeparadis.com/broll-guide.html">← Back to the Guide</a>
+  </div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <h1>My B-Roll Shot List</h1>
+      <p>Print this sheet before every shoot. Fill it in and take it with you.</p>
+    </div>
+    <div class="meta-fields">
+      <div class="meta-field">
+        Video Topic: <span class="field-line"></span>
+      </div>
+      <div class="meta-field">
+        Shoot Date: <span class="field-line"></span>
+      </div>
+      <div class="meta-field">
+        Location(s): <span class="field-line"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK REMINDER -->
+  <div class="reminder">
+    <div class="reminder-col">
+      <strong>Story Shots</strong>
+      Moments that matter. Use the 3-shot system: Wide, Medium, Close-Up.
+    </div>
+    <div class="reminder-col">
+      <strong>Transition Shots</strong>
+      Connective tissue. One shot per moment is enough.
+    </div>
+    <div class="reminder-col">
+      <strong>Detail + POV</strong>
+      Close-ups and first-person shots. Save these for your payoff moments.
+    </div>
+  </div>
+
+  <!-- STORY SHOTS -->
+  <div class="shotlist-section">
+    <div class="section-header">
+      <span class="section-label">Story Shots</span>
+      <span class="section-sub">— use the 3-shot system for each one</span>
+      <span class="section-line"></span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th class="col-check"></th>
+          <th class="col-shot">Moment / Location</th>
+          <th class="col-angles">Angles to Get</th>
+          <th class="col-notes">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-check"><span class="checkbox"></span></td>
+          <td><span class="write-line"></span></td>
+          <td>
+            <div class="angle-checks">
+              <div class="angle-check"><span class="mini-box"></span> Wide</div>
+              <div class="angle-check"><span class="mini-box"></span> Med</div>
+              <div class="angle-check"><span class="mini-box"></span> CU</div>
+            </div>
+          </td>
+          <td><span class="write-line"></span></td>
+        </tr>
+        <tr>
+          <td class="col-check"><span class="checkbox"></span></td>
+          <td><span class="write-line"></span></td>
+          <td>
+            <div class="angle-checks">
+              <div class="angle-check"><span class="mini-box"></span> Wide</div>
+              <div class="angle-check"><span class="mini-box"></span> Med</div>
+              <div class="angle-check"><span class="mini-box"></span> CU</div>
+            </div>
+          </td>
+          <td><span class="write-line"></span></td>
+        </tr>
+        <tr>
+          <td class="col-check"><span class="checkbox"></span></td>
+          <td><span class="write-line"></span></td>
+          <td>
+            <div class="angle-checks">
+              <div class="angle-check"><span class="mini-box"></span> Wide</div>
+              <div class="angle-check"><span class="mini-box"></span> Med</div>
+              <div class="angle-check"><span class="mini-box"></span> CU</div>
+            </div>
+          </td>
+          <td><span class="write-line"></span></td>
+        </tr>
+        <tr>
+          <td class="col-check"><span class="checkbox"></span></td>
+          <td><span class="write-line"></span></td>
+          <td>
+            <div class="angle-checks">
+              <div class="angle-check"><span class="mini-box"></span> Wide</div>
+              <div class="angle-check"><span class="mini-box"></span> Med</div>
+              <div class="angle-check"><span class="mini-box"></span> CU</div>
+            </div>
+          </td>
+          <td><span class="write-line"></span></td>
+        </tr>
+        <tr>
+          <td class="col-check"><span class="checkbox"></span></td>
+          <td><span class="write-line"></span></td>
+          <td>
+            <div class="angle-checks">
+              <div class="angle-check"><span class="mini-box"></span> Wide</div>
+              <div class="angle-check"><span class="mini-box"></span> Med</div>
+              <div class="angle-check"><span class="mini-box"></span> CU</div>
+            </div>
+          </td>
+          <td><span class="write-line"></span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TRANSITION SHOTS -->
+  <div class="shotlist-section">
+    <div class="section-header">
+      <span class="section-label">Transition Shots</span>
+      <span class="section-sub">— one shot per moment is enough</span>
+      <span class="section-line"></span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th class="col-check"></th>
+          <th class="col-shot">The Shot</th>
+          <th class="col-angles">Movement</th>
+          <th class="col-notes">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-check"><span class="checkbox"></span></td>
+          <td><span class="write-line"></span></td>
+          <td><span class="write-line"></span></td>
+          <td><span class="write-line"></span></td>
+        </tr>
+        <tr>
+          <td class="col-check"><span class="checkbox"></span></td>
+          <td><span class="write-line"></span></td>
+          <td><span class="write-line"></span></td>
+          <td><span class="write-line"></span></td>
+        </tr>
+        <tr>
+          <td class="col-check"><span class="checkbox"></span></td>
+          <td><span class="write-line"></span></td>
+          <td><span class="write-line"></span></td>
+          <td><span class="write-line"></span></td>
+        </tr>
+        <tr>
+          <td class="col-check"><span class="checkbox"></span></td>
+          <td><span class="write-line"></span></td>
+          <td><span class="write-line"></span></td>
+          <td><span class="write-line"></span></td>
+        </tr>
+        <tr>
+          <td class="col-check"><span class="checkbox"></span></td>
+          <td><span class="write-line"></span></td>
+          <td><span class="write-line"></span></td>
+          <td><span class="write-line"></span></td>
+        </tr>
+        <tr>
+          <td class="col-check"><span class="checkbox"></span></td>
+          <td><span class="write-line"></span></td>
+          <td><span class="write-line"></span></td>
+          <td><span class="write-line"></span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- DETAIL + BONUS SHOTS -->
+  <div class="shotlist-section">
+    <div class="section-header">
+      <span class="section-label">Detail, POV + Bonus Shots</span>
+      <span class="section-sub">— grab these if you have time</span>
+      <span class="section-line"></span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th class="col-check"></th>
+          <th colspan="3">Shot Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-check"><span class="checkbox"></span></td>
+          <td colspan="3"><span class="write-line"></span></td>
+        </tr>
+        <tr>
+          <td class="col-check"><span class="checkbox"></span></td>
+          <td colspan="3"><span class="write-line"></span></td>
+        </tr>
+        <tr>
+          <td class="col-check"><span class="checkbox"></span></td>
+          <td colspan="3"><span class="write-line"></span></td>
+        </tr>
+        <tr>
+          <td class="col-check"><span class="checkbox"></span></td>
+          <td colspan="3"><span class="write-line"></span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span>Confident Creator Circle — Dee Dee Paradis</span>
+    <span>resources.deedeeparadis.com</span>
+  </div>
+
+</div>
+</body>
+</html>
