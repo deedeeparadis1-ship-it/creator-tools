@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You're In! — Dee Dee Paradis</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #99e17a;
+    --green-light: #bfecac;
+    --yellow: #ffde59;
+    --yellow-light: #ffeb99;
+    --red: #f47c7c;
+    --red-light: #ff9999;
+    --blue: #99c5ff;
+    --blue-light: #c2dcff;
+    --purple: #cea8f0;
+    --purple-light: #e2cbf6;
+    --white: #ffffff;
+    --text: #2a2a2a;
+    --text-light: #666666;
+    --bg: #fdfaf5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+  }
+
+  .page {
+    max-width: 580px;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* CONFETTI TOP */
+  .confetti-row {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  /* MAIN CARD */
+  .card {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 52px 48px;
+    border: 2px solid var(--green);
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    background: var(--yellow);
+    border-radius: 50%;
+    opacity: 0.2;
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: -30px;
+    width: 120px; height: 120px;
+    background: var(--green);
+    border-radius: 50%;
+    opacity: 0.15;
+  }
+
+  .card-inner { position: relative; z-index: 1; }
+
+  .check-circle {
+    width: 72px;
+    height: 72px;
+    background: var(--green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    font-size: 32px;
+  }
+
+  .card h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    color: var(--text);
+  }
+
+  .card p {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 32px;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .download-btn {
+    display: inline-block;
+    background: var(--green);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-size: 17px;
+    font-weight: 900;
+    padding: 18px 40px;
+    border-radius: 14px;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.15s;
+    margin-bottom: 16px;
+  }
+
+  .download-btn:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+  }
+
+  .email-note {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 0;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--green-light);
+    border-radius: 16px;
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .footer-left strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .footer-left span {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-light);
+  }
+
+  .footer-link {
+    display: inline-block;
+    background: var(--green);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    padding: 10px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+
+  .footer-link:hover { opacity: 0.85; }
+
+  @media (max-width: 480px) {
+    .card { padding: 36px 28px; }
+    .card h1 { font-size: 26px; }
+    .footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- CONFETTI DOTS -->
+  <div class="confetti-row">
+    <div class="dot" style="background:#99e17a;"></div>
+    <div class="dot" style="background:#ffde59;"></div>
+    <div class="dot" style="background:#f47c7c;"></div>
+    <div class="dot" style="background:#99c5ff;"></div>
+    <div class="dot" style="background:#cea8f0;"></div>
+    <div class="dot" style="background:#ffde59;"></div>
+    <div class="dot" style="background:#99e17a;"></div>
+  </div>
+
+  <!-- MAIN CARD -->
+  <div class="card">
+    <div class="card-inner">
+      <div class="check-circle">✓</div>
+      <h1>You're In!<br>Here's Your Shot List.</h1>
+      <p>Your free B-Roll guide and printable shot list are ready. Click below to open them right now.</p>
+      <a class="download-btn" href="https://resources.deedeeparadis.com/broll-guide.html" target="_blank">
+        Access Your Shot List →
+      </a>
+      <p class="email-note">We also sent the link to your email so you can find it anytime.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">
+      <strong>Confident Creator Circle</strong>
+      <span>Dee Dee's free community for creators over 40</span>
+    </div>
+    <a class="footer-link" href="https://www.skool.com/content-creator-circle-1570/about" target="_blank">Join the Community →</a>
+  </div>
+
+</div>
+</body>
+</html>
