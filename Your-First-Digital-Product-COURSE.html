@@ -1,0 +1,2426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your First Digital Product — Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@500;600&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --cream:#FFF7EC; --paper:#FFFDF8; --card:#FFFFFF;
+    --ink:#34243F; --ink-soft:#6E5F80; --line:#EBE0D4;
+    --blue:#6E8FD6; --blue-tint:#EAF0FB; --blue-bd:#C9D8F4;
+    --green:#2FA56F; --green-tint:#E4F6EE; --green-bd:#BCE6D2;
+    --yellow:#E8A91C; --yellow-tint:#FFF3D4; --yellow-bd:#F3DFA0;
+    --coral:#FF6F91; --coral-tint:#FFE7ED; --coral-bd:#F8C9D6;
+    --purple:#9C63D1; --purple-tint:#F3E9FB; --purple-bd:#E0CBF2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:"Nunito Sans",system-ui,sans-serif;color:var(--ink);font-size:18px;line-height:1.6;background:var(--cream);background-image:linear-gradient(rgba(110,95,128,.05) 1px, transparent 1px),linear-gradient(90deg, rgba(110,95,128,.05) 1px, transparent 1px);background-size:34px 34px;-webkit-font-smoothing:antialiased;}
+  .serif{font-family:"Fraunces",Georgia,serif;}
+  .label{font-family:"IBM Plex Mono",monospace;font-weight:600;letter-spacing:.18em;text-transform:uppercase;font-size:12.5px;color:var(--ink-soft);}
+
+  .lesson{display:none;}
+  .lesson.active{display:block;}
+
+  header{position:sticky;top:0;z-index:50;background:rgba(255,247,236,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .hbar{max-width:1180px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:16px;}
+  .mark{flex:0 0 auto;width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--coral),var(--purple));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(156,99,209,.28);}
+  .htext h1{font-family:"Fraunces",serif;font-weight:600;font-size:22px;line-height:1.1;color:var(--ink);}
+  .htext .label{margin-top:2px;display:block;}
+  .htag{margin-left:auto;color:var(--coral);}
+
+  nav.tabs{position:sticky;top:75px;z-index:49;background:rgba(255,247,236,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .tabrow{max-width:1180px;margin:0 auto;padding:0 28px;display:flex;gap:30px;overflow-x:auto;}
+  .tabrow a{font-family:"IBM Plex Mono",monospace;font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:12.5px;color:var(--ink-soft);text-decoration:none;padding:15px 0;border-bottom:3px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s;}
+  .tabrow a:hover{color:var(--ink);}
+  .tabrow a.active{color:var(--coral);border-bottom-color:var(--coral);}
+  .tabrow a:focus-visible{outline:2px solid var(--purple);outline-offset:3px;border-radius:3px;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  section.block{padding:64px 0 8px;scroll-margin-top:140px;}
+  .sec-head{max-width:760px;margin-bottom:30px;}
+  .sec-head .label{color:var(--coral);}
+  .sec-head h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(30px,4.4vw,46px);line-height:1.08;margin:12px 0 14px;}
+  .sec-head h2 .a-coral{color:var(--coral);} .sec-head h2 .a-purple{color:var(--purple);} .sec-head h2 .a-green{color:var(--green);} .sec-head h2 .a-blue{color:var(--blue);}
+  .sec-head p{font-size:19px;color:var(--ink-soft);max-width:64ch;}
+
+  .hero{padding:60px 0 8px;}
+  .hero .label{color:var(--purple);}
+  .hero h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(38px,6vw,68px);line-height:1.04;margin:16px 0 20px;max-width:18ch;}
+  .hero h2 em{font-style:italic;color:var(--coral);}
+  .hero p{font-size:20px;color:var(--ink-soft);max-width:62ch;}
+
+  .band{margin:30px 0;border-radius:22px;padding:34px 38px;background:linear-gradient(120deg,var(--green-tint),var(--yellow-tint) 60%,var(--coral-tint));border:1px solid var(--green-bd);text-align:center;}
+  .band .big{font-family:"Fraunces",serif;font-weight:700;font-size:clamp(26px,4vw,44px);line-height:1.12;}
+  .band .big .g{color:var(--green);} .band .big .c{color:var(--coral);} .band .big .p{color:var(--purple);}
+
+  .grid{display:grid;gap:22px;}
+  .g3{grid-template-columns:repeat(3,1fr);}
+  .g2{grid-template-columns:repeat(2,1fr);}
+  @media (max-width:860px){.g3,.g2{grid-template-columns:1fr;}}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:0 6px 20px rgba(58,42,79,.06);}
+  .card .label{margin-bottom:10px;}
+  .card h3{font-family:"Fraunces",serif;font-weight:600;font-size:24px;line-height:1.15;margin-bottom:12px;}
+  .card p{font-size:16.5px;color:var(--ink-soft);margin-bottom:14px;}
+  .card ul{list-style:none;display:flex;flex-direction:column;gap:9px;}
+  .card li{position:relative;padding-left:26px;font-size:16px;font-weight:700;color:var(--ink);}
+  .card li::before{content:"";position:absolute;left:0;top:8px;width:11px;height:11px;border-radius:50%;}
+  .best{margin-top:8px;font-size:14.5px;font-weight:800;color:var(--ink);}
+  .best span{font-family:"IBM Plex Mono",monospace;font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:11px;color:var(--ink-soft);display:block;margin-bottom:3px;}
+  .tint-green{background:var(--green-tint);border-color:var(--green-bd);} .tint-green .label{color:var(--green);} .tint-green li::before{background:var(--green);}
+  .tint-yellow{background:var(--yellow-tint);border-color:var(--yellow-bd);} .tint-yellow .label{color:var(--yellow);} .tint-yellow li::before{background:var(--yellow);}
+  .tint-coral{background:var(--coral-tint);border-color:var(--coral-bd);} .tint-coral .label{color:var(--coral);} .tint-coral li::before{background:var(--coral);}
+  .tint-blue{background:var(--blue-tint);border-color:var(--blue-bd);} .tint-blue .label{color:var(--blue);} .tint-blue li::before{background:var(--blue);}
+  .tint-purple{background:var(--purple-tint);border-color:var(--purple-bd);} .tint-purple .label{color:var(--purple);} .tint-purple li::before{background:var(--purple);}
+  .card .icon{width:42px;height:42px;margin-bottom:14px;}
+
+  .steps{position:relative;margin-top:10px;padding-left:6px;}
+  .steps::before{content:"";position:absolute;left:28px;top:34px;bottom:34px;width:2px;background:var(--coral-bd);}
+  .step{display:flex;gap:18px;align-items:flex-start;padding:10px 0;position:relative;}
+  .sn{flex:0 0 auto;width:46px;height:46px;border-radius:13px;color:#fff;font-family:"Fraunces",serif;font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;z-index:1;background:linear-gradient(135deg,var(--coral),var(--purple));}
+  .sn.promise{background:linear-gradient(135deg,var(--green),#27966a);}
+  .sc{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 20px;}
+  .sc.promise{background:var(--green-tint);border-color:var(--green-bd);}
+  .sc .label{margin-bottom:4px;color:var(--coral);}
+  .sc.promise .label{color:var(--green);}
+  .sc h4{font-family:"Fraunces",serif;font-weight:600;font-size:18px;margin-bottom:2px;}
+  .sc p{font-size:15px;color:var(--ink-soft);margin:0;}
+
+  .callout{margin:40px 0 8px;border-radius:22px;padding:34px 40px;background:var(--ink);color:#fff;display:flex;gap:22px;align-items:flex-start;}
+  .callout .qmark{font-family:"Fraunces",serif;font-size:60px;line-height:.7;color:var(--yellow);flex:0 0 auto;}
+  .callout p{font-family:"Fraunces",serif;font-weight:500;font-size:clamp(22px,3vw,30px);line-height:1.3;}
+  .callout p b{color:var(--yellow);font-weight:700;}
+
+  .move .label{color:var(--purple);}
+  .move h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(28px,4vw,42px);margin:12px 0 14px;}
+  .move p{font-size:19px;color:var(--ink-soft);max-width:64ch;margin-bottom:22px;}
+  .move p b{color:var(--ink);}
+  .nextpill{display:inline-flex;align-items:center;gap:10px;text-decoration:none;background:linear-gradient(135deg,var(--coral),var(--purple));color:#fff;font-weight:800;font-size:17px;padding:15px 28px;border-radius:999px;box-shadow:0 10px 24px rgba(156,99,209,.3);transition:transform .16s;cursor:pointer;border:none;}
+  .nextpill:hover{transform:translateY(-2px);}
+  .nextpill:focus-visible{outline:3px solid var(--purple);outline-offset:3px;}
+
+  footer{padding:60px 0 110px;text-align:center;}
+  footer .label{color:var(--ink-soft);}
+
+  /* ---- course chrome (single-file navigation) ---- */
+  .coursebar{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:60;
+    display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:6px;box-shadow:0 10px 30px rgba(58,42,79,.18);}
+  .cbtn{width:42px;height:42px;border:none;background:var(--cream);border-radius:50%;cursor:pointer;
+    font-size:20px;color:var(--purple);display:flex;align-items:center;justify-content:center;transition:background .15s,color .15s;}
+  .cbtn:hover{background:var(--purple-tint);}
+  .cbtn:disabled{opacity:.35;cursor:default;}
+  .cbtn:focus-visible{outline:3px solid var(--purple);outline-offset:2px;}
+  .cmid{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;letter-spacing:.04em;
+    color:var(--ink);background:none;border:none;cursor:pointer;padding:0 14px;white-space:nowrap;}
+  .cmid b{color:var(--coral);}
+
+  .menu-overlay{position:fixed;inset:0;z-index:70;background:rgba(52,36,79,.45);
+    display:none;align-items:center;justify-content:center;padding:24px;}
+  .menu-overlay.open{display:flex;}
+  .menu{background:var(--paper);border-radius:22px;max-width:460px;width:100%;max-height:80vh;overflow:auto;
+    padding:14px;box-shadow:0 24px 60px rgba(58,42,79,.3);}
+  .menu h3{font-family:"Fraunces",serif;font-weight:600;font-size:20px;padding:12px 14px 6px;}
+  .menu .grp{font-family:"IBM Plex Mono",monospace;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    font-size:11px;color:var(--ink-soft);padding:14px 14px 4px;}
+  .menu button.item{display:block;width:100%;text-align:left;border:none;background:none;cursor:pointer;
+    font-family:"Nunito Sans",sans-serif;font-size:16px;font-weight:700;color:var(--ink);
+    padding:11px 14px;border-radius:12px;transition:background .12s;}
+  .menu button.item:hover{background:var(--cream);}
+  .menu button.item.current{background:var(--coral-tint);color:var(--coral);}
+
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}.nextpill:hover{transform:none;}}
+  @media (max-width:520px){ .htag{display:none;} }
+
+</style>
+</head>
+<body>
+<section class="lesson active" id="lesson-0">
+
+
+<header>
+  <div class="hbar">
+    <div class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M6 3v18" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M6 4h11l-2.5 3.5L17 11H6V4z" fill="#fff"/>
+      </svg>
+    </div>
+    <div class="htext">
+      <h1>Welcome</h1>
+      <span class="label">Your First Digital Product · Start Here</span>
+    </div>
+    <span class="label htag">Start here.</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabrow" id="l0-tabrow">
+    <a href="#l0-promise" class="active">The Promise</a>
+    <a href="#l0-how">How It Works</a>
+    <a href="#l0-rule">The One Rule</a>
+    <a href="#l0-go">Let's Go</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="label">Welcome</span>
+    <h2 class="serif">By the end of this, you'll have a product that's <em>actually live.</em></h2>
+    <p>No theory, no someday. Over four short modules, you're going to pick a product, make it, set it up to take payment, and tell people about it. A real thing, out in the world, that someone can buy. Let's get you there.</p>
+  </section>
+
+  <section class="block" id="l0-promise">
+    <div class="sec-head">
+      <span class="label">The promise</span>
+      <h2 class="serif">What you'll <span class="a-coral">walk away</span> with.</h2>
+      <p>One real product, set up to sell, start to first sale. Here's exactly what that breaks down to.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card tint-coral">
+        <span class="label">Modules 1 &amp; 2</span>
+        <h3 class="serif">A product, picked and made</h3>
+        <p>You'll choose one small thing that solves one problem, and actually build it. No giant course, no overwhelm.</p>
+        <ul>
+          <li>One clear idea</li>
+          <li>Made in an afternoon</li>
+          <li>Done, not perfect</li>
+        </ul>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">Module 3</span>
+        <h3 class="serif">A way to get paid</h3>
+        <p>You'll set it up so people can buy it and get it automatically. No tech degree required, I promise.</p>
+        <ul>
+          <li>A working checkout</li>
+          <li>Payment to your bank</li>
+          <li>Delivery on autopilot</li>
+        </ul>
+      </div>
+      <div class="card tint-green">
+        <span class="label">Module 4</span>
+        <h3 class="serif">A way to sell it</h3>
+        <p>You'll price it, build a simple page, and learn to tell people without ever feeling salesy.</p>
+        <ul>
+          <li>A price that's an easy yes</li>
+          <li>A simple sales page</li>
+          <li>A way to mention it</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="l0-how">
+    <div class="sec-head">
+      <span class="label">How it works</span>
+      <h2 class="serif">Four modules. <span class="a-green">In order.</span></h2>
+      <p>Each one builds on the last. Do them in sequence and you'll never feel lost or stuck.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="sn promise" aria-hidden="true">&#9733;</span>
+        <div class="sc promise">
+          <span class="label">The whole journey</span>
+          <h4 class="serif">From a blank page to your first sale.</h4>
+          <p>Four steps. That's the entire path.</p>
+        </div>
+      </div>
+      <div class="step"><span class="sn" aria-hidden="true">1</span><div class="sc"><h4 class="serif">Pick your first product</h4><p>Decide exactly what you're going to make.</p></div></div>
+      <div class="step"><span class="sn" aria-hidden="true">2</span><div class="sc"><h4 class="serif">Make it</h4><p>Build the real thing, fast and clean.</p></div></div>
+      <div class="step"><span class="sn" aria-hidden="true">3</span><div class="sc"><h4 class="serif">Set it up to get paid</h4><p>Turn on payment and automatic delivery.</p></div></div>
+      <div class="step"><span class="sn" aria-hidden="true">4</span><div class="sc"><h4 class="serif">Sell it</h4><p>Price it, make a page, and tell people.</p></div></div>
+    </div>
+  </section>
+
+  <section class="block" id="l0-rule">
+    <div class="band">
+      <p class="big serif">If it doesn't move you toward your <span class="c">first sale</span>, we don't do it.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-purple">
+        <span class="label">Rule, part one</span>
+        <h3 class="serif">Small and finished wins</h3>
+        <p>A small product that's done beats a big one that lives in your head forever. We're aiming for finished, not impressive.</p>
+        <ul>
+          <li>Done beats perfect</li>
+          <li>Small means focused</li>
+          <li>Finished is the goal</li>
+        </ul>
+      </div>
+      <div class="card tint-blue">
+        <span class="label">Rule, part two</span>
+        <h3 class="serif">No rabbit holes</h3>
+        <p>We skip everything that doesn't get you to that first sale. No fancy funnels, no extra tools, no someday-features. Just the path.</p>
+        <ul>
+          <li>One product</li>
+          <li>One clear path</li>
+          <li>Nothing extra</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="qmark">&ldquo;</span>
+      <p>Most people never make their first product because they try to make their best one. We're doing the opposite. We're making your first one, finishing it, and <b>getting it out there.</b></p>
+    </div>
+  </section>
+
+  <section class="block move" id="l0-go">
+    <span class="label">Ready?</span>
+    <h2 class="serif">Let's build the thing.</h2>
+    <p>That's the whole plan. No fluff, no overwhelm, just four steps to a real product you can sell. <b>Start with Module 1,</b> where we pick exactly what you're going to make.</p>
+    <a class="nextpill" data-goto="1" href="#l0-">Start &rarr; Module 1: Pick your first product</a>
+  </section>
+
+  <footer>
+    <span class="label">Your First Digital Product · Welcome</span>
+  </footer>
+
+</div>
+
+
+
+</section>
+<section class="lesson" id="lesson-1">
+
+
+<header>
+  <div class="hbar">
+    <div class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M5 9h11v5a5 5 0 0 1-5 5H10a5 5 0 0 1-5-5V9z" fill="#fff" opacity=".95"/>
+        <path d="M16 10h2.5a2.5 2.5 0 0 1 0 5H16" stroke="#fff" stroke-width="1.8" fill="none"/>
+        <path d="M8 3.5c-.8 1.2 0 2 0 3M11.5 3c-.8 1.2 0 2 0 3" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="htext">
+      <h1>The One-Problem Rule</h1>
+      <span class="label">Module 1 · Lesson 1</span>
+    </div>
+    <span class="label htag">Start small. Finish it.</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabrow" id="l1-tabrow">
+    <a href="#l1-rule" class="active">The Rule</a>
+    <a href="#l1-why">Why Small Wins</a>
+    <a href="#l1-real">In Real Life</a>
+    <a href="#l1-move">Your Move</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="label">Core idea</span>
+    <h2 class="serif">Your first product is a <em>first date</em>, not a wedding.</h2>
+    <p>Before you make a single thing, you need the right size in your head. This is where most people over 40 freeze. They picture some giant, polished program, the size of it scares them, and they go right back to doing nothing. So let's shrink it. Your first product has one job, and it's smaller than you think.</p>
+  </section>
+
+  <!-- RULE -->
+  <section class="block" id="l1-rule">
+    <div class="band">
+      <p class="big serif"><span class="g">One problem.</span> <span class="c">One outcome.</span> <span class="p">Kept small.</span></p>
+    </div>
+    <div class="grid g3">
+      <div class="card tint-green">
+        <span class="label">Part one</span>
+        <h3 class="serif">One problem</h3>
+        <p>Pick a single thing your viewer is stuck on. Not the whole journey, not five problems. One. The narrower it is, the easier it is to make and the easier it is to sell.</p>
+        <ul>
+          <li>The thing people ask you about most</li>
+          <li>Something you can explain start to finish</li>
+          <li>A problem with a clear before and after</li>
+        </ul>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">Part two</span>
+        <h3 class="serif">One outcome</h3>
+        <p>They finish with one clear win they didn't have before they bought it. If you can't say the win in a single sentence, it's not focused enough yet.</p>
+        <ul>
+          <li>Name the win out loud</li>
+          <li>One result, not a buffet</li>
+          <li>"By the end, you'll have ___"</li>
+        </ul>
+      </div>
+      <div class="card tint-coral">
+        <span class="label">Part three</span>
+        <h3 class="serif">Kept small</h3>
+        <p>Small enough to make in an afternoon, cheap enough to be an easy yes. And small isn't lazy. It's focused. One problem solved really well beats ten solved halfway.</p>
+        <ul>
+          <li>Made fast, not someday</li>
+          <li>Priced for the first yes</li>
+          <li>Focused, not flimsy</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="block" id="l1-why">
+    <div class="sec-head">
+      <span class="label">Why small wins</span>
+      <h2 class="serif">Going big feels impressive. It's also where people <span class="a-coral">quit.</span></h2>
+      <p>Here's what actually happens when you ignore the rule and reach for the big thing first.</p>
+    </div>
+    <div class="grid g2 compare">
+      <div class="card tint-coral">
+        <span class="label">The trap</span>
+        <h3 class="serif">The big-product trap</h3>
+        <p>Someone finally decides to make money from their channel, so they sit down to build the giant signature course. Twelve modules. A workbook. The whole production.</p>
+        <ul>
+          <li>Three weeks in, still not done</li>
+          <li>Exhausted and discouraged</li>
+          <li>Sold exactly nothing</li>
+          <li>Most people quit right here</li>
+        </ul>
+      </div>
+      <span class="vs">vs</span>
+      <div class="card tint-green">
+        <span class="label">The win</span>
+        <h3 class="serif">The small-product win</h3>
+        <p>You make one small, genuinely helpful thing, and you actually finish it this week. It's out in the world while the big-course folks are still on module two.</p>
+        <ul>
+          <li>It's done, so it's real</li>
+          <li>Someone can buy it today</li>
+          <li>You get your first yes</li>
+          <li>Momentum, not burnout</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- REAL LIFE -->
+  <section class="block" id="l1-real">
+    <div class="sec-head">
+      <span class="label">In real life</span>
+      <h2 class="serif">Two easy ways to <span class="a-purple">picture</span> the right size.</h2>
+      <p>You don't need a marketing degree to get this. You already know it from regular life.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-purple">
+        <svg class="icon" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 16h17v8a8 8 0 0 1-8 8h-1a8 8 0 0 1-8-8v-8z" fill="#fff" stroke="#9C63D1" stroke-width="2"/><path d="M26 18h4a4 4 0 0 1 0 8h-4" stroke="#9C63D1" stroke-width="2" fill="none"/><path d="M14 6c-1.2 1.8 0 3 0 4.5M19 5c-1.2 1.8 0 3 0 4.5" stroke="#FF6F91" stroke-width="2" stroke-linecap="round"/></svg>
+        <span class="label">Analogy one</span>
+        <h3 class="serif">The first date</h3>
+        <p>You don't propose marriage on a first date. You grab a coffee. You let the other person decide if they like you before you ask for anything bigger.</p>
+        <p>Your first product is that coffee. Small, low pressure, and its whole job is to turn a stranger into someone who's said yes to you once.</p>
+      </div>
+      <div class="card tint-yellow">
+        <svg class="icon" viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="7" y="14" width="26" height="20" rx="3" fill="#fff" stroke="#E8A91C" stroke-width="2"/><path d="M13 14V11a7 7 0 0 1 14 0v3" stroke="#E8A91C" stroke-width="2" fill="none"/><circle cx="20" cy="24" r="3.5" fill="#FF6F91"/></svg>
+        <span class="label">Analogy two</span>
+        <h3 class="serif">The free sample</h3>
+        <p>Think of the sample table at Costco. They don't hand you the whole rotisserie chicken and a bill. They give you one bite on a toothpick.</p>
+        <p>That bite isn't where they make their money. It's how they get you to trust the thing is good. Your first product is the bite, not the whole chicken.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="qmark">&ldquo;</span>
+      <p>The first yes is the hard one. Once someone's bought one small thing from you and you've actually helped them, <b>every yes after that gets easier.</b></p>
+    </div>
+  </section>
+
+  <!-- MOVE -->
+  <section class="block move" id="l1-move">
+    <span class="label">Before lesson 2</span>
+    <h2 class="serif">Make yourself one promise.</h2>
+    <p>Small and finished beats big and perfect. Every single time. Hold onto that, because in the next lesson we're going to find the one problem your product is going to solve, and it's probably something you already know cold.</p>
+    <a class="nextpill" data-goto="2" href="#l1-">Next &rarr; Lesson 2: Find your idea</a>
+  </section>
+
+  <footer>
+    <span class="label">Your First Digital Product · Module 1 · Lesson 1</span>
+  </footer>
+
+</div>
+
+
+
+</section>
+<section class="lesson" id="lesson-2">
+
+
+<header>
+  <div class="hbar">
+    <div class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.2 1 2V17h6v-1.5c0-.8.4-1.4 1-2A6 6 0 0 0 12 3z" fill="#fff"/>
+        <path d="M9.5 20h5M10 22h4" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="htext">
+      <h1>Find Your Idea</h1>
+      <span class="label">Module 1 · Lesson 2</span>
+    </div>
+    <span class="label htag">You already know it.</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabrow" id="l2-tabrow">
+    <a href="#l2-look" class="active">Where to Look</a>
+    <a href="#l2-shortcut">The Shortcut</a>
+    <a href="#l2-gutcheck">Gut Check</a>
+    <a href="#l2-move">Your Move</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="label">Core idea</span>
+    <h2 class="serif">You're not inventing an idea. You already <em>have</em> one.</h2>
+    <p>This is where people overthink the hardest. They sit and wait for some brilliant, original idea to strike. It won't, and it doesn't need to. The best first product comes from something you already know cold and already help people with. Let's go dig it out.</p>
+  </section>
+
+  <section class="block" id="l2-look">
+    <div class="sec-head">
+      <span class="label">Where to look</span>
+      <h2 class="serif">Your idea is hiding in <span class="a-blue">plain sight.</span></h2>
+      <p>Four places it's almost always sitting, waiting for you to notice it.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-blue">
+        <span class="label">Source one</span>
+        <h3 class="serif">Your comments and DMs</h3>
+        <p>The questions that show up again and again. People are literally telling you what they're stuck on. You just have to listen for the repeats.</p>
+        <ul>
+          <li>The question you've answered ten times</li>
+          <li>The "how did you do that?" replies</li>
+          <li>The thing people thank you for</li>
+        </ul>
+      </div>
+      <div class="card tint-green">
+        <span class="label">Source two</span>
+        <h3 class="serif">What you explain constantly</h3>
+        <p>The thing you walk people through over and over, on camera and off. If you're a little tired of explaining it, that's a great sign. It means it's a product.</p>
+        <ul>
+          <li>The mini-lecture you give friends</li>
+          <li>The steps you know by heart</li>
+          <li>The part others always find confusing</li>
+        </ul>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">Source three</span>
+        <h3 class="serif">What tripped you up early</h3>
+        <p>The wall you hit when you started, that you eventually figured out. You're now one step ahead of the person still stuck there, and that's all it takes.</p>
+        <ul>
+          <li>The thing you wish you'd known</li>
+          <li>The mistake you'd save them from</li>
+          <li>Your "I finally cracked it" moment</li>
+        </ul>
+      </div>
+      <div class="card tint-purple">
+        <span class="label">Source four</span>
+        <h3 class="serif">What people already pay to fix</h3>
+        <p>Look at what your audience already buys or hires help for. If they're paying someone else, they'll pay you for a simpler, clearer version.</p>
+        <ul>
+          <li>The problem that's worth money to them</li>
+          <li>The shortcut they'd happily buy</li>
+          <li>The headache they want gone</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="l2-shortcut">
+    <div class="band">
+      <p class="big serif">If people keep asking you the <span class="c">same question</span>, that question is your <span class="p">product.</span></p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-coral">
+        <span class="label">The shortcut</span>
+        <h3 class="serif">Be the go-to friend</h3>
+        <p>You know that one friend everybody calls about a certain thing? The go-to for tech help, or recipes, or finding a good deal? On your channel, you're that friend for something.</p>
+        <p>The thing people come to you for is the exact thing they'll pay you to package up and hand them in one place.</p>
+      </div>
+      <div class="card tint-green">
+        <span class="label">A relief</span>
+        <h3 class="serif">It doesn't have to be original</h3>
+        <p>Your idea doesn't need to be brand new. It needs to be clear and helpful. A simpler explanation of something that already exists beats a clever idea nobody understands.</p>
+        <ul>
+          <li>Clear beats clever</li>
+          <li>Helpful beats original</li>
+          <li>Done beats perfect</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="l2-gutcheck">
+    <div class="sec-head">
+      <span class="label">Gut check</span>
+      <h2 class="serif">Run your idea through <span class="a-purple">three quick questions.</span></h2>
+      <p>If you can answer yes to all three, you've found it. Stop looking and start building.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card tint-coral">
+        <span class="label">Test one</span>
+        <h3 class="serif">Can you name the win?</h3>
+        <p>Finish this sentence: "By the end, they'll have ___." If you can fill that blank in one line, it's focused enough.</p>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">Test two</span>
+        <h3 class="serif">Can they use it fast?</h3>
+        <p>One clear win they can get the same day, not a six-month transformation. Quick wins are what get bought and finished.</p>
+      </div>
+      <div class="card tint-blue">
+        <span class="label">Test three</span>
+        <h3 class="serif">Do you actually know it?</h3>
+        <p>You can teach this without Googling. You've done it, or you help people do it. That's your authority right there.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="qmark">&ldquo;</span>
+      <p>You don't need a new idea. You need a clear one. The thing you already explain for free is the thing people will gladly pay you to <b>hand them in one place.</b></p>
+    </div>
+  </section>
+
+  <section class="block move" id="l2-move">
+    <span class="label">Before lesson 3</span>
+    <h2 class="serif">Write it in one sentence.</h2>
+    <p>Fill in this blank before you move on: <b>I help [who] [do what].</b> Get it down, even rough, even messy. That's your product idea. In the next lesson we'll turn it into the right kind of product, the format that fits both you and the problem.</p>
+    <a class="nextpill" data-goto="3" href="#l2-">Next &rarr; Lesson 3: Pick your format</a>
+  </section>
+
+  <footer>
+    <span class="label">Your First Digital Product · Module 1 · Lesson 2</span>
+  </footer>
+
+</div>
+
+
+
+</section>
+<section class="lesson" id="lesson-3">
+
+
+<header>
+  <div class="hbar">
+    <div class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <rect x="4" y="4" width="7" height="7" rx="2" fill="#fff"/>
+        <rect x="13" y="4" width="7" height="7" rx="2" fill="#fff" opacity=".75"/>
+        <rect x="4" y="13" width="7" height="7" rx="2" fill="#fff" opacity=".75"/>
+        <rect x="13" y="13" width="7" height="7" rx="2" fill="#fff"/>
+      </svg>
+    </div>
+    <div class="htext">
+      <h1>Pick Your Format</h1>
+      <span class="label">Module 1 · Lesson 3</span>
+    </div>
+    <span class="label htag">Pick one. Just one.</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabrow" id="l3-tabrow">
+    <a href="#l3-menu" class="active">The Menu</a>
+    <a href="#l3-choose">How to Choose</a>
+    <a href="#l3-one">One Format</a>
+    <a href="#l3-move">Your Move</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="label">Core idea</span>
+    <h2 class="serif">The format matters <em>less</em> than you think.</h2>
+    <p>People stall here trying to pick the perfect format, like the wrong choice will sink the whole thing. It won't. A guide, a checklist, a template, a short workshop, any of them can be your first product. What matters is that it solves your one problem and that you'll actually finish it. Let's pick the one that fits you.</p>
+  </section>
+
+  <section class="block" id="l3-menu">
+    <div class="sec-head">
+      <span class="label">The menu</span>
+      <h2 class="serif">Four simple formats. <span class="a-coral">Pick one.</span></h2>
+      <p>Every one of these can be made fast and sold cheap. Here's what each is best at.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-coral">
+        <svg class="icon" viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="9" y="5" width="22" height="30" rx="4" fill="#fff" stroke="#FF6F91" stroke-width="2"/><path d="M14 13h12M14 19h12M14 25h8" stroke="#FF6F91" stroke-width="2" stroke-linecap="round"/></svg>
+        <span class="label">Format one</span>
+        <h3 class="serif">Guide</h3>
+        <p>Walks them through the how, start to finish. Best when the win takes a few steps and people need the full path laid out.</p>
+        <p class="best"><span>Best for</span>A process, a how-to, a start-to-finish method.</p>
+      </div>
+      <div class="card tint-green">
+        <svg class="icon" viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="6" y="6" width="28" height="28" rx="6" fill="#fff" stroke="#2FA56F" stroke-width="2"/><path d="M13 20l4 4 9-10" stroke="#2FA56F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="label">Format two</span>
+        <h3 class="serif">Checklist</h3>
+        <p>The steps in order so nothing gets missed. Best when people kind of know what to do but forget pieces or get overwhelmed.</p>
+        <p class="best"><span>Best for</span>A repeatable process, a setup, a launch.</p>
+      </div>
+      <div class="card tint-yellow">
+        <svg class="icon" viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="3" fill="#fff" stroke="#E8A91C" stroke-width="2"/><rect x="22" y="6" width="12" height="12" rx="3" fill="#fff" stroke="#E8A91C" stroke-width="2"/><rect x="6" y="22" width="12" height="12" rx="3" fill="#fff" stroke="#E8A91C" stroke-width="2"/><rect x="22" y="22" width="12" height="12" rx="3" fill="#fff" stroke="#E8A91C" stroke-width="2"/></svg>
+        <span class="label">Format three</span>
+        <h3 class="serif">Template</h3>
+        <p>A fill-in-the-blanks shortcut they reuse. Best when you can hand them a head start instead of a blank page.</p>
+        <p class="best"><span>Best for</span>Scripts, planners, swipe files, layouts.</p>
+      </div>
+      <div class="card tint-purple">
+        <svg class="icon" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="15" fill="#fff" stroke="#9C63D1" stroke-width="2"/><path d="M16 13l10 7-10 7V13z" fill="#9C63D1"/></svg>
+        <span class="label">Format four</span>
+        <h3 class="serif">Mini workshop</h3>
+        <p>A short recorded session that teaches one thing. Best when you teach better out loud than on paper and you're comfy on camera.</p>
+        <p class="best"><span>Best for</span>A concept, a demo, a walk-through.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="l3-choose">
+    <div class="sec-head">
+      <span class="label">How to choose</span>
+      <h2 class="serif">Match it to the <span class="a-blue">problem</span> and your <span class="a-coral">comfort.</span></h2>
+      <p>Two questions decide it for you. That's the whole decision.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-blue">
+        <span class="label">Question one</span>
+        <h3 class="serif">What does the problem need?</h3>
+        <p>Some problems need the full walk-through. Some just need the steps, or a head start. Let the problem pick the shape.</p>
+        <ul>
+          <li>Big messy problem &rarr; guide or workshop</li>
+          <li>Forgetting steps &rarr; checklist</li>
+          <li>Blank-page dread &rarr; template</li>
+        </ul>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">Question two</span>
+        <h3 class="serif">What are you comfortable making?</h3>
+        <p>Love writing? Guide or checklist. Happier talking than typing? Record a workshop. The best format is the one you'll actually finish.</p>
+        <ul>
+          <li>Play to your strength</li>
+          <li>The one you'll finish wins</li>
+          <li>There's no wrong answer here</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="qmark">&ldquo;</span>
+      <p>Picking a format is like picking a container for leftovers. Soup needs a tub, a sandwich needs a bag. You're not agonizing, you're just <b>matching the container to what's going inside.</b></p>
+    </div>
+  </section>
+
+  <section class="block" id="l3-one">
+    <div class="sec-head">
+      <span class="label">One format</span>
+      <h2 class="serif">One format. <span class="a-purple">For now.</span></h2>
+      <p>You can always add more later. Today, we keep it to one so it actually gets finished.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-green">
+        <span class="label">Why just one</span>
+        <h3 class="serif">One beats two half-built</h3>
+        <p>One focused product is easier to make, easier to explain, and easier to buy. Two half-finished products help nobody and sell nothing.</p>
+        <ul>
+          <li>Easier to finish</li>
+          <li>Easier to explain</li>
+          <li>Easier to buy</li>
+        </ul>
+      </div>
+      <div class="card tint-purple">
+        <span class="label">Later, not now</span>
+        <h3 class="serif">You can expand after proof</h3>
+        <p>Once this one sells, you can turn a guide into a workshop or bundle a template alongside it. But that's a later problem. Today, just one.</p>
+        <ul>
+          <li>First sale first</li>
+          <li>Expand after it works</li>
+          <li>Don't borrow tomorrow's work</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block move" id="l3-move">
+    <span class="label">Module 1 complete</span>
+    <h2 class="serif">Pick your format. Out loud.</h2>
+    <p>Say it: <b>my first product is a [format] that helps [who] [do what].</b> That's your whole first module done. You know the rule, you've got your idea, and now you've got your format. Next, we actually make the thing.</p>
+    <a class="nextpill" data-goto="4" href="#l3-">Next &rarr; Module 2: Make it</a>
+  </section>
+
+  <footer>
+    <span class="label">Your First Digital Product · Module 1 · Lesson 3</span>
+  </footer>
+
+</div>
+
+
+
+</section>
+<section class="lesson" id="lesson-4">
+
+
+<header>
+  <div class="hbar">
+    <div class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M4 6l5-2 6 2 5-2v14l-5 2-6-2-5 2V6z" fill="#fff"/>
+        <path d="M9 4v14M15 6v14" stroke="#9C63D1" stroke-width="1.4"/>
+      </svg>
+    </div>
+    <div class="htext">
+      <h1>Map It Before You Make It</h1>
+      <span class="label">Module 2 · Lesson 1</span>
+    </div>
+    <span class="label htag">Bones first.</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabrow" id="l4-tabrow">
+    <a href="#l4-bones" class="active">Bones First</a>
+    <a href="#l4-map">The Map</a>
+    <a href="#l4-cut">Cut It Down</a>
+    <a href="#l4-move">Your Move</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="label">Core idea</span>
+    <h2 class="serif">Outline it first. Then building is just <em>filling in the blanks.</em></h2>
+    <p>The reason a product takes forever isn't the making. It's sitting down to a blank page with no plan and trying to invent it as you go. So we don't do that. Before you make anything, you map it. Once the bones are down, the actual building is the easy part.</p>
+  </section>
+
+  <section class="block" id="l4-bones">
+    <div class="sec-head">
+      <span class="label">Bones first</span>
+      <h2 class="serif">Build the <span class="a-green">skeleton</span> before the skin.</h2>
+      <p>Every good product is just a clear path from where someone is now to the one win you promised. Get that path down first.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card tint-coral">
+        <span class="label">Step one</span>
+        <h3 class="serif">Start with the win</h3>
+        <p>Write the ending first. "By the end they'll have ___." Everything else in the product exists only to get them there.</p>
+        <ul>
+          <li>The promise is the destination</li>
+          <li>Work backward from it</li>
+          <li>If it doesn't serve the win, cut it</li>
+        </ul>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">Step two</span>
+        <h3 class="serif">List the steps to get there</h3>
+        <p>What are the steps someone takes to go from stuck to done? Just list them, in order. That list is your outline.</p>
+        <ul>
+          <li>Brain-dump every step</li>
+          <li>Put them in order</li>
+          <li>That's your table of contents</li>
+        </ul>
+      </div>
+      <div class="card tint-green">
+        <span class="label">Step three</span>
+        <h3 class="serif">One step, one section</h3>
+        <p>Each step becomes one small section. Now you're not writing a whole product, you're just filling in a few small boxes.</p>
+        <ul>
+          <li>Small sections, not chapters</li>
+          <li>One idea each</li>
+          <li>Easy to start, easy to finish</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="l4-map">
+    <div class="sec-head">
+      <span class="label">The map</span>
+      <h2 class="serif">Here's what a <span class="a-coral">map</span> looks like.</h2>
+      <p>Say your product helps someone film their first video without freezing up. Once you write the promise and the steps, it almost builds itself.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="sn promise" aria-hidden="true">&#9733;</span>
+        <div class="sc promise">
+          <span class="label">The promise</span>
+          <h4 class="serif">By the end, you'll film your first video, start to finish.</h4>
+          <p>This is the one win. Every step below points at it.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="sn" aria-hidden="true">1</span>
+        <div class="sc"><h4 class="serif">Pick one thing to talk about</h4><p>Narrow it down so you're not staring at a blank brain.</p></div>
+      </div>
+      <div class="step">
+        <span class="sn" aria-hidden="true">2</span>
+        <div class="sc"><h4 class="serif">Set up your phone and light</h4><p>The three-minute version. No gear shopping required.</p></div>
+      </div>
+      <div class="step">
+        <span class="sn" aria-hidden="true">3</span>
+        <div class="sc"><h4 class="serif">The one trick to stop freezing</h4><p>What to do the second the nerves hit record.</p></div>
+      </div>
+      <div class="step">
+        <span class="sn" aria-hidden="true">4</span>
+        <div class="sc"><h4 class="serif">Hit record and do one take</h4><p>One take, all the way through. No restarting.</p></div>
+      </div>
+      <div class="step">
+        <span class="sn" aria-hidden="true">5</span>
+        <div class="sc"><h4 class="serif">What "good enough" looks like</h4><p>So they know when to stop and call video one done.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="l4-cut">
+    <div class="sec-head">
+      <span class="label">Cut it down</span>
+      <h2 class="serif">When in doubt, <span class="a-coral">cut it out.</span></h2>
+      <p>The first draft of any map has too much in it. Your job now is to remove everything that isn't the one outcome.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-coral">
+        <span class="label">The trap</span>
+        <h3 class="serif">The "nice to know" pile</h3>
+        <p>You'll want to add extra tips, bonus context, the whole history of the thing. Resist. Every extra adds time to build and confusion to use.</p>
+        <ul>
+          <li>Cut the backstory</li>
+          <li>Cut the tangents</li>
+          <li>Cut the "while we're here..."</li>
+        </ul>
+      </div>
+      <div class="card tint-green">
+        <span class="label">The keeper</span>
+        <h3 class="serif">Keep only what gets the win</h3>
+        <p>If a section doesn't move them toward the one promised outcome, it doesn't belong in version one. Park it for later.</p>
+        <ul>
+          <li>Serve the one outcome</li>
+          <li>Save the rest in a "later" list</li>
+          <li>Lean is a feature, not a flaw</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="qmark">&ldquo;</span>
+      <p>A map you can build in a week beats a masterpiece you never finish. Get the bones down, cut it lean, and the making becomes <b>almost boring.</b> That's the goal.</p>
+    </div>
+  </section>
+
+  <section class="block move" id="l4-move">
+    <span class="label">Before lesson 2</span>
+    <h2 class="serif">Map yours in ten minutes.</h2>
+    <p>Write your one-sentence promise at the top. List the steps to get there. Turn each step into a small section. Then cross out anything that isn't the win. <b>That's your map.</b> The next lesson is where we actually build it.</p>
+    <a class="nextpill" data-goto="5" href="#l4-">Next &rarr; Lesson 2: Build it</a>
+  </section>
+
+  <footer>
+    <span class="label">Your First Digital Product · Module 2 · Lesson 1</span>
+  </footer>
+
+</div>
+
+
+
+</section>
+<section class="lesson" id="lesson-5">
+
+
+<header>
+  <div class="hbar">
+    <div class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <rect x="4" y="9" width="7" height="11" rx="1.5" fill="#fff"/>
+        <rect x="13" y="4" width="7" height="16" rx="1.5" fill="#fff" opacity=".8"/>
+        <path d="M4 20h16" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="htext">
+      <h1>Build It</h1>
+      <span class="label">Module 2 · Lesson 2</span>
+    </div>
+    <span class="label htag">Made, not perfect.</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabrow" id="l5-tabrow">
+    <a href="#l5-tool" class="active">The Tool</a>
+    <a href="#l5-readable">Make It Readable</a>
+    <a href="#l5-export">Export It</a>
+    <a href="#l5-move">Your Move</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="label">Core idea</span>
+    <h2 class="serif">You can build this in an <em>afternoon</em>, in a free tool.</h2>
+    <p>Here's the part people dread and then can't believe how simple it is. You don't need design skills or fancy software. You need Canva, your map from the last lesson, and a couple of hours. Let's turn your outline into a real thing people can hold.</p>
+  </section>
+
+  <section class="block" id="l5-tool">
+    <div class="sec-head">
+      <span class="label">The tool</span>
+      <h2 class="serif">Canva does the <span class="a-purple">hard part</span> for you.</h2>
+      <p>It's free, it runs in your browser, and it's built for people who don't think of themselves as designers. That's exactly who it's for.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card tint-purple">
+        <span class="label">Step one</span>
+        <h3 class="serif">Start from a template</h3>
+        <p>You never start from a blank page. Search your format, pick a template that's close, then swap in your words. The layout's already done for you.</p>
+        <ul>
+          <li>Search "ebook," "checklist," etc.</li>
+          <li>Pick one you like</li>
+          <li>Replace its text with yours</li>
+        </ul>
+      </div>
+      <div class="card tint-blue">
+        <span class="label">Step two</span>
+        <h3 class="serif">Drop your map in</h3>
+        <p>Each section of your map becomes a page. You're pouring your outline in and dressing it up, not inventing anything from scratch.</p>
+        <ul>
+          <li>One section per page</li>
+          <li>Headline, then your content</li>
+          <li>Follow the template's rhythm</li>
+        </ul>
+      </div>
+      <div class="card tint-green">
+        <span class="label">Step three</span>
+        <h3 class="serif">Don't reinvent design</h3>
+        <p>Use the template's fonts and spacing. Resist fiddling. The pros already made it look good. Your only job is clear words.</p>
+        <ul>
+          <li>Trust the template</li>
+          <li>Words first, polish second</li>
+          <li>Clear beats clever</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="l5-readable">
+    <div class="sec-head">
+      <span class="label">Make it readable</span>
+      <h2 class="serif">Readable beats <span class="a-coral">fancy</span>, every time.</h2>
+      <p>A few simple rules keep it looking clean and professional with zero design background.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-coral">
+        <span class="label">Rule one</span>
+        <h3 class="serif">Keep it clean</h3>
+        <p>Lots of white space, text big enough to read easily, one idea per page. Crowded pages feel overwhelming and cheap. Roomy pages feel calm and worth paying for.</p>
+        <ul>
+          <li>Big, readable text</li>
+          <li>Room to breathe</li>
+          <li>One idea per page</li>
+        </ul>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">Rule two</span>
+        <h3 class="serif">Stay consistent</h3>
+        <p>Same fonts, same colors, same spacing all the way through. Consistency is what makes homemade look professional. Pick a look and repeat it.</p>
+        <ul>
+          <li>Two fonts, maximum</li>
+          <li>A small handful of colors</li>
+          <li>Repeat, don't reinvent</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="qmark">&ldquo;</span>
+      <p>Think of it like setting a table. You don't need fancy china. A clean plate, a folded napkin, everything lined up, and it feels cared for. <b>Tidy and consistent reads as "this person knows what they're doing."</b></p>
+    </div>
+  </section>
+
+  <section class="block" id="l5-export">
+    <div class="sec-head">
+      <span class="label">Export it</span>
+      <h2 class="serif">Get it out of Canva and <span class="a-green">ready to send.</span></h2>
+      <p>One last step turns your design into the file your buyer actually receives.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-blue">
+        <span class="label">Do this</span>
+        <h3 class="serif">Export as a PDF</h3>
+        <p>For a guide, checklist, or template, a PDF is your friend. It looks the same on every device and nobody can accidentally mess it up.</p>
+        <ul>
+          <li>Download, then choose PDF</li>
+          <li>Name the file clearly</li>
+          <li>Open it to be sure it looks right</li>
+        </ul>
+      </div>
+      <div class="card tint-green">
+        <span class="label">Then this</span>
+        <h3 class="serif">Give it one fresh read</h3>
+        <p>Open the finished file and read it like a buyer would. Typos, broken spots, anything confusing. Fix those, and you're done.</p>
+        <ul>
+          <li>Read it with fresh eyes</li>
+          <li>Fix the obvious stuff</li>
+          <li>Then stop touching it</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block move" id="l5-move">
+    <span class="label">Before lesson 3</span>
+    <h2 class="serif">Build it this week. Not someday.</h2>
+    <p>Open Canva, pick a template, pour your map in, keep it clean and consistent, and export the PDF. <b>Give yourself an afternoon, not a month.</b> In the next lesson, we deal with the voice in your head saying it's not good enough yet.</p>
+    <a class="nextpill" data-goto="6" href="#l5-">Next &rarr; Lesson 3: Good enough to sell</a>
+  </section>
+
+  <footer>
+    <span class="label">Your First Digital Product · Module 2 · Lesson 2</span>
+  </footer>
+
+</div>
+
+
+
+</section>
+<section class="lesson" id="lesson-6">
+
+
+<header>
+  <div class="hbar">
+    <div class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="9" fill="#fff"/>
+        <path d="M8 12.5l2.6 2.6L16 9.5" stroke="#9C63D1" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="htext">
+      <h1>Good Enough to Sell</h1>
+      <span class="label">Module 2 · Lesson 3</span>
+    </div>
+    <span class="label htag">Done beats perfect.</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabrow" id="l6-tabrow">
+    <a href="#l6-done" class="active">Done Beats Perfect</a>
+    <a href="#l6-focused">Focused, Not Lazy</a>
+    <a href="#l6-finish">The Finish Line</a>
+    <a href="#l6-move">Your Move</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="label">Core idea</span>
+    <h2 class="serif">A finished "good" product beats a <em>perfect</em> one that doesn't exist.</h2>
+    <p>This is where more first products die than anywhere else. Not in the making. In the endless polishing. You keep tweaking, second-guessing, adding one more thing, and it never goes live. Let's get you across the finish line.</p>
+  </section>
+
+  <section class="block" id="l6-done">
+    <div class="sec-head">
+      <span class="label">Done beats perfect</span>
+      <h2 class="serif">Perfect is just <span class="a-coral">hiding</span> with better lighting.</h2>
+      <p>Polishing forever feels productive. It's usually fear wearing a disguise. Here's what's really going on with your first product.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card tint-coral">
+        <span class="label">Reason one</span>
+        <h3 class="serif">Perfect doesn't sell</h3>
+        <p>A perfect product in your head has helped zero people and earned zero dollars. A good one that's live can do both today.</p>
+        <ul>
+          <li>Imaginary products help nobody</li>
+          <li>Live ones help and earn</li>
+          <li>Shipped beats flawless</li>
+        </ul>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">Reason two</span>
+        <h3 class="serif">Selling it shows you what to fix</h3>
+        <p>You learn what to improve from real buyers, not from more tweaking in the dark. Version one teaches you version two.</p>
+        <ul>
+          <li>Real feedback beats guessing</li>
+          <li>You can update it later, easily</li>
+          <li>V1 pays for V2</li>
+        </ul>
+      </div>
+      <div class="card tint-green">
+        <span class="label">Reason three</span>
+        <h3 class="serif">Nobody expects perfect</h3>
+        <p>Your buyer wants the one win you promised. Deliver that and they're happy. They are not sitting there grading your design.</p>
+        <ul>
+          <li>They want the result</li>
+          <li>It's not a beauty contest</li>
+          <li>Helpful is the bar</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="l6-focused">
+    <div class="sec-head">
+      <span class="label">Focused, not lazy</span>
+      <h2 class="serif">Small means <span class="a-purple">focused</span>, not lazy.</h2>
+      <p>There's a real difference between a lean product and a sloppy one, and it matters. Keep this straight.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-coral">
+        <span class="label">The line</span>
+        <h3 class="serif">Lean is not sloppy</h3>
+        <p>A two-page PDF you slapped together in five minutes breaks trust. Small isn't an excuse to cut corners. It's permission to go deep on one thing.</p>
+        <ul>
+          <li>Small is not the same as careless</li>
+          <li>One thing, done really well</li>
+          <li>Care always shows</li>
+        </ul>
+      </div>
+      <div class="card tint-green">
+        <span class="label">The standard</span>
+        <h3 class="serif">One problem, solved completely</h3>
+        <p>Solve your one problem so well that someone would happily pay again. That's the bar. Narrow and excellent beats broad and thin every time.</p>
+        <ul>
+          <li>Go deep, not wide</li>
+          <li>Leave them genuinely helped</li>
+          <li>Quality on a small scope</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="qmark">&ldquo;</span>
+      <p>A great taco truck doesn't have a ten-page menu. It does three things so well there's a line out the door. <b>Your first product is the taco truck.</b> Small menu, no apologies, really good at the one thing.</p>
+    </div>
+  </section>
+
+  <section class="block" id="l6-finish">
+    <div class="sec-head">
+      <span class="label">The finish line</span>
+      <h2 class="serif">How to know it's <span class="a-green">actually done.</span></h2>
+      <p>A simple three-question test so you stop polishing and hit publish.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card tint-blue">
+        <span class="label">Question one</span>
+        <h3 class="serif">Does it deliver the win?</h3>
+        <p>If someone follows it, do they get the one outcome you promised? If yes, it works. That's the only thing that truly has to be true.</p>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">Question two</span>
+        <h3 class="serif">Is it clean and clear?</h3>
+        <p>Readable, consistent, no obvious mistakes. Not gallery-perfect. Just clear enough that nothing trips the reader up.</p>
+      </div>
+      <div class="card tint-green">
+        <span class="label">Question three</span>
+        <h3 class="serif">Would you give it to a friend?</h3>
+        <p>If you'd hand it to a friend with the same problem and feel good about it, it's ready to sell. Trust that gut.</p>
+      </div>
+    </div>
+    <div class="band">
+      <p class="big serif">If it delivers the <span class="g">win</span>, it's ready. <span class="c">Ship it.</span></p>
+    </div>
+  </section>
+
+  <section class="block move" id="l6-move">
+    <span class="label">Module 2 complete</span>
+    <h2 class="serif">Call it done. Out loud.</h2>
+    <p>Run your product through the three questions. If it delivers the win, it's clean, and you'd give it to a friend, then it's finished. Say it: <b>this is done.</b> That's Module 2 complete. You've made a real product. Next, we set it up so people can actually pay you for it.</p>
+    <a class="nextpill" data-goto="7" href="#l6-">Next &rarr; Module 3: Set it up to get paid</a>
+  </section>
+
+  <footer>
+    <span class="label">Your First Digital Product · Module 2 · Lesson 3</span>
+  </footer>
+
+</div>
+
+
+
+</section>
+<section class="lesson" id="lesson-7">
+
+
+<header>
+  <div class="hbar">
+    <div class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <circle cx="8" cy="8" r="4.5" fill="none" stroke="#fff" stroke-width="2"/>
+        <path d="M11 11l8 8M16 16l2-2M18 18l2-2" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="htext">
+      <h1>The Tech Is Already Built</h1>
+      <span class="label">Module 3 · Lesson 1</span>
+    </div>
+    <span class="label htag">Just turn the key.</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabrow" id="l7-tabrow">
+    <a href="#l7-fear" class="active">The Fear</a>
+    <a href="#l7-key">Turning the Key</a>
+    <a href="#l7-map">The Map Ahead</a>
+    <a href="#l7-move">Your Move</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="label">Core idea</span>
+    <h2 class="serif">You're not building the tech. You're just <em>turning it on.</em></h2>
+    <p>This is the module people dread, so let's clear the fear out first. You are not going to write code, hire a developer, or build anything from scratch. The hard tech already exists. Your whole job is to fill in some blanks and flip a few switches. Let's walk through it so nothing catches you off guard.</p>
+  </section>
+
+  <section class="block" id="l7-fear">
+    <div class="sec-head">
+      <span class="label">The fear</span>
+      <h2 class="serif">The fear is normal. It's also <span class="a-coral">misplaced.</span></h2>
+      <p>Almost everyone over 40 freezes right here. So let's look at what's actually true about the tech before you touch a thing.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card tint-coral">
+        <span class="label">Truth one</span>
+        <h3 class="serif">You won't build anything</h3>
+        <p>The payment system, the delivery, the checkout page, all of it is already built by companies whose only job is to make it work. You're a user, not an engineer.</p>
+        <ul>
+          <li>No code, ever</li>
+          <li>No developer needed</li>
+          <li>You're filling in blanks</li>
+        </ul>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">Truth two</span>
+        <h3 class="serif">It's fill-in-the-blank</h3>
+        <p>These tools are made for regular people. You type your product name, set your price, upload your file. That's the actual difficulty level.</p>
+        <ul>
+          <li>Type, click, save</li>
+          <li>Plain-English screens</li>
+          <li>Built for non-techies</li>
+        </ul>
+      </div>
+      <div class="card tint-green">
+        <span class="label">Truth three</span>
+        <h3 class="serif">You can't really break it</h3>
+        <p>Nothing here is permanent or scary. You can change a price, fix a typo, or redo a page anytime. There's no big red button that ruins everything.</p>
+        <ul>
+          <li>Everything's editable</li>
+          <li>Mistakes are fixable</li>
+          <li>You test before going live</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="l7-key">
+    <div class="band">
+      <p class="big serif">You're not building the car. You're <span class="c">turning the key.</span></p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-purple">
+        <span class="label">The analogy</span>
+        <h3 class="serif">The car is already built</h3>
+        <p>Think about driving. You don't understand every part of the engine, and you don't need to. Someone built it. You turn the key and go. Systeme and Stripe are that car.</p>
+        <ul>
+          <li>The engine's already done</li>
+          <li>You just drive it</li>
+          <li>Trust the machine to work</li>
+        </ul>
+      </div>
+      <div class="card tint-blue">
+        <span class="label">Your actual job</span>
+        <h3 class="serif">The simple stuff is all yours</h3>
+        <p>Your real job is the easy part: name your product, set a price, upload your file, connect your bank. The tools handle everything complicated, invisibly.</p>
+        <ul>
+          <li>Name it</li>
+          <li>Price it</li>
+          <li>Upload it</li>
+          <li>Connect payment</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="l7-map">
+    <div class="sec-head">
+      <span class="label">The map ahead</span>
+      <h2 class="serif">Here's <span class="a-green">everything</span> we're about to do.</h2>
+      <p>No surprises. A handful of short steps across the next two lessons, and then you can take money.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="sn promise" aria-hidden="true">&#9733;</span>
+        <div class="sc promise">
+          <span class="label">By the end of this module</span>
+          <h4 class="serif">Someone can buy your product and get it, with zero work from you.</h4>
+          <p>That's the whole destination. Here are the steps to get there.</p>
+        </div>
+      </div>
+      <div class="step"><span class="sn" aria-hidden="true">1</span><div class="sc"><h4 class="serif">Create your product in Systeme</h4><p>Name it, price it, upload your file.</p></div></div>
+      <div class="step"><span class="sn" aria-hidden="true">2</span><div class="sc"><h4 class="serif">Connect Stripe</h4><p>So the money lands in your bank account.</p></div></div>
+      <div class="step"><span class="sn" aria-hidden="true">3</span><div class="sc"><h4 class="serif">Build a simple checkout page</h4><p>The page where people click buy.</p></div></div>
+      <div class="step"><span class="sn" aria-hidden="true">4</span><div class="sc"><h4 class="serif">Set automatic delivery</h4><p>Buyers get the file the instant they pay.</p></div></div>
+      <div class="step"><span class="sn" aria-hidden="true">5</span><div class="sc"><h4 class="serif">Add a thank-you page</h4><p>A warm landing spot that points to what's next.</p></div></div>
+    </div>
+  </section>
+
+  <div class="wrap" style="padding:0;">
+    <div class="callout">
+      <span class="qmark">&ldquo;</span>
+      <p>The tech is the part you're most afraid of and the part that takes the least time. An afternoon, start to finish. <b>Once it's done, it runs while you sleep.</b></p>
+    </div>
+  </div>
+
+  <section class="block move" id="l7-move">
+    <span class="label">Before lesson 2</span>
+    <h2 class="serif">Get three things ready.</h2>
+    <p>Before the next lesson, put three things in one spot: <b>your finished product file, the price you want to charge, and a Systeme account you can log into.</b> That's all the prep. Next lesson, we set up the product and the checkout page.</p>
+    <a class="nextpill" data-goto="8" href="#l7-">Next &rarr; Lesson 2: Product and checkout</a>
+  </section>
+
+  <footer>
+    <span class="label">Your First Digital Product · Module 3 · Lesson 1</span>
+  </footer>
+
+</div>
+
+
+
+</section>
+<section class="lesson" id="lesson-8">
+
+
+<header>
+  <div class="hbar">
+    <div class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M4 11.5l7.5-7.5H20v8.5L12.5 20 4 11.5z" fill="#fff"/>
+        <circle cx="15.5" cy="8.5" r="1.6" fill="#9C63D1"/>
+      </svg>
+    </div>
+    <div class="htext">
+      <h1>Product and Checkout</h1>
+      <span class="label">Module 3 · Lesson 2</span>
+    </div>
+    <span class="label htag">Name it, price it, sell it.</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabrow" id="l8-tabrow">
+    <a href="#l8-product" class="active">Create the Product</a>
+    <a href="#l8-stripe">Connect Stripe</a>
+    <a href="#l8-checkout">Build the Checkout</a>
+    <a href="#l8-move">Your Move</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="label">Core idea</span>
+    <h2 class="serif">Three things turn your file into something people can <em>buy.</em></h2>
+    <p>Now we make it real. By the end of this lesson you'll have a product set up, your payments connected, and a checkout page where someone can actually click buy. I'll walk you through what each step does and what to have ready, and you'll do the clicks in your own account as we go.</p>
+  </section>
+
+  <section class="block" id="l8-product">
+    <div class="sec-head">
+      <span class="label">Create the product</span>
+      <h2 class="serif">First, tell Systeme what you're <span class="a-coral">selling.</span></h2>
+      <p>Creating a product is mostly just describing it. Here's what you'll set.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card tint-coral">
+        <span class="label">Field one</span>
+        <h3 class="serif">Name and describe it</h3>
+        <p>The product name buyers will see, plus a short description. Keep it clear and plain. This is what shows up on the checkout page.</p>
+        <ul>
+          <li>A clear, simple name</li>
+          <li>A one-line description</li>
+          <li>Match it to your promise</li>
+        </ul>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">Field two</span>
+        <h3 class="serif">Set your price</h3>
+        <p>Type the price you decided on. You can change it anytime, so don't agonize. We'll dig into pricing strategy in the next module.</p>
+        <ul>
+          <li>Enter your number</li>
+          <li>One-time payment</li>
+          <li>Changeable whenever</li>
+        </ul>
+      </div>
+      <div class="card tint-green">
+        <span class="label">Field three</span>
+        <h3 class="serif">Upload your file</h3>
+        <p>Attach the PDF you exported last module. This is the thing buyers receive. Systeme stores it and hands it out automatically.</p>
+        <ul>
+          <li>Upload your PDF</li>
+          <li>Systeme holds it safely</li>
+          <li>Delivered on purchase</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="l8-stripe">
+    <div class="sec-head">
+      <span class="label">Connect Stripe</span>
+      <h2 class="serif">Connect Stripe so the <span class="a-purple">money</span> reaches you.</h2>
+      <p>Stripe is the piece that actually moves the payment into your bank. You connect it once and forget it.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-purple">
+        <span class="label">What it is</span>
+        <h3 class="serif">What Stripe does</h3>
+        <p>Stripe is the trusted middleman that takes the buyer's card and deposits the money into your bank. Millions of businesses use it, and you never touch card numbers yourself.</p>
+        <ul>
+          <li>Handles the card safely</li>
+          <li>Deposits to your bank</li>
+          <li>You never see card data</li>
+        </ul>
+      </div>
+      <div class="card tint-blue">
+        <span class="label">What you do</span>
+        <h3 class="serif">Connect it once</h3>
+        <p>In Systeme's settings, you link your Stripe account in a few clicks. If you don't have one yet, you'll create it free during this step. Set it up once and every future product uses it.</p>
+        <ul>
+          <li>Link it in settings</li>
+          <li>One-time setup</li>
+          <li>Have your bank details handy</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="l8-checkout">
+    <div class="sec-head">
+      <span class="label">Build the checkout</span>
+      <h2 class="serif">Build the page where they <span class="a-green">click buy.</span></h2>
+      <p>The checkout page is where the sale happens. Systeme gives you a template, so you barely have to design a thing.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-coral">
+        <span class="label">Start here</span>
+        <h3 class="serif">Start from a template</h3>
+        <p>Systeme has ready-made checkout pages. Pick one, drop your product in, and the payment fields are already there waiting.</p>
+        <ul>
+          <li>Pick a checkout template</li>
+          <li>Your product auto-fills</li>
+          <li>Payment fields built in</li>
+        </ul>
+      </div>
+      <div class="card tint-green">
+        <span class="label">Keep it lean</span>
+        <h3 class="serif">Don't clutter it</h3>
+        <p>Your product name, the price, a short line on what they get, and the buy button. That's a checkout that converts. Extra stuff just gives people reasons to hesitate.</p>
+        <ul>
+          <li>Name, price, one promise</li>
+          <li>Big, clear buy button</li>
+          <li>Nothing extra to distract</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="qmark">&ldquo;</span>
+      <p>Once this page exists, you have a link you can send anyone, anywhere, that takes their money and gives them your product. <b>That link is your whole business in one URL.</b></p>
+    </div>
+  </section>
+
+  <section class="block move" id="l8-move">
+    <span class="label">Before lesson 3</span>
+    <h2 class="serif">Get to a working checkout link.</h2>
+    <p>Create the product, set the price, upload your file, connect Stripe, and build the checkout page from a template. When you're done, <b>you'll have one link that takes payment.</b> In the last lesson of this module, we make sure buyers get their product automatically and land on a warm thank-you page.</p>
+    <a class="nextpill" data-goto="9" href="#l8-">Next &rarr; Lesson 3: Delivery and thank-you</a>
+  </section>
+
+  <footer>
+    <span class="label">Your First Digital Product · Module 3 · Lesson 2</span>
+  </footer>
+
+</div>
+
+
+
+</section>
+<section class="lesson" id="lesson-9">
+
+
+<header>
+  <div class="hbar">
+    <div class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M3 11l18-7-7 18-3.5-7L3 11z" fill="#fff"/>
+        <path d="M10.5 13.5L21 4" stroke="#9C63D1" stroke-width="1.6"/>
+      </svg>
+    </div>
+    <div class="htext">
+      <h1>Delivery and Thank-You</h1>
+      <span class="label">Module 3 · Lesson 3</span>
+    </div>
+    <span class="label htag">Set it once. It runs forever.</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabrow" id="l9-tabrow">
+    <a href="#l9-delivery" class="active">Automatic Delivery</a>
+    <a href="#l9-thankyou">The Thank-You Page</a>
+    <a href="#l9-test">One Test</a>
+    <a href="#l9-move">Your Move</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="label">Core idea</span>
+    <h2 class="serif">Set it up once, and it sells while you're <em>asleep.</em></h2>
+    <p>This is the part that makes it feel like magic. Once you set up automatic delivery, you never have to lift a finger when someone buys. They pay, they instantly get the file, and they land on a friendly thank-you page. You could be out on a walk. Let's turn it on.</p>
+  </section>
+
+  <section class="block" id="l9-delivery">
+    <div class="sec-head">
+      <span class="label">Automatic delivery</span>
+      <h2 class="serif">The buyer gets it <span class="a-green">instantly.</span> You do nothing.</h2>
+      <p>This is a simple rule you set one time: when someone buys, send them the product. Set it, then forget it.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card tint-coral">
+        <span class="label">The rule</span>
+        <h3 class="serif">One simple automation</h3>
+        <p>In Systeme you create a little rule: when this product is purchased, deliver the file. Think of a light switch wired to the front door. Someone walks in, the light comes on by itself.</p>
+        <ul>
+          <li>Trigger: they buy</li>
+          <li>Action: send the file</li>
+          <li>Runs on its own</li>
+        </ul>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">The freedom</span>
+        <h3 class="serif">No manual sending</h3>
+        <p>You're not emailing files at midnight. The second the payment clears, the buyer has it. Whether you're awake, asleep, or completely off the grid.</p>
+        <ul>
+          <li>Instant, every time</li>
+          <li>No you required</li>
+          <li>Works around the clock</li>
+        </ul>
+      </div>
+      <div class="card tint-green">
+        <span class="label">The proof</span>
+        <h3 class="serif">Test it before you trust it</h3>
+        <p>Run one test purchase yourself and watch it work end to end. Seeing it deliver once kills the worry for good.</p>
+        <ul>
+          <li>Buy it yourself once</li>
+          <li>Confirm the file arrives</li>
+          <li>Then relax</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="l9-thankyou">
+    <div class="sec-head">
+      <span class="label">The thank-you page</span>
+      <h2 class="serif">Where they land is your <span class="a-purple">next move.</span></h2>
+      <p>The thank-you page is the screen buyers see the moment they finish paying. It quietly does two jobs.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-purple">
+        <span class="label">Job one</span>
+        <h3 class="serif">Confirm and reassure</h3>
+        <p>First, tell them the sale worked and their product is on its way. A nervous new buyer relaxes the second they see a warm, clear confirmation.</p>
+        <ul>
+          <li>"You're in, here's what's next"</li>
+          <li>Where to find their file</li>
+          <li>A friendly, human tone</li>
+        </ul>
+      </div>
+      <div class="card tint-blue">
+        <span class="label">Job two</span>
+        <h3 class="serif">Point to what's next</h3>
+        <p>This is prime real estate. A happy new buyer is your warmest audience all day. Point them gently toward one next step, like your free community or your next offer.</p>
+        <ul>
+          <li>Thank them warmly</li>
+          <li>One soft next step</li>
+          <li>Invite, don't oversell</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="l9-test">
+    <div class="sec-head">
+      <span class="label">One test</span>
+      <h2 class="serif">Buy your own product <span class="a-coral">once.</span></h2>
+      <p>Before you tell a soul it exists, run the whole thing yourself so you know it works.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-green">
+        <span class="label">The end-to-end test</span>
+        <h3 class="serif">Check these three things</h3>
+        <p>Do a test purchase (you can refund yourself, or use Systeme's test mode). Then confirm all three pieces fired the way they should.</p>
+        <ul>
+          <li>The payment went through</li>
+          <li>The file actually arrived</li>
+          <li>The thank-you page showed up</li>
+        </ul>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">Why bother</span>
+        <h3 class="serif">It kills the doubt</h3>
+        <p>Watching your own sale run start to finish is the thing that finally makes it feel real. Once you've seen it work, you'll stop second-guessing and start sharing.</p>
+        <ul>
+          <li>Seeing is believing</li>
+          <li>Confidence to promote</li>
+          <li>No more "does it work?"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="qmark">&ldquo;</span>
+      <p>When all three pieces work, payment, delivery, and thank-you, you officially have a business that <b>runs without you.</b> That's the whole point of doing the tech once.</p>
+    </div>
+  </section>
+
+  <section class="block move" id="l9-move">
+    <span class="label">Module 3 complete</span>
+    <h2 class="serif">Turn it on. Then test it.</h2>
+    <p>Set the delivery automation, build a warm thank-you page that points to your next step, and run one test purchase to watch the whole thing work. When it does, say it: <b>I can take money in my sleep.</b> That's Module 3, the scary one, done. Last module: getting people to actually buy.</p>
+    <a class="nextpill" data-goto="10" href="#l9-">Next &rarr; Module 4: Sell it</a>
+  </section>
+
+  <footer>
+    <span class="label">Your First Digital Product · Module 3 · Lesson 3</span>
+  </footer>
+
+</div>
+
+
+
+</section>
+<section class="lesson" id="lesson-10">
+
+
+<header>
+  <div class="hbar">
+    <div class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="9" fill="#fff"/>
+        <path d="M12 7v10M9.5 9.2c0-1.2 1.1-1.9 2.5-1.9s2.5.7 2.5 1.8-1 1.5-2.5 1.9-2.5.8-2.5 2 1.1 1.9 2.5 1.9 2.5-.7 2.5-1.8" stroke="#9C63D1" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+      </svg>
+    </div>
+    <div class="htext">
+      <h1>Price It for the First Yes</h1>
+      <span class="label">Module 4 · Lesson 1</span>
+    </div>
+    <span class="label htag">Make yes easy.</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabrow" id="l10-tabrow">
+    <a href="#l10-goal" class="active">The Goal of Price</a>
+    <a href="#l10-number">Pick a Number</a>
+    <a href="#l10-underselling">Not Underselling</a>
+    <a href="#l10-move">Your Move</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="label">Core idea</span>
+    <h2 class="serif">Your first price has one job: make <em>yes</em> easy.</h2>
+    <p>People agonize over pricing like it's a math problem with a right answer. For your first product, it isn't. The goal isn't the most money per sale. It's the most people saying yes for the very first time. Let's pick a number that does exactly that.</p>
+  </section>
+
+  <section class="block" id="l10-goal">
+    <div class="sec-head">
+      <span class="label">The goal of price</span>
+      <h2 class="serif">Price for the <span class="a-coral">first yes</span>, not the big payday.</h2>
+      <p>Once you know what the price is actually for, the number gets a whole lot easier to pick.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card tint-coral">
+        <span class="label">Reason one</span>
+        <h3 class="serif">The first yes is the prize</h3>
+        <p>Your first product isn't where you get rich. It's where a stranger becomes a buyer. A low price removes the last reason to hesitate.</p>
+        <ul>
+          <li>Turn a watcher into a buyer</li>
+          <li>Low price, low risk</li>
+          <li>The relationship is the win</li>
+        </ul>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">Reason two</span>
+        <h3 class="serif">Cheap gets tested</h3>
+        <p>When nobody knows you yet, a low price lets people try you without much thought. A high price makes them stop and wonder if you're worth it.</p>
+        <ul>
+          <li>Easy to say yes to</li>
+          <li>Skips the "is she legit?" pause</li>
+          <li>More buyers, faster</li>
+        </ul>
+      </div>
+      <div class="card tint-green">
+        <span class="label">Reason three</span>
+        <h3 class="serif">First sales build proof</h3>
+        <p>A handful of happy buyers gives you reviews, confidence, and momentum. That proof is worth more than the few extra dollars a high price might earn.</p>
+        <ul>
+          <li>Reviews and trust</li>
+          <li>Confidence to keep going</li>
+          <li>Proof beats price early on</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="l10-number">
+    <div class="band">
+      <p class="big serif"><span class="g">$17 to $47.</span> Pick a number in there and <span class="c">move on.</span></p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-blue">
+        <span class="label">Where to land</span>
+        <h3 class="serif">The zone that works</h3>
+        <p>Somewhere between seventeen and forty-seven dollars. Low enough to be an impulse yes, high enough that people take it seriously. Free can feel worthless. This feels real but easy.</p>
+        <ul>
+          <li>$17 to $47 is the zone</li>
+          <li>Cheap enough to not overthink</li>
+          <li>Real enough to be valued</li>
+        </ul>
+      </div>
+      <div class="card tint-purple">
+        <span class="label">A relief</span>
+        <h3 class="serif">Don't overthink it</h3>
+        <p>There's no perfect number, and you can change it anytime. Pick one that feels a touch low to you. That little discomfort usually means it's priced right for a first product.</p>
+        <ul>
+          <li>No magic number exists</li>
+          <li>Change it whenever you want</li>
+          <li>A little low is just right</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="l10-underselling">
+    <div class="sec-head">
+      <span class="label">Not underselling</span>
+      <h2 class="serif">You're not <span class="a-coral">underselling</span> yourself.</h2>
+      <p>This is the worry that makes people price too high and then sell nothing. Let's settle it for good.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-coral">
+        <span class="label">The reframe</span>
+        <h3 class="serif">It's a doorway, not a ceiling</h3>
+        <p>A low first price isn't you saying you're cheap. It's the easy front door. Once people are in and you've helped them, they'll happily pay more for what comes next.</p>
+        <ul>
+          <li>The first price opens the door</li>
+          <li>Bigger offers come later</li>
+          <li>Low now, not low forever</li>
+        </ul>
+      </div>
+      <div class="card tint-green">
+        <span class="label">On purpose</span>
+        <h3 class="serif">You're lowering the bar deliberately</h3>
+        <p>You're making that first yes tiny on purpose, because the first yes is the hard one. Every sale after it gets easier, and it can cost more.</p>
+        <ul>
+          <li>First yes: make it easy</li>
+          <li>Later yeses: charge more</li>
+          <li>The ladder goes up from here</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="qmark">&ldquo;</span>
+      <p>Think of a coffee shop's first punch on a loyalty card. They're not getting rich on your first latte. They want you walking back in. <b>Your low first price is that first punch on the card.</b></p>
+    </div>
+  </section>
+
+  <section class="block move" id="l10-move">
+    <span class="label">Before lesson 2</span>
+    <h2 class="serif">Pick your number. Right now.</h2>
+    <p>Land somewhere between seventeen and forty-seven dollars, choose the one that feels a touch low, and lock it in. <b>Don't spend another day on it.</b> Next lesson, we build the simple page that does the selling for you.</p>
+    <a class="nextpill" data-goto="11" href="#l10-">Next &rarr; Lesson 2: Your sales page</a>
+  </section>
+
+  <footer>
+    <span class="label">Your First Digital Product · Module 4 · Lesson 1</span>
+  </footer>
+
+</div>
+
+
+
+</section>
+<section class="lesson" id="lesson-11">
+
+
+<header>
+  <div class="hbar">
+    <div class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <rect x="5" y="3" width="14" height="18" rx="2.5" fill="#fff"/>
+        <path d="M9 8h6M9 12h6M9 16h3" stroke="#9C63D1" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="htext">
+      <h1>Your Sales Page</h1>
+      <span class="label">Module 4 · Lesson 2</span>
+    </div>
+    <span class="label htag">Clear sells.</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabrow" id="l11-tabrow">
+    <a href="#l11-needs" class="active">What It Needs</a>
+    <a href="#l11-plain">Keep It Plain</a>
+    <a href="#l11-traps">Common Traps</a>
+    <a href="#l11-move">Your Move</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="label">Core idea</span>
+    <h2 class="serif">A sales page is just a clear answer to <em>one question.</em></h2>
+    <p>The phrase "sales page" makes people picture some slick, manipulative thing they don't know how to write. Forget that. A good sales page just answers one honest question: should I buy this? Give a clear yes, and you're done. Here's all it really needs.</p>
+  </section>
+
+  <section class="block" id="l11-needs">
+    <div class="sec-head">
+      <span class="label">What it needs</span>
+      <h2 class="serif">The <span class="a-coral">few things</span> a sales page actually needs.</h2>
+      <p>Not a wall of copy. Just enough, top to bottom, to help one person decide. Here are the pieces, in order.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="sn promise" aria-hidden="true">&#9733;</span>
+        <div class="sc promise">
+          <span class="label">The one question</span>
+          <h4 class="serif">Your page answers: should I buy this?</h4>
+          <p>Every piece below helps the right person get to a clear yes.</p>
+        </div>
+      </div>
+      <div class="step"><span class="sn" aria-hidden="true">1</span><div class="sc"><h4 class="serif">A clear headline</h4><p>The one outcome they get. Say it plainly, right at the top.</p></div></div>
+      <div class="step"><span class="sn" aria-hidden="true">2</span><div class="sc"><h4 class="serif">The problem it solves</h4><p>Name their struggle so they feel understood and keep reading.</p></div></div>
+      <div class="step"><span class="sn" aria-hidden="true">3</span><div class="sc"><h4 class="serif">What's inside</h4><p>A short bulleted list of what they actually get. No mystery.</p></div></div>
+      <div class="step"><span class="sn" aria-hidden="true">4</span><div class="sc"><h4 class="serif">Who it's for</h4><p>One line so the right person thinks, "that's me."</p></div></div>
+      <div class="step"><span class="sn" aria-hidden="true">5</span><div class="sc"><h4 class="serif">The price and the buy button</h4><p>Clear and easy to find. Never make them hunt for how to pay.</p></div></div>
+      <div class="step"><span class="sn" aria-hidden="true">6</span><div class="sc"><h4 class="serif">A line about you</h4><p>One sentence on why you can help. That's all the credibility you need.</p></div></div>
+    </div>
+  </section>
+
+  <section class="block" id="l11-plain">
+    <div class="sec-head">
+      <span class="label">Keep it plain</span>
+      <h2 class="serif">Plain and clear beats <span class="a-purple">clever.</span></h2>
+      <p>The fancier you try to make it, the more you get in your own way. Three simple rules.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card tint-coral">
+        <span class="label">Rule one</span>
+        <h3 class="serif">Write like you talk</h3>
+        <p>Say it the way you'd say it to a friend across the table. No marketing-speak, no hype words. Your normal voice is the most convincing thing you've got.</p>
+        <ul>
+          <li>Talk, don't "sell"</li>
+          <li>Skip the hype words</li>
+          <li>Sound like a person</li>
+        </ul>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">Rule two</span>
+        <h3 class="serif">One promise, repeated</h3>
+        <p>Pick the one outcome and keep coming back to it. A page that promises one clear thing beats a page that lists fifteen.</p>
+        <ul>
+          <li>One outcome, front and center</li>
+          <li>Repeat it, don't pile on</li>
+          <li>Clarity over cleverness</li>
+        </ul>
+      </div>
+      <div class="card tint-green">
+        <span class="label">Rule three</span>
+        <h3 class="serif">Make the next step obvious</h3>
+        <p>One buy button, easy to find, showing up more than once down the page. Never make someone hunt for how to pay you.</p>
+        <ul>
+          <li>One clear button</li>
+          <li>Repeat it down the page</li>
+          <li>No guessing required</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="l11-traps">
+    <div class="sec-head">
+      <span class="label">Common traps</span>
+      <h2 class="serif">The traps that <span class="a-coral">sink</span> a simple page.</h2>
+      <p>Avoid these three and your plain little page will outperform fancier ones.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card tint-coral">
+        <span class="label">Trap one</span>
+        <h3 class="serif">Too many words</h3>
+        <p>Long, dense pages bury the decision. People skim. Short and scannable, with room to breathe, wins.</p>
+        <ul>
+          <li>Cut, then cut again</li>
+          <li>Short paragraphs</li>
+          <li>White space helps</li>
+        </ul>
+      </div>
+      <div class="card tint-purple">
+        <span class="label">Trap two</span>
+        <h3 class="serif">Too many choices</h3>
+        <p>One product, one button, one decision. The second you add options, people freeze and leave without buying anything.</p>
+        <ul>
+          <li>One offer only</li>
+          <li>One call to action</li>
+          <li>Don't make them choose</li>
+        </ul>
+      </div>
+      <div class="card tint-blue">
+        <span class="label">Trap three</span>
+        <h3 class="serif">Hiding the price</h3>
+        <p>Burying the price feels safer but makes people suspicious. Show it plainly, right by the button. Clear pricing builds trust.</p>
+        <ul>
+          <li>Show the price</li>
+          <li>Put it by the button</li>
+          <li>Honesty sells</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="qmark">&ldquo;</span>
+      <p>A clear, plain page from a real person beats a slick, clever one every time. Your audience over 40 has seen every sales trick there is. <b>Honest and simple is what earns their click.</b></p>
+    </div>
+  </section>
+
+  <section class="block move" id="l11-move">
+    <span class="label">Before lesson 3</span>
+    <h2 class="serif">Draft your page in one sitting.</h2>
+    <p>Headline, the problem, what's inside, who it's for, the price, the button, and a line about you. Write it like you're talking to one person, and keep it short. <b>Then the last lesson is the one people fear most and need most:</b> actually telling people it exists.</p>
+    <a class="nextpill" data-goto="12" href="#l11-">Next &rarr; Lesson 3: Tell people</a>
+  </section>
+
+  <footer>
+    <span class="label">Your First Digital Product · Module 4 · Lesson 2</span>
+  </footer>
+
+</div>
+
+
+
+</section>
+<section class="lesson" id="lesson-12">
+
+
+<header>
+  <div class="hbar">
+    <div class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M4 10v4a1 1 0 0 0 1 1h3l5 4V5L8 9H5a1 1 0 0 0-1 1z" fill="#fff"/>
+        <path d="M16.5 9a4 4 0 0 1 0 6M18.5 7a7 7 0 0 1 0 10" stroke="#fff" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+      </svg>
+    </div>
+    <div class="htext">
+      <h1>Tell People</h1>
+      <span class="label">Module 4 · Lesson 3</span>
+    </div>
+    <span class="label htag">Help out loud.</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabrow" id="l12-tabrow">
+    <a href="#l12-reframe" class="active">Reframe It</a>
+    <a href="#l12-spots">The Three Spots</a>
+    <a href="#l12-oneask">One Ask at a Time</a>
+    <a href="#l12-move">Your Move</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="label">Core idea</span>
+    <h2 class="serif">You're not selling. You're <em>helping out loud.</em></h2>
+    <p>Here's the wall almost everyone hits. They build the whole thing and then never tell a soul it exists, because telling people feels pushy. So let's fix the feeling first, then I'll show you exactly where to mention it without ever sounding salesy.</p>
+  </section>
+
+  <section class="block" id="l12-reframe">
+    <div class="sec-head">
+      <span class="label">Reframe it</span>
+      <h2 class="serif">Selling is just <span class="a-coral">helping</span>, out loud.</h2>
+      <p>If the feeling is the problem, change the feeling. Here's what's actually happening when you mention your product.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card tint-coral">
+        <span class="label">Truth one</span>
+        <h3 class="serif">You made it to help</h3>
+        <p>You built this to solve a real problem for a real person. Telling them it exists isn't pushy. Hiding it from someone who needs it is the unkind thing.</p>
+        <ul>
+          <li>You're offering a solution</li>
+          <li>Staying quiet doesn't help them</li>
+          <li>Mentioning it is generous</li>
+        </ul>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">Truth two</span>
+        <h3 class="serif">It's the friend test</h3>
+        <p>If a friend asked how to fix the exact thing you're good at, you'd just tell them. You wouldn't whisper or apologize. This is that, only out loud on a video.</p>
+        <ul>
+          <li>You'd tell a friend</li>
+          <li>No apology needed</li>
+          <li>Same energy, bigger room</li>
+        </ul>
+      </div>
+      <div class="card tint-green">
+        <span class="label">Truth three</span>
+        <h3 class="serif">They can always say no</h3>
+        <p>A soft mention isn't pressure. You're opening a door, not shoving anyone through it. The people who need it will be glad you spoke up.</p>
+        <ul>
+          <li>Offer, don't pressure</li>
+          <li>A no is perfectly fine</li>
+          <li>The right people say yes</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="l12-spots">
+    <div class="sec-head">
+      <span class="label">The three spots</span>
+      <h2 class="serif">Three places to <span class="a-purple">mention it.</span></h2>
+      <p>You don't need to be loud or constant. Just present in the right three spots.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card tint-purple">
+        <span class="label">Spot one</span>
+        <h3 class="serif">A soft mention in videos</h3>
+        <p>Around the one-third mark, after you've given value, one calm line: "If you want help with this, I made something, link's in the description." Then right back to the content.</p>
+        <ul>
+          <li>One line, then move on</li>
+          <li>Only after you've helped first</li>
+          <li>Point to the description</li>
+        </ul>
+      </div>
+      <div class="card tint-blue">
+        <span class="label">Spot two</span>
+        <h3 class="serif">The freebie thank-you page</h3>
+        <p>The page right after someone grabs your freebie. They just raised their hand, so it's the perfect place for a gentle "here's the next step if you want it."</p>
+        <ul>
+          <li>They're already warm</li>
+          <li>A natural next step</li>
+          <li>Soft, not a hard pitch</li>
+        </ul>
+      </div>
+      <div class="card tint-green">
+        <span class="label">Spot three</span>
+        <h3 class="serif">One email</h3>
+        <p>A single short email to your list that tells the story of who it helps and points to the page. Not a campaign. One honest note from you.</p>
+        <ul>
+          <li>One email, not ten</li>
+          <li>Tell them who it helps</li>
+          <li>Link it and let it breathe</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="l12-oneask">
+    <div class="sec-head">
+      <span class="label">One ask at a time</span>
+      <h2 class="serif">One spoken ask <span class="a-coral">per video.</span></h2>
+      <p>This is the rule that keeps you from sounding salesy and keeps your videos working.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-coral">
+        <span class="label">The rule</span>
+        <h3 class="serif">Don't stack your asks</h3>
+        <p>The second you ask for two things out loud, join my community and buy my product, you split attention and get less of both. Pick one spoken ask per video.</p>
+        <ul>
+          <li>One ask, said once</li>
+          <li>Don't pile them up</li>
+          <li>The description holds the rest</li>
+        </ul>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">The trick</span>
+        <h3 class="serif">Match the ask to the warmth</h3>
+        <p>A cold video gets the soft ask, the freebie. A video about the exact thing your product solves can name the product directly. Warmer viewer, more direct ask.</p>
+        <ul>
+          <li>Cold video, soft ask</li>
+          <li>Warm video, name it</li>
+          <li>Let the topic decide</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="qmark">&ldquo;</span>
+      <p>Most first products don't fail because they're bad. They fail because nobody ever heard about them. The difference is usually just someone willing to say, out loud, <b>this exists and it can help you.</b></p>
+    </div>
+  </section>
+
+  <section class="block move" id="l12-move">
+    <span class="label">Module 4 complete</span>
+    <h2 class="serif">Say it out loud. Just once.</h2>
+    <p>Pick your warmest video, add one soft mention at the one-third mark, set up the thank-you page line, and write the one email. That's the whole selling system, and that's Module 4 done. You've now got a product made, set up to take money, and a way to tell people. <b>The hard part is behind you.</b></p>
+    <a class="nextpill" data-goto="13" href="#l12-">Next &rarr; You did it. Now what?</a>
+  </section>
+
+  <footer>
+    <span class="label">Your First Digital Product · Module 4 · Lesson 3</span>
+  </footer>
+
+</div>
+
+
+
+</section>
+<section class="lesson" id="lesson-13">
+
+
+<header>
+  <div class="hbar">
+    <div class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 3l2.4 5.6 6 .5-4.6 3.9 1.5 5.9L12 16.5 6.7 18.8l1.5-5.9L3.6 9.1l6-.5L12 3z" fill="#fff"/>
+      </svg>
+    </div>
+    <div class="htext">
+      <h1>You Did It</h1>
+      <span class="label">Your First Digital Product · The Finish</span>
+    </div>
+    <span class="label htag">You did it.</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabrow" id="l13-tabrow">
+    <a href="#l13-did" class="active">You Did It</a>
+    <a href="#l13-next">What's Next</a>
+    <a href="#l13-keep">Keep Going</a>
+    <a href="#l13-go">Go Tell Someone</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="label">You made it</span>
+    <h2 class="serif">You did the thing most people only <em>talk about.</em></h2>
+    <p>Stop for a second and take that in. You have a real product, made, set up to take money, with a way to sell it. That puts you ahead of almost everyone who says they want to do this. So first, well done. Now let's talk about what comes next.</p>
+  </section>
+
+  <section class="block" id="l13-did">
+    <div class="sec-head">
+      <span class="label">You did it</span>
+      <h2 class="serif">Look at what you <span class="a-green">actually built.</span></h2>
+      <p>Run back through it. Every piece is real now, not an idea on a someday list.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-green">
+        <span class="label">The thing</span>
+        <h3 class="serif">A real, finished product</h3>
+        <p>Not an idea. A thing someone can buy and use today. You picked it, you made it, you finished it. That alone is rare.</p>
+        <ul>
+          <li>Picked and built</li>
+          <li>Out of your head</li>
+          <li>Into the world</li>
+        </ul>
+      </div>
+      <div class="card tint-coral">
+        <span class="label">The system</span>
+        <h3 class="serif">A business that runs itself</h3>
+        <p>Payment, delivery, a page, and a way to tell people. It works whether you're at your desk or out living your life.</p>
+        <ul>
+          <li>Takes the money</li>
+          <li>Delivers itself</li>
+          <li>Sells while you sleep</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="l13-next">
+    <div class="sec-head">
+      <span class="label">What's next</span>
+      <h2 class="serif">Once the first sales <span class="a-purple">come in.</span></h2>
+      <p>You don't need to do any of these today. But when you're ready, here's where it goes from here.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card tint-yellow">
+        <span class="label">Option one</span>
+        <h3 class="serif">Raise the price</h3>
+        <p>Once people are buying and you've got a few happy reviews, nudge the price up. You priced low to get the first yes. You don't have to stay there.</p>
+        <ul>
+          <li>Proof lets you charge more</li>
+          <li>Small bumps over time</li>
+          <li>You earned it</li>
+        </ul>
+      </div>
+      <div class="card tint-purple">
+        <span class="label">Option two</span>
+        <h3 class="serif">Build the next one</h3>
+        <p>A second small product gives buyers another reason to come back. Or grow this one, a guide becomes a workshop. But that's later, not today.</p>
+        <ul>
+          <li>Another small product</li>
+          <li>Or expand this one</li>
+          <li>Later, not now</li>
+        </ul>
+      </div>
+      <div class="card tint-blue">
+        <span class="label">Option three</span>
+        <h3 class="serif">Point your videos at it</h3>
+        <p>Now that it exists, your videos have somewhere to send people. Soft mentions, the description, the thank-you page. The funnel you already know.</p>
+        <ul>
+          <li>Videos feed the product</li>
+          <li>Soft mentions do the work</li>
+          <li>The whole funnel connects</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="qmark">&ldquo;</span>
+      <p>You don't have to do any of that today. Today, you just finished something. The next product, the higher price, the bigger offers, those are problems for future you. <b>Right now, celebrate that you shipped.</b></p>
+    </div>
+  </section>
+
+  <section class="block" id="l13-keep">
+    <div class="sec-head">
+      <span class="label">Keep going</span>
+      <h2 class="serif">Don't do the next part <span class="a-coral">alone.</span></h2>
+      <p>The people who keep going are almost always the ones who don't try to go it solo.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-green">
+        <span class="label">Come hang out</span>
+        <h3 class="serif">Join the community</h3>
+        <p>This is where creators over 40 keep each other moving, share what's working, and celebrate first sales. It's a whole lot easier with people who get it.</p>
+        <ul>
+          <li>People who get it</li>
+          <li>Momentum and support</li>
+          <li>Celebrate the wins together</li>
+        </ul>
+      </div>
+      <div class="card tint-coral">
+        <span class="label">Keep the muscle</span>
+        <h3 class="serif">Keep showing up</h3>
+        <p>One product is the start, not the finish. The creators who build real income are simply the ones who kept going. You've proven you can finish. Now keep finishing.</p>
+        <ul>
+          <li>One down, more ahead</li>
+          <li>Consistency wins</li>
+          <li>You've got the muscle now</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block move" id="l13-go">
+    <span class="label">One last thing</span>
+    <h2 class="serif">You're not done. You're just getting started.</h2>
+    <p>One product is proof you can do this. The next step is simple: <b>go tell people it exists,</b> then come build the next thing with people who are right there with you.</p>
+    <a class="nextpill" href="https://www.skool.com/content-creator-circle-1570/about">Join the free community</a>
+  </section>
+
+  <footer>
+    <span class="label">Your First Digital Product · The End</span>
+  </footer>
+
+</div>
+
+
+
+</section>
+
+<div class="coursebar">
+  <button class="cbtn" id="cb-prev" aria-label="Previous lesson">&#8249;</button>
+  <button class="cmid" id="cb-mid">Lesson <b id="cb-num">1</b> / 14</button>
+  <button class="cbtn" id="cb-next" aria-label="Next lesson">&#8250;</button>
+</div>
+
+<div class="menu-overlay" id="menu-overlay">
+  <div class="menu" id="menu"></div>
+</div>
+
+
+<script>
+  var lessons = Array.prototype.slice.call(document.querySelectorAll('.lesson'));
+  var TITLES = ["Welcome","1.1  The One-Problem Rule","1.2  Find Your Idea","1.3  Pick Your Format","2.1  Map It Before You Make It","2.2  Build It","2.3  Good Enough to Sell","3.1  The Tech Is Already Built","3.2  Product and Checkout","3.3  Delivery and Thank-You","4.1  Price It for the First Yes","4.2  Your Sales Page","4.3  Tell People","You Did It"];
+  var GROUPS = [["",[0]],["Module 1 · Pick Your First Product",[1,2,3]],["Module 2 · Make It",[4,5,6]],["Module 3 · Set It Up to Get Paid",[7,8,9]],["Module 4 · Sell It",[10,11,12]],["Finish",[13]]];
+  var current = 0;
+  var total = lessons.length;
+
+  function refreshSpy(){
+    var lesson = lessons[current];
+    if(!lesson) return;
+    var links = Array.prototype.slice.call(lesson.querySelectorAll('.tabrow a'));
+    var secs = links.map(function(a){ return document.getElementById(a.getAttribute('href').slice(1)); }).filter(Boolean);
+    if(!secs.length) return;
+    var pos = window.scrollY + 200, cur = secs[0];
+    secs.forEach(function(s){ if(s.offsetTop <= pos) cur = s; });
+    links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === '#' + (cur && cur.id)); });
+  }
+
+  function updateBar(){
+    document.getElementById('cb-num').textContent = (current+1);
+    document.getElementById('cb-prev').disabled = (current===0);
+    document.getElementById('cb-next').disabled = (current===total-1);
+  }
+
+  function show(i){
+    if(i<0 || i>=total) return;
+    lessons[current].classList.remove('active');
+    current = i;
+    lessons[current].classList.add('active');
+    window.scrollTo(0,0);
+    updateBar();
+    refreshSpy();
+    closeMenu();
+  }
+
+  // in-content "Next" buttons
+  Array.prototype.slice.call(document.querySelectorAll('[data-goto]')).forEach(function(a){
+    a.addEventListener('click', function(e){ e.preventDefault(); show(parseInt(a.getAttribute('data-goto'),10)); });
+  });
+
+  document.getElementById('cb-prev').addEventListener('click', function(){ show(current-1); });
+  document.getElementById('cb-next').addEventListener('click', function(){ show(current+1); });
+
+  // lesson menu
+  var overlay = document.getElementById('menu-overlay');
+  var menu = document.getElementById('menu');
+  function buildMenu(){
+    var html = '<h3>Lessons</h3>';
+    GROUPS.forEach(function(g){
+      if(g[0]) html += '<div class="grp">'+g[0]+'</div>';
+      g[1].forEach(function(idx){
+        html += '<button class="item'+(idx===current?' current':'')+'" data-idx="'+idx+'">'+TITLES[idx]+'</button>';
+      });
+    });
+    menu.innerHTML = html;
+    Array.prototype.slice.call(menu.querySelectorAll('.item')).forEach(function(b){
+      b.addEventListener('click', function(){ show(parseInt(b.getAttribute('data-idx'),10)); });
+    });
+  }
+  function openMenu(){ buildMenu(); overlay.classList.add('open'); }
+  function closeMenu(){ overlay.classList.remove('open'); }
+  document.getElementById('cb-mid').addEventListener('click', openMenu);
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) closeMenu(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeMenu(); });
+
+  window.addEventListener('scroll', refreshSpy, {passive:true});
+  updateBar(); refreshSpy();
+</script>
+
+</body>
+</html>
