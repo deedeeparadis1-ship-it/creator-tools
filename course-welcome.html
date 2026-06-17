@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome — Start Here</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@500;600&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FFF7EC; --paper:#FFFDF8; --card:#FFFFFF;
+    --ink:#34243F; --ink-soft:#6E5F80; --line:#EBE0D4;
+    --blue:#6E8FD6; --blue-tint:#EAF0FB; --blue-bd:#C9D8F4;
+    --green:#2FA56F; --green-tint:#E4F6EE; --green-bd:#BCE6D2;
+    --yellow:#E8A91C; --yellow-tint:#FFF3D4; --yellow-bd:#F3DFA0;
+    --coral:#FF6F91; --coral-tint:#FFE7ED; --coral-bd:#F8C9D6;
+    --purple:#9C63D1; --purple-tint:#F3E9FB; --purple-bd:#E0CBF2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:"Nunito Sans",system-ui,sans-serif;color:var(--ink);font-size:18px;line-height:1.6;background:var(--cream);background-image:linear-gradient(rgba(110,95,128,.05) 1px, transparent 1px),linear-gradient(90deg, rgba(110,95,128,.05) 1px, transparent 1px);background-size:34px 34px;-webkit-font-smoothing:antialiased;}
+  .serif{font-family:"Fraunces",Georgia,serif;}
+  .label{font-family:"IBM Plex Mono",monospace;font-weight:600;letter-spacing:.18em;text-transform:uppercase;font-size:12.5px;color:var(--ink-soft);}
+
+  header{position:sticky;top:0;z-index:50;background:rgba(255,247,236,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .hbar{max-width:1180px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:16px;}
+  .mark{flex:0 0 auto;width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--coral),var(--purple));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(156,99,209,.28);}
+  .htext h1{font-family:"Fraunces",serif;font-weight:600;font-size:22px;line-height:1.1;color:var(--ink);}
+  .htext .label{margin-top:2px;display:block;}
+  .htag{margin-left:auto;color:var(--coral);}
+
+  nav.tabs{position:sticky;top:75px;z-index:49;background:rgba(255,247,236,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .tabrow{max-width:1180px;margin:0 auto;padding:0 28px;display:flex;gap:30px;overflow-x:auto;}
+  .tabrow a{font-family:"IBM Plex Mono",monospace;font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:12.5px;color:var(--ink-soft);text-decoration:none;padding:15px 0;border-bottom:3px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s;}
+  .tabrow a:hover{color:var(--ink);}
+  .tabrow a.active{color:var(--coral);border-bottom-color:var(--coral);}
+  .tabrow a:focus-visible{outline:2px solid var(--purple);outline-offset:3px;border-radius:3px;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  section.block{padding:64px 0 8px;scroll-margin-top:140px;}
+  .sec-head{max-width:760px;margin-bottom:30px;}
+  .sec-head .label{color:var(--coral);}
+  .sec-head h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(30px,4.4vw,46px);line-height:1.08;margin:12px 0 14px;}
+  .sec-head h2 .a-coral{color:var(--coral);} .sec-head h2 .a-purple{color:var(--purple);} .sec-head h2 .a-green{color:var(--green);} .sec-head h2 .a-blue{color:var(--blue);}
+  .sec-head p{font-size:19px;color:var(--ink-soft);max-width:64ch;}
+
+  .hero{padding:60px 0 8px;}
+  .hero .label{color:var(--purple);}
+  .hero h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(38px,6vw,68px);line-height:1.04;margin:16px 0 20px;max-width:18ch;}
+  .hero h2 em{font-style:italic;color:var(--coral);}
+  .hero p{font-size:20px;color:var(--ink-soft);max-width:62ch;}
+
+  .band{margin:30px 0;border-radius:22px;padding:34px 38px;background:linear-gradient(120deg,var(--green-tint),var(--yellow-tint) 60%,var(--coral-tint));border:1px solid var(--green-bd);text-align:center;}
+  .band .big{font-family:"Fraunces",serif;font-weight:700;font-size:clamp(26px,4vw,44px);line-height:1.12;}
+  .band .big .g{color:var(--green);} .band .big .c{color:var(--coral);} .band .big .p{color:var(--purple);}
+
+  .grid{display:grid;gap:22px;}
+  .g3{grid-template-columns:repeat(3,1fr);}
+  .g2{grid-template-columns:repeat(2,1fr);}
+  @media (max-width:860px){.g3,.g2{grid-template-columns:1fr;}}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:0 6px 20px rgba(58,42,79,.06);}
+  .card .label{margin-bottom:10px;}
+  .card h3{font-family:"Fraunces",serif;font-weight:600;font-size:24px;line-height:1.15;margin-bottom:12px;}
+  .card p{font-size:16.5px;color:var(--ink-soft);margin-bottom:14px;}
+  .card ul{list-style:none;display:flex;flex-direction:column;gap:9px;}
+  .card li{position:relative;padding-left:26px;font-size:16px;font-weight:700;color:var(--ink);}
+  .card li::before{content:"";position:absolute;left:0;top:8px;width:11px;height:11px;border-radius:50%;}
+  .tint-green{background:var(--green-tint);border-color:var(--green-bd);} .tint-green .label{color:var(--green);} .tint-green li::before{background:var(--green);}
+  .tint-yellow{background:var(--yellow-tint);border-color:var(--yellow-bd);} .tint-yellow .label{color:var(--yellow);} .tint-yellow li::before{background:var(--yellow);}
+  .tint-coral{background:var(--coral-tint);border-color:var(--coral-bd);} .tint-coral .label{color:var(--coral);} .tint-coral li::before{background:var(--coral);}
+  .tint-blue{background:var(--blue-tint);border-color:var(--blue-bd);} .tint-blue .label{color:var(--blue);} .tint-blue li::before{background:var(--blue);}
+  .tint-purple{background:var(--purple-tint);border-color:var(--purple-bd);} .tint-purple .label{color:var(--purple);} .tint-purple li::before{background:var(--purple);}
+  .card .icon{width:42px;height:42px;margin-bottom:14px;}
+
+  .steps{position:relative;margin-top:10px;padding-left:6px;}
+  .steps::before{content:"";position:absolute;left:28px;top:34px;bottom:34px;width:2px;background:var(--coral-bd);}
+  .step{display:flex;gap:18px;align-items:flex-start;padding:10px 0;position:relative;}
+  .sn{flex:0 0 auto;width:46px;height:46px;border-radius:13px;color:#fff;font-family:"Fraunces",serif;font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;z-index:1;background:linear-gradient(135deg,var(--coral),var(--purple));}
+  .sn.promise{background:linear-gradient(135deg,var(--green),#27966a);}
+  .sc{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 20px;}
+  .sc.promise{background:var(--green-tint);border-color:var(--green-bd);}
+  .sc .label{margin-bottom:4px;color:var(--coral);}
+  .sc.promise .label{color:var(--green);}
+  .sc h4{font-family:"Fraunces",serif;font-weight:600;font-size:18px;margin-bottom:2px;}
+  .sc p{font-size:15px;color:var(--ink-soft);margin:0;}
+
+  .callout{margin:40px 0 8px;border-radius:22px;padding:34px 40px;background:var(--ink);color:#fff;display:flex;gap:22px;align-items:flex-start;}
+  .callout .qmark{font-family:"Fraunces",serif;font-size:60px;line-height:.7;color:var(--yellow);flex:0 0 auto;}
+  .callout p{font-family:"Fraunces",serif;font-weight:500;font-size:clamp(22px,3vw,30px);line-height:1.3;}
+  .callout p b{color:var(--yellow);font-weight:700;}
+
+  .move .label{color:var(--purple);}
+  .move h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(28px,4vw,42px);margin:12px 0 14px;}
+  .move p{font-size:19px;color:var(--ink-soft);max-width:64ch;margin-bottom:22px;}
+  .move p b{color:var(--ink);}
+  .nextpill{display:inline-flex;align-items:center;gap:10px;text-decoration:none;background:linear-gradient(135deg,var(--coral),var(--purple));color:#fff;font-weight:800;font-size:17px;padding:15px 28px;border-radius:999px;box-shadow:0 10px 24px rgba(156,99,209,.3);transition:transform .16s;}
+  .nextpill:hover{transform:translateY(-2px);}
+  .nextpill:focus-visible{outline:3px solid var(--purple);outline-offset:3px;}
+
+  footer{padding:60px 0 80px;text-align:center;}
+  footer .label{color:var(--ink-soft);}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}.nextpill:hover{transform:none;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hbar">
+    <div class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M6 3v18" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M6 4h11l-2.5 3.5L17 11H6V4z" fill="#fff"/>
+      </svg>
+    </div>
+    <div class="htext">
+      <h1>Welcome</h1>
+      <span class="label">Your First Digital Product · Start Here</span>
+    </div>
+    <span class="label htag">Start here.</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabrow" id="tabrow">
+    <a href="#promise" class="active">The Promise</a>
+    <a href="#how">How It Works</a>
+    <a href="#rule">The One Rule</a>
+    <a href="#go">Let's Go</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="label">Welcome</span>
+    <h2 class="serif">By the end of this, you'll have a product that's <em>actually live.</em></h2>
+    <p>No theory, no someday. Over four short modules, you're going to pick a product, make it, set it up to take payment, and tell people about it. A real thing, out in the world, that someone can buy. Let's get you there.</p>
+  </section>
+
+  <section class="block" id="promise">
+    <div class="sec-head">
+      <span class="label">The promise</span>
+      <h2 class="serif">What you'll <span class="a-coral">walk away</span> with.</h2>
+      <p>One real product, set up to sell, start to first sale. Here's exactly what that breaks down to.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card tint-coral">
+        <span class="label">Modules 1 &amp; 2</span>
+        <h3 class="serif">A product, picked and made</h3>
+        <p>You'll choose one small thing that solves one problem, and actually build it. No giant course, no overwhelm.</p>
+        <ul>
+          <li>One clear idea</li>
+          <li>Made in an afternoon</li>
+          <li>Done, not perfect</li>
+        </ul>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">Module 3</span>
+        <h3 class="serif">A way to get paid</h3>
+        <p>You'll set it up so people can buy it and get it automatically. No tech degree required, I promise.</p>
+        <ul>
+          <li>A working checkout</li>
+          <li>Payment to your bank</li>
+          <li>Delivery on autopilot</li>
+        </ul>
+      </div>
+      <div class="card tint-green">
+        <span class="label">Module 4</span>
+        <h3 class="serif">A way to sell it</h3>
+        <p>You'll price it, build a simple page, and learn to tell people without ever feeling salesy.</p>
+        <ul>
+          <li>A price that's an easy yes</li>
+          <li>A simple sales page</li>
+          <li>A way to mention it</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="how">
+    <div class="sec-head">
+      <span class="label">How it works</span>
+      <h2 class="serif">Four modules. <span class="a-green">In order.</span></h2>
+      <p>Each one builds on the last. Do them in sequence and you'll never feel lost or stuck.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="sn promise" aria-hidden="true">&#9733;</span>
+        <div class="sc promise">
+          <span class="label">The whole journey</span>
+          <h4 class="serif">From a blank page to your first sale.</h4>
+          <p>Four steps. That's the entire path.</p>
+        </div>
+      </div>
+      <div class="step"><span class="sn" aria-hidden="true">1</span><div class="sc"><h4 class="serif">Pick your first product</h4><p>Decide exactly what you're going to make.</p></div></div>
+      <div class="step"><span class="sn" aria-hidden="true">2</span><div class="sc"><h4 class="serif">Make it</h4><p>Build the real thing, fast and clean.</p></div></div>
+      <div class="step"><span class="sn" aria-hidden="true">3</span><div class="sc"><h4 class="serif">Set it up to get paid</h4><p>Turn on payment and automatic delivery.</p></div></div>
+      <div class="step"><span class="sn" aria-hidden="true">4</span><div class="sc"><h4 class="serif">Sell it</h4><p>Price it, make a page, and tell people.</p></div></div>
+    </div>
+  </section>
+
+  <section class="block" id="rule">
+    <div class="band">
+      <p class="big serif">If it doesn't move you toward your <span class="c">first sale</span>, we don't do it.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-purple">
+        <span class="label">Rule, part one</span>
+        <h3 class="serif">Small and finished wins</h3>
+        <p>A small product that's done beats a big one that lives in your head forever. We're aiming for finished, not impressive.</p>
+        <ul>
+          <li>Done beats perfect</li>
+          <li>Small means focused</li>
+          <li>Finished is the goal</li>
+        </ul>
+      </div>
+      <div class="card tint-blue">
+        <span class="label">Rule, part two</span>
+        <h3 class="serif">No rabbit holes</h3>
+        <p>We skip everything that doesn't get you to that first sale. No fancy funnels, no extra tools, no someday-features. Just the path.</p>
+        <ul>
+          <li>One product</li>
+          <li>One clear path</li>
+          <li>Nothing extra</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="qmark">&ldquo;</span>
+      <p>Most people never make their first product because they try to make their best one. We're doing the opposite. We're making your first one, finishing it, and <b>getting it out there.</b></p>
+    </div>
+  </section>
+
+  <section class="block move" id="go">
+    <span class="label">Ready?</span>
+    <h2 class="serif">Let's build the thing.</h2>
+    <p>That's the whole plan. No fluff, no overwhelm, just four steps to a real product you can sell. <b>Start with Module 1,</b> where we pick exactly what you're going to make.</p>
+    <a class="nextpill" href="course-m1-l1-one-problem-rule.html">Start &rarr; Module 1: Pick your first product</a>
+  </section>
+
+  <footer>
+    <span class="label">Your First Digital Product · Welcome</span>
+  </footer>
+
+</div>
+
+<script>
+  var links = Array.prototype.slice.call(document.querySelectorAll('.tabrow a'));
+  var sections = links.map(function(a){return document.querySelector(a.getAttribute('href'));}).filter(Boolean);
+  function onScroll(){
+    var pos = window.scrollY + 200, current = sections[0];
+    sections.forEach(function(s){ if(s.offsetTop <= pos) current = s; });
+    links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === '#' + current.id); });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+</script>
+</body>
+</html>
