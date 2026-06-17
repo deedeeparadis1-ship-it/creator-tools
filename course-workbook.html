@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your First Digital Product — Workbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@500;600&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FFF7EC; --paper:#FFFDF8; --card:#FFFFFF;
+    --ink:#34243F; --ink-soft:#6E5F80; --line:#EBE0D4;
+    --blue:#6E8FD6; --blue-tint:#EAF0FB; --blue-bd:#C9D8F4;
+    --green:#2FA56F; --green-tint:#E4F6EE; --green-bd:#BCE6D2;
+    --yellow:#E8A91C; --yellow-tint:#FFF3D4; --yellow-bd:#F3DFA0;
+    --coral:#FF6F91; --coral-tint:#FFE7ED; --coral-bd:#F8C9D6;
+    --purple:#9C63D1; --purple-tint:#F3E9FB; --purple-bd:#E0CBF2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:"Nunito Sans",system-ui,sans-serif;color:var(--ink);font-size:18px;line-height:1.6;background:var(--cream);background-image:linear-gradient(rgba(110,95,128,.05) 1px, transparent 1px),linear-gradient(90deg, rgba(110,95,128,.05) 1px, transparent 1px);background-size:34px 34px;-webkit-font-smoothing:antialiased;}
+  .serif{font-family:"Fraunces",Georgia,serif;}
+  .label{font-family:"IBM Plex Mono",monospace;font-weight:600;letter-spacing:.18em;text-transform:uppercase;font-size:12.5px;color:var(--ink-soft);}
+
+  header{position:sticky;top:0;z-index:50;background:rgba(255,247,236,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .hbar{max-width:920px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:16px;}
+  .mark{flex:0 0 auto;width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--coral),var(--purple));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(156,99,209,.28);}
+  .htext h1{font-family:"Fraunces",serif;font-weight:600;font-size:22px;line-height:1.1;color:var(--ink);}
+  .htext .label{margin-top:2px;display:block;}
+  .printbtn{margin-left:auto;background:var(--ink);color:#fff;border:none;border-radius:999px;padding:11px 20px;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;}
+  .printbtn:hover{background:#48345f;}
+
+  nav.tabs{position:sticky;top:75px;z-index:49;background:rgba(255,247,236,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .tabrow{max-width:920px;margin:0 auto;padding:0 28px;display:flex;gap:26px;overflow-x:auto;}
+  .tabrow a{font-family:"IBM Plex Mono",monospace;font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:12px;color:var(--ink-soft);text-decoration:none;padding:15px 0;border-bottom:3px solid transparent;white-space:nowrap;}
+  .tabrow a:hover{color:var(--ink);}
+  .tabrow a.active{color:var(--coral);border-bottom-color:var(--coral);}
+
+  .wrap{max-width:920px;margin:0 auto;padding:0 28px;}
+  .intro{padding:54px 0 8px;}
+  .intro .label{color:var(--purple);}
+  .intro h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(34px,5vw,52px);line-height:1.05;margin:14px 0 16px;max-width:18ch;}
+  .intro h2 em{font-style:italic;color:var(--coral);}
+  .intro p{font-size:19px;color:var(--ink-soft);max-width:60ch;}
+
+  section.res{padding:50px 0 8px;scroll-margin-top:142px;}
+  .res-head{display:flex;align-items:center;gap:14px;margin-bottom:8px;}
+  .res-num{width:40px;height:40px;border-radius:11px;color:#fff;font-family:"Fraunces",serif;font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--coral),var(--purple));flex:0 0 auto;}
+  .res-head .label{color:var(--coral);}
+  .res h3{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(26px,3.6vw,38px);line-height:1.1;margin:6px 0 6px;}
+  .res .lead{font-size:17px;color:var(--ink-soft);max-width:62ch;margin-bottom:22px;}
+
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px;box-shadow:0 6px 20px rgba(58,42,79,.06);}
+  .panel.tint-coral{background:var(--coral-tint);border-color:var(--coral-bd);}
+  .panel.tint-green{background:var(--green-tint);border-color:var(--green-bd);}
+  .panel.tint-blue{background:var(--blue-tint);border-color:var(--blue-bd);}
+  .panel.tint-purple{background:var(--purple-tint);border-color:var(--purple-bd);}
+  .panel.tint-yellow{background:var(--yellow-tint);border-color:var(--yellow-bd);}
+
+  .flabel{font-family:"IBM Plex Mono",monospace;font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:11px;color:var(--ink-soft);display:block;margin:0 0 6px;}
+  .field{margin-bottom:20px;}
+  input.line, textarea.box{width:100%;font-family:"Nunito Sans",sans-serif;font-size:17px;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:13px 16px;}
+  input.line:focus, textarea.box:focus{outline:none;border-color:var(--coral);}
+  textarea.box{min-height:92px;resize:vertical;line-height:1.5;}
+  .fill-sentence{font-family:"Fraunces",serif;font-size:clamp(22px,3.2vw,30px);line-height:1.7;color:var(--ink);}
+  .fill-sentence input{display:inline-block;width:42%;min-width:180px;font-family:"Nunito Sans",sans-serif;font-size:20px;border:none;border-bottom:3px solid var(--coral);background:transparent;padding:2px 6px;color:var(--coral);font-weight:800;}
+  .fill-sentence input:focus{outline:none;border-bottom-color:var(--purple);}
+
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:680px){.twocol{grid-template-columns:1fr;}}
+  .mini{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;}
+  .mini h4{font-family:"Fraunces",serif;font-weight:600;font-size:19px;margin-bottom:4px;}
+  .mini p{font-size:14.5px;color:var(--ink-soft);margin-bottom:8px;}
+  .mini .use{font-size:13px;font-weight:800;color:var(--ink);}
+  .mini .use span{font-family:"IBM Plex Mono",monospace;font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:10px;color:var(--ink-soft);display:block;}
+
+  .steps-fill .sf{display:flex;gap:14px;align-items:flex-start;margin-bottom:12px;}
+  .steps-fill .sfn{flex:0 0 auto;width:38px;height:38px;border-radius:10px;background:#fff;border:1px solid var(--line);color:var(--coral);font-weight:900;display:flex;align-items:center;justify-content:center;margin-top:4px;}
+  .steps-fill .sf input{flex:1;}
+
+  .check{display:flex;align-items:flex-start;gap:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:12px;cursor:pointer;}
+  .check input{width:24px;height:24px;flex:0 0 auto;margin-top:2px;accent-color:var(--green);}
+  .check .ct b{font-family:"Fraunces",serif;font-weight:600;font-size:18px;display:block;}
+  .check .ct span{font-size:14.5px;color:var(--ink-soft);}
+
+  .swipe{background:#fff;border:1px dashed var(--coral-bd);border-radius:14px;padding:22px;font-size:16px;color:var(--ink);line-height:1.6;}
+  .swipe p{margin-bottom:12px;}
+  .swipe .ph{color:var(--coral);font-weight:800;}
+  .copyhint{font-size:13px;color:var(--ink-soft);margin-top:10px;font-style:italic;}
+
+  .tip{margin-top:16px;font-size:15px;color:var(--ink-soft);}
+  .tip b{color:var(--ink);}
+
+  footer{padding:54px 0 80px;text-align:center;}
+  .wordmark{font-family:"Fraunces",serif;font-weight:700;font-size:24px;color:var(--coral);margin-bottom:2px;}
+  footer p{font-size:13.5px;color:var(--ink-soft);}
+
+  @media print{
+    header,nav.tabs,.printbtn{display:none!important;}
+    body{background:#fff;}
+    .panel,.mini,.check,.swipe{box-shadow:none;}
+    section.res{page-break-inside:avoid;padding:24px 0;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hbar">
+    <div class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <rect x="5" y="3" width="14" height="18" rx="2.5" fill="#fff"/>
+        <path d="M9 8h6M9 12h6M9 16h3" stroke="#9C63D1" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="htext">
+      <h1>The Workbook</h1>
+      <span class="label">Your First Digital Product</span>
+    </div>
+    <button class="printbtn" onclick="window.print()">Print / Save PDF</button>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabrow" id="tabrow">
+    <a href="#promise" class="active">Your Promise</a>
+    <a href="#format">Format Chooser</a>
+    <a href="#map">Product Map</a>
+    <a href="#done">Is It Done?</a>
+    <a href="#thankyou">Thank-You Swipe</a>
+    <a href="#salespage">Sales Page</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="intro">
+    <span class="label">Work along as you go</span>
+    <h2 class="serif">Six tools to take you <em>idea to first sale.</em></h2>
+    <p>Fill these in as you move through the course. Type right on the page, or hit Print to save a blank copy as a PDF and write on it by hand. Whatever works for you.</p>
+  </section>
+
+  <!-- 1. PROMISE -->
+  <section class="res" id="promise">
+    <div class="res-head"><span class="res-num">1</span><span class="label">After Lessons 1.1 &amp; 1.2</span></div>
+    <h3 class="serif">Your Promise</h3>
+    <p class="lead">Your whole product starts with one sentence. Fill in the blanks and say it out loud. If you can finish this line, you have your idea.</p>
+    <div class="panel tint-coral">
+      <p class="fill-sentence">I help <input type="text" placeholder="who"> with <input type="text" placeholder="what problem">.</p>
+      <div class="field" style="margin-top:24px;">
+        <span class="flabel">The one win they get</span>
+        <input class="line" type="text" placeholder="By the end, they'll have...">
+      </div>
+      <p class="tip"><b>Gut check:</b> Can you name the win in one line, can they get it fast, and do you already know it? Three yeses means you're ready.</p>
+    </div>
+  </section>
+
+  <!-- 2. FORMAT CHOOSER -->
+  <section class="res" id="format">
+    <div class="res-head"><span class="res-num">2</span><span class="label">After Lesson 1.3</span></div>
+    <h3 class="serif">Format Chooser</h3>
+    <p class="lead">Four simple formats. Match yours to the problem and to how you like to work, then circle your pick.</p>
+    <div class="panel">
+      <div class="twocol">
+        <div class="mini"><h4>Guide</h4><p>Walks them through the how, start to finish.</p><p class="use"><span>Best for</span>A process or how-to with a few steps.</p></div>
+        <div class="mini"><h4>Checklist</h4><p>The steps in order so nothing gets missed.</p><p class="use"><span>Best for</span>A setup or launch people forget pieces of.</p></div>
+        <div class="mini"><h4>Template</h4><p>A fill-in-the-blank shortcut they reuse.</p><p class="use"><span>Best for</span>Saving people from the blank page.</p></div>
+        <div class="mini"><h4>Mini workshop</h4><p>A short recorded video teaching one thing.</p><p class="use"><span>Best for</span>When you teach better out loud.</p></div>
+      </div>
+      <div class="field" style="margin-top:22px;margin-bottom:0;">
+        <span class="flabel">My format is</span>
+        <input class="line" type="text" placeholder="Guide / Checklist / Template / Mini workshop">
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. PRODUCT MAP -->
+  <section class="res" id="map">
+    <div class="res-head"><span class="res-num">3</span><span class="label">After Lesson 2.1</span></div>
+    <h3 class="serif">Product Map</h3>
+    <p class="lead">Write the promise, then list the steps to get there. Each step becomes one small section. Now building is just filling in the boxes.</p>
+    <div class="panel tint-green">
+      <div class="field">
+        <span class="flabel">The promise (the one win)</span>
+        <input class="line" type="text" placeholder="By the end, you'll...">
+      </div>
+      <span class="flabel">The steps to get there</span>
+      <div class="steps-fill" style="margin-top:8px;">
+        <div class="sf"><span class="sfn">1</span><input class="line" type="text" placeholder="First step..."></div>
+        <div class="sf"><span class="sfn">2</span><input class="line" type="text" placeholder="Next step..."></div>
+        <div class="sf"><span class="sfn">3</span><input class="line" type="text" placeholder="Next step..."></div>
+        <div class="sf"><span class="sfn">4</span><input class="line" type="text" placeholder="Next step..."></div>
+        <div class="sf"><span class="sfn">5</span><input class="line" type="text" placeholder="Last step..."></div>
+      </div>
+      <p class="tip"><b>Then cut:</b> cross out any step that doesn't move them toward the promise. Lean is the goal.</p>
+    </div>
+  </section>
+
+  <!-- 4. IS IT DONE -->
+  <section class="res" id="done">
+    <div class="res-head"><span class="res-num">4</span><span class="label">After Lesson 2.3</span></div>
+    <h3 class="serif">Is It Done?</h3>
+    <p class="lead">Stop polishing. Run your product through these three questions. Three checks and you ship it.</p>
+    <div class="panel tint-yellow">
+      <label class="check"><input type="checkbox"><span class="ct"><b>Does it deliver the win?</b><span>If someone follows it, they get the one outcome you promised.</span></span></label>
+      <label class="check"><input type="checkbox"><span class="ct"><b>Is it clean and clear?</b><span>Readable and consistent, with no obvious mistakes. Not gallery-perfect.</span></span></label>
+      <label class="check"><input type="checkbox"><span class="ct"><b>Would you give it to a friend?</b><span>You'd hand it to a friend with this problem and feel good about it.</span></span></label>
+      <p class="tip"><b>All three checked?</b> It's done. Ship it.</p>
+    </div>
+  </section>
+
+  <!-- 5. THANK YOU SWIPE -->
+  <section class="res" id="thankyou">
+    <div class="res-head"><span class="res-num">5</span><span class="label">After Lesson 3.3</span></div>
+    <h3 class="serif">Thank-You Page Swipe</h3>
+    <p class="lead">Copy this onto your Systeme thank-you page and swap in your details. It confirms the sale and points to your next step.</p>
+    <div class="panel tint-blue">
+      <div class="swipe">
+        <p><b>You're in! Thank you so much.</b></p>
+        <p>Your <span class="ph">[product name]</span> is on its way to your inbox right now. If you don't see it in a few minutes, check your spam or promotions folder, and add me to your contacts so we stay connected.</p>
+        <p>Here's what I'd do next: <span class="ph">[one simple first step with the product]</span>.</p>
+        <p>And if you want to keep going with people who are right where you are, come hang out in my free community. <span class="ph">[community link]</span></p>
+        <p>So glad you're here.<br><span class="ph">[your sign-off]</span></p>
+      </div>
+      <p class="copyhint">Select the text above to copy it, then paste into your thank-you page and replace the pink placeholders.</p>
+    </div>
+  </section>
+
+  <!-- 6. SALES PAGE -->
+  <section class="res" id="salespage">
+    <div class="res-head"><span class="res-num">6</span><span class="label">After Lesson 4.2</span></div>
+    <h3 class="serif">Sales Page Template</h3>
+    <p class="lead">Fill each box in your own plain words, like you're talking to one person. When it's done, you've drafted your whole sales page.</p>
+    <div class="panel tint-purple">
+      <div class="field"><span class="flabel">Headline (the one outcome they get)</span><input class="line" type="text" placeholder="e.g. Make your first digital product this weekend"></div>
+      <div class="field"><span class="flabel">The problem it solves</span><textarea class="box" placeholder="Name the struggle so they feel understood..."></textarea></div>
+      <div class="field"><span class="flabel">What's inside (a short list)</span><textarea class="box" placeholder="- ...&#10;- ...&#10;- ..."></textarea></div>
+      <div class="field"><span class="flabel">Who it's for</span><input class="line" type="text" placeholder="This is for you if..."></div>
+      <div class="twocol">
+        <div class="field"><span class="flabel">The price</span><input class="line" type="text" placeholder="$47"></div>
+        <div class="field"><span class="flabel">The button says</span><input class="line" type="text" placeholder="e.g. Get instant access"></div>
+      </div>
+      <div class="field" style="margin-bottom:0;"><span class="flabel">A line about you</span><input class="line" type="text" placeholder="Why you can help with this..."></div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="wordmark">Dee Dee Paradis</p>
+    <p>Your First Digital Product · The Workbook</p>
+  </footer>
+
+</div>
+
+<script>
+  var links = Array.prototype.slice.call(document.querySelectorAll('.tabrow a'));
+  var sections = links.map(function(a){return document.querySelector(a.getAttribute('href'));}).filter(Boolean);
+  function onScroll(){
+    var pos = window.scrollY + 200, current = sections[0];
+    sections.forEach(function(s){ if(s.offsetTop <= pos) current = s; });
+    links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === '#' + current.id); });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+</script>
+</body>
+</html>
