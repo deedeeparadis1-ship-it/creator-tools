@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build a Product to Sell with Claude</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@500;600&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FFF7EC; --paper:#FFFDF8; --card:#FFFFFF;
+    --ink:#34243F; --ink-soft:#6E5F80; --line:#EBE0D4;
+    --blue:#6E8FD6; --blue-tint:#EAF0FB; --blue-bd:#C9D8F4;
+    --green:#2FA56F; --green-tint:#E4F6EE; --green-bd:#BCE6D2;
+    --yellow:#E8A91C; --yellow-tint:#FFF3D4; --yellow-bd:#F3DFA0;
+    --coral:#FF6F91; --coral-tint:#FFE7ED; --coral-bd:#F8C9D6;
+    --purple:#9C63D1; --purple-tint:#F3E9FB; --purple-bd:#E0CBF2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:"Nunito Sans",system-ui,sans-serif;color:var(--ink);font-size:18px;line-height:1.6;background:var(--cream);background-image:linear-gradient(rgba(110,95,128,.05) 1px, transparent 1px),linear-gradient(90deg, rgba(110,95,128,.05) 1px, transparent 1px);background-size:34px 34px;-webkit-font-smoothing:antialiased;}
+  .serif{font-family:"Fraunces",Georgia,serif;}
+  .label{font-family:"IBM Plex Mono",monospace;font-weight:600;letter-spacing:.18em;text-transform:uppercase;font-size:12.5px;color:var(--ink-soft);}
+
+  header{position:sticky;top:0;z-index:50;background:rgba(255,247,236,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .hbar{max-width:1040px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:16px;}
+  .mark{flex:0 0 auto;width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--coral),var(--purple));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(156,99,209,.28);}
+  .htext h1{font-family:"Fraunces",serif;font-weight:600;font-size:22px;line-height:1.1;color:var(--ink);}
+  .htext .label{margin-top:2px;display:block;}
+  .htag{margin-left:auto;color:var(--coral);}
+
+  nav.tabs{position:sticky;top:75px;z-index:49;background:rgba(255,247,236,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .tabrow{max-width:1040px;margin:0 auto;padding:0 28px;display:flex;gap:28px;overflow-x:auto;}
+  .tabrow a{font-family:"IBM Plex Mono",monospace;font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:12px;color:var(--ink-soft);text-decoration:none;padding:15px 0;border-bottom:3px solid transparent;white-space:nowrap;}
+  .tabrow a:hover{color:var(--ink);}
+  .tabrow a.active{color:var(--coral);border-bottom-color:var(--coral);}
+
+  .wrap{max-width:1040px;margin:0 auto;padding:0 28px;}
+  section.block{padding:58px 0 8px;scroll-margin-top:140px;}
+  .sec-head{max-width:740px;margin-bottom:26px;}
+  .sec-head .label{color:var(--coral);}
+  .sec-head h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(28px,4.2vw,42px);line-height:1.08;margin:12px 0 14px;}
+  .sec-head h2 .a-coral{color:var(--coral);} .sec-head h2 .a-purple{color:var(--purple);} .sec-head h2 .a-green{color:var(--green);} .sec-head h2 .a-blue{color:var(--blue);}
+  .sec-head p{font-size:18px;color:var(--ink-soft);max-width:64ch;}
+
+  .hero{padding:58px 0 8px;}
+  .hero .label{color:var(--purple);}
+  .hero h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(34px,5.2vw,58px);line-height:1.05;margin:16px 0 18px;max-width:17ch;}
+  .hero h2 em{font-style:italic;color:var(--coral);}
+  .hero p{font-size:19px;color:var(--ink-soft);max-width:62ch;}
+
+  .grid{display:grid;gap:20px;}
+  .g2{grid-template-columns:repeat(2,1fr);}
+  @media (max-width:760px){.g2{grid-template-columns:1fr;}}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:0 6px 20px rgba(58,42,79,.06);}
+  .card h3{font-family:"Fraunces",serif;font-weight:600;font-size:22px;line-height:1.15;margin-bottom:8px;}
+  .card p{font-size:16px;color:var(--ink-soft);}
+  .tint-blue{background:var(--blue-tint);border-color:var(--blue-bd);}
+  .tint-green{background:var(--green-tint);border-color:var(--green-bd);}
+  .ic{width:40px;height:40px;margin-bottom:12px;}
+
+  /* prompt blocks */
+  .prompt{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px 28px;box-shadow:0 6px 20px rgba(58,42,79,.06);margin-bottom:20px;}
+  .prompt .pnum{font-family:"IBM Plex Mono",monospace;font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:var(--coral);margin-bottom:6px;}
+  .prompt h3{font-family:"Fraunces",serif;font-weight:600;font-size:23px;line-height:1.15;margin-bottom:4px;}
+  .prompt .forwhat{font-size:15.5px;color:var(--ink-soft);font-style:italic;margin-bottom:16px;}
+  .swipe{background:var(--cream);border:1px dashed var(--coral-bd);border-radius:14px;padding:20px 22px;font-size:16px;color:var(--ink);line-height:1.6;}
+  .swipe .ph{color:var(--coral);font-weight:800;}
+  .copyhint{font-size:13px;color:var(--ink-soft);margin-top:10px;font-style:italic;}
+
+  .tips{margin-top:8px;background:var(--purple-tint);border:1px solid var(--purple-bd);border-radius:18px;padding:24px 28px;}
+  .tips h4{font-family:"Fraunces",serif;font-weight:600;font-size:19px;margin-bottom:10px;}
+  .tips ul{list-style:none;display:flex;flex-direction:column;gap:9px;}
+  .tips li{position:relative;padding-left:24px;font-size:16px;font-weight:700;color:var(--ink);}
+  .tips li::before{content:"";position:absolute;left:0;top:8px;width:10px;height:10px;border-radius:50%;background:var(--purple);}
+
+  /* hosting */
+  .pdfnote{background:var(--green-tint);border:1px solid var(--green-bd);border-radius:16px;padding:18px 22px;font-size:16px;color:var(--ink);margin-bottom:24px;}
+  .pdfnote b{color:var(--green);}
+
+  .hostcard{display:flex;gap:18px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px 22px;box-shadow:0 5px 16px rgba(58,42,79,.05);margin-bottom:14px;}
+  .rate{flex:0 0 auto;width:58px;height:58px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;line-height:1;}
+  .rate b{font-family:"Fraunces",serif;font-weight:700;font-size:22px;}
+  .rate span{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.1em;margin-top:2px;opacity:.9;}
+  .rate.easy{background:linear-gradient(135deg,var(--green),#27966a);}
+  .rate.mid{background:linear-gradient(135deg,var(--yellow),#d6970f);}
+  .rate.hard{background:linear-gradient(135deg,var(--coral),#e85b7e);}
+  .hostcard .ht{flex:1;}
+  .hostcard h4{font-family:"Fraunces",serif;font-weight:600;font-size:20px;margin-bottom:3px;}
+  .hostcard p{font-size:15.5px;color:var(--ink-soft);}
+  .hostcard .easytag{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);}
+
+  .scale{font-size:15px;color:var(--ink-soft);margin-bottom:20px;}
+  .scale b{color:var(--ink);}
+
+  .note{margin-top:18px;background:var(--yellow-tint);border:1px solid var(--yellow-bd);border-radius:16px;padding:18px 22px;font-size:15.5px;color:var(--ink);}
+  .note b{color:var(--ink);}
+  .note.purple{background:var(--purple-tint);border-color:var(--purple-bd);}
+
+  footer{padding:50px 0 80px;text-align:center;}
+  .wordmark{font-family:"Fraunces",serif;font-weight:700;font-size:24px;color:var(--coral);margin-bottom:2px;}
+  footer p{font-size:13.5px;color:var(--ink-soft);}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hbar">
+    <div class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 3l1.8 4.7L18.5 9l-4.7 1.8L12 15.5l-1.8-4.7L5.5 9l4.7-1.3L12 3z" fill="#fff"/>
+        <path d="M18 14l.8 2.2 2.2.8-2.2.8L18 20l-.8-2.2-2.2-.8 2.2-.8L18 14z" fill="#fff" opacity=".85"/>
+      </svg>
+    </div>
+    <div class="htext">
+      <h1>Build a Product to Sell with Claude</h1>
+      <span class="label">Resource · Prompts &amp; hosting</span>
+    </div>
+    <span class="label htag">Build it. Sell it.</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabrow" id="tabrow">
+    <a href="#how" class="active">How It Works</a>
+    <a href="#prompts">The Prompts</a>
+    <a href="#host">Host It</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="label">Resource</span>
+    <h2 class="serif">Let Claude help you <em>build the thing</em> you'll sell.</h2>
+    <p>You can build two kinds of products in Claude: an interactive one people use on a web page, or a PDF people download. Below are prompts for both. Paste one in, then answer Claude's questions as it asks them. The more you tell it, the more the product sounds like you.</p>
+  </section>
+
+  <section class="block" id="how">
+    <div class="sec-head">
+      <span class="label">How it works</span>
+      <h2 class="serif">Two kinds of products. <span class="a-coral">Pick what fits.</span></h2>
+      <p>Not sure which one yours is? The first prompt helps you decide. Here's the difference.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-blue">
+        <svg class="ic" viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="6" y="8" width="28" height="20" rx="3" fill="#fff" stroke="#6E8FD6" stroke-width="2"/><path d="M14 33h12" stroke="#6E8FD6" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="18" r="3.5" fill="#FF6F91"/></svg>
+        <h3 class="serif">Interactive</h3>
+        <p>A clickable tool, quiz, calculator, or worksheet people use on a web page. It feels modern and impressive, and it needs to be hosted online (covered below).</p>
+      </div>
+      <div class="card tint-green">
+        <svg class="ic" viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="9" y="5" width="22" height="30" rx="3" fill="#fff" stroke="#2FA56F" stroke-width="2"/><path d="M14 13h12M14 19h12M14 25h8" stroke="#2FA56F" stroke-width="2" stroke-linecap="round"/></svg>
+        <h3 class="serif">PDF</h3>
+        <p>A guide, checklist, or workbook people download. Simple, familiar, and the easiest path. No hosting needed, you just upload it to your sales platform.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="prompts">
+    <div class="sec-head">
+      <span class="label">The prompts</span>
+      <h2 class="serif">Copy a prompt. Answer the <span class="a-purple">questions.</span></h2>
+      <p>Each prompt is built to make Claude interview you first, so what you end up with is actually yours, not generic. Jump to the one you need.</p>
+    </div>
+
+    <div class="prompt">
+      <div class="pnum">Prompt 1 — Not sure which format? Start here.</div>
+      <h3 class="serif">Claude helps you choose</h3>
+      <p class="forwhat">Use this when you don't yet know if your product should be interactive or a PDF.</p>
+      <div class="swipe">I want to create a digital product to sell. Before we build anything, help me decide whether it should be an interactive web tool or a downloadable PDF. Ask me questions one at a time about who it's for, the one problem it solves, and how my buyer would actually use it. After I answer, recommend the format that fits best and tell me why.</div>
+    </div>
+
+    <div class="prompt">
+      <div class="pnum">Prompt 2 — Build an interactive product.</div>
+      <h3 class="serif">A clickable tool, quiz, or worksheet</h3>
+      <p class="forwhat">Use this to build something people click and use on a web page.</p>
+      <div class="swipe">I want to build an interactive <span class="ph">[tool / quiz / calculator / worksheet]</span> that I can sell as a digital product. Here's what it's about: <span class="ph">[describe it in a sentence or two]</span>. Before you build it, ask me questions one at a time about the outcome my buyer should get, what they'll click or fill in, and the look and feel I want. Once you understand it, build it as a single HTML file I can host. Keep it simple, clean, and easy for a non-techy person to use.</div>
+    </div>
+
+    <div class="prompt">
+      <div class="pnum">Prompt 3 — Build a PDF product.</div>
+      <h3 class="serif">A guide, checklist, or workbook</h3>
+      <p class="forwhat">Use this to build something people download and keep.</p>
+      <div class="swipe">I want to create a downloadable <span class="ph">[guide / checklist / workbook]</span> that I can sell as a PDF. Here's the topic: <span class="ph">[describe it]</span>. Before writing it, ask me questions one at a time about the one outcome my buyer gets, the steps to get there, and my tone of voice. Then write it section by section, checking with me as you go. Keep it clear, warm, and easy to follow, with no fluff.</div>
+    </div>
+
+    <div class="prompt">
+      <div class="pnum">Prompt 4 — Make it sound like you.</div>
+      <h3 class="serif">Rewrite it in your voice</h3>
+      <p class="forwhat">Use this once you have a draft, to turn it from generic into yours.</p>
+      <div class="swipe">Here's a sample of how I write: <span class="ph">[paste a few sentences you've written, like a video script or an email]</span>. Rewrite my product in this voice. Keep it warm and plain, use contractions, and cut anything that sounds stiff or salesy.</div>
+    </div>
+
+    <div class="prompt">
+      <div class="pnum">Prompt 5 — Polish it before you sell.</div>
+      <h3 class="serif">Claude checks it like a buyer</h3>
+      <p class="forwhat">Use this last, as a final once-over before you put it up for sale.</p>
+      <div class="swipe">Read through my finished product as if you're the buyer. Point out anything confusing, missing, or that doesn't deliver the promise. Then give me a short, honest list of what to fix before I sell it. Don't rewrite my voice out of it.</div>
+      <p class="copyhint">Select any prompt above to copy it, then paste it into Claude and replace the pink brackets with your details.</p>
+    </div>
+
+    <div class="tips">
+      <h4 class="serif">Get the most out of it</h4>
+      <ul>
+        <li>Answer Claude's questions honestly and in detail. Vague answers get vague products.</li>
+        <li>You don't have to accept the first version. Ask for changes until it's right.</li>
+        <li>If something's off, just say so plainly. "Make this simpler" or "this isn't my voice" works fine.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" id="host">
+    <div class="sec-head">
+      <span class="label">Host it</span>
+      <h2 class="serif">Putting your interactive product <span class="a-green">online.</span></h2>
+      <p>Hosting just means putting your file online so it has a link you can share or sell.</p>
+    </div>
+
+    <div class="pdfnote"><b>Made a PDF?</b> You're done. Just upload it to your sales platform like any file and skip this part. This is only for the interactive HTML kind, which needs to live on the web.</div>
+
+    <p class="scale">Here are free places to host it, rated 1 to 10 on how techy they feel. <b>1 is "drag a file and you're done." 10 is "you basically need to be a developer."</b></p>
+
+    <div class="hostcard">
+      <div class="rate easy"><b>2</b><span>/ 10</span></div>
+      <div class="ht"><h4 class="serif">Netlify Drop <span class="easytag">· easiest</span></h4><p>Drag your file onto the page and it hands you a link in seconds. No account needed to start. The gentlest option.</p></div>
+    </div>
+    <div class="hostcard">
+      <div class="rate easy"><b>2</b><span>/ 10</span></div>
+      <div class="ht"><h4 class="serif">Tiiny Host</h4><p>Same easy idea, built for dropping one file and getting a link fast. Very beginner-friendly. The free version is more limited on how long your file stays up.</p></div>
+    </div>
+    <div class="hostcard">
+      <div class="rate mid"><b>5</b><span>/ 10</span></div>
+      <div class="ht"><h4 class="serif">GitHub Pages</h4><p>Free, reliable, and permanent, and it's what I use. It just has more steps: make an account, create a repository, upload your file, then switch on Pages in the settings. Doable, just not the gentlest first time.</p></div>
+    </div>
+    <div class="hostcard">
+      <div class="rate hard"><b>6</b><span>/ 10</span></div>
+      <div class="ht"><h4 class="serif">Cloudflare Pages</h4><p>Free and powerful, but the setup usually means connecting a code repository, which is more than most beginners want for one file. Great once you're comfortable.</p></div>
+    </div>
+
+    <div class="note purple">
+      <b>Worth a peek (newest and easiest):</b> A few brand-new tools like OneClickLive and host-html are built for exactly this moment. Paste the HTML your AI made and get a link in under 10 seconds. They're the simplest of all. Just know they're new, and some only keep your file up free for a trial period.
+    </div>
+
+    <div class="note">
+      <b>If you get stuck on the tech:</b> This is the one genuinely techy step in the whole process, and that's okay. If any of it feels over your head, open your favorite AI tool, tell it which service you're using, and ask it to walk you through hosting your file step by step. It'll guide you through it. And if your product can simply be a PDF instead, that's the easier path, and there's no shame in taking it.
+    </div>
+  </section>
+
+  <footer>
+    <p class="wordmark">Dee Dee Paradis</p>
+    <p>Your First Digital Product · Resource</p>
+  </footer>
+
+</div>
+
+<script>
+  var links = Array.prototype.slice.call(document.querySelectorAll('.tabrow a'));
+  var sections = links.map(function(a){return document.querySelector(a.getAttribute('href'));}).filter(Boolean);
+  function onScroll(){
+    var pos = window.scrollY + 200, current = sections[0];
+    sections.forEach(function(s){ if(s.offsetTop <= pos) current = s; });
+    links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === '#' + current.id); });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+</script>
+</body>
+</html>
