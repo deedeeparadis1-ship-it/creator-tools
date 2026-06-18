@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Set Up Your Stripe Account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@500;600&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FFF7EC; --paper:#FFFDF8; --card:#FFFFFF;
+    --ink:#34243F; --ink-soft:#6E5F80; --line:#EBE0D4;
+    --blue:#6E8FD6; --blue-tint:#EAF0FB; --blue-bd:#C9D8F4;
+    --green:#2FA56F; --green-tint:#E4F6EE; --green-bd:#BCE6D2;
+    --yellow:#E8A91C; --yellow-tint:#FFF3D4; --yellow-bd:#F3DFA0;
+    --coral:#FF6F91; --coral-tint:#FFE7ED; --coral-bd:#F8C9D6;
+    --purple:#9C63D1; --purple-tint:#F3E9FB; --purple-bd:#E0CBF2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:"Nunito Sans",system-ui,sans-serif;color:var(--ink);font-size:18px;line-height:1.6;background:var(--cream);background-image:linear-gradient(rgba(110,95,128,.05) 1px, transparent 1px),linear-gradient(90deg, rgba(110,95,128,.05) 1px, transparent 1px);background-size:34px 34px;-webkit-font-smoothing:antialiased;}
+  .serif{font-family:"Fraunces",Georgia,serif;}
+  .label{font-family:"IBM Plex Mono",monospace;font-weight:600;letter-spacing:.18em;text-transform:uppercase;font-size:12.5px;color:var(--ink-soft);}
+
+  header{position:sticky;top:0;z-index:50;background:rgba(255,247,236,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .hbar{max-width:1100px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:16px;}
+  .mark{flex:0 0 auto;width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--coral),var(--purple));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(156,99,209,.28);}
+  .htext h1{font-family:"Fraunces",serif;font-weight:600;font-size:22px;line-height:1.1;color:var(--ink);}
+  .htext .label{margin-top:2px;display:block;}
+  .htag{margin-left:auto;color:var(--coral);}
+
+  nav.tabs{position:sticky;top:75px;z-index:49;background:rgba(255,247,236,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .tabrow{max-width:1100px;margin:0 auto;padding:0 28px;display:flex;gap:28px;overflow-x:auto;}
+  .tabrow a{font-family:"IBM Plex Mono",monospace;font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:12px;color:var(--ink-soft);text-decoration:none;padding:15px 0;border-bottom:3px solid transparent;white-space:nowrap;}
+  .tabrow a:hover{color:var(--ink);}
+  .tabrow a.active{color:var(--coral);border-bottom-color:var(--coral);}
+
+  .wrap{max-width:1100px;margin:0 auto;padding:0 28px;}
+  section.block{padding:60px 0 8px;scroll-margin-top:140px;}
+  .sec-head{max-width:740px;margin-bottom:26px;}
+  .sec-head .label{color:var(--coral);}
+  .sec-head h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(28px,4.2vw,42px);line-height:1.08;margin:12px 0 14px;}
+  .sec-head h2 .a-coral{color:var(--coral);} .sec-head h2 .a-purple{color:var(--purple);} .sec-head h2 .a-green{color:var(--green);} .sec-head h2 .a-blue{color:var(--blue);}
+  .sec-head p{font-size:18px;color:var(--ink-soft);max-width:64ch;}
+
+  .hero{padding:58px 0 8px;}
+  .hero .label{color:var(--purple);}
+  .hero h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(36px,5.6vw,60px);line-height:1.05;margin:16px 0 18px;max-width:17ch;}
+  .hero h2 em{font-style:italic;color:var(--coral);}
+  .hero p{font-size:19px;color:var(--ink-soft);max-width:62ch;}
+
+  .grid{display:grid;gap:20px;}
+  .g3{grid-template-columns:repeat(3,1fr);}
+  .g2{grid-template-columns:repeat(2,1fr);}
+  @media (max-width:840px){.g3,.g2{grid-template-columns:1fr;}}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:0 6px 20px rgba(58,42,79,.06);}
+  .card .label{margin-bottom:10px;}
+  .card h3{font-family:"Fraunces",serif;font-weight:600;font-size:22px;line-height:1.15;margin-bottom:10px;}
+  .card p{font-size:16px;color:var(--ink-soft);margin-bottom:12px;}
+  .card ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+  .card li{position:relative;padding-left:24px;font-size:15.5px;font-weight:700;color:var(--ink);}
+  .card li::before{content:"";position:absolute;left:0;top:7px;width:10px;height:10px;border-radius:50%;}
+  .tint-green{background:var(--green-tint);border-color:var(--green-bd);} .tint-green .label{color:var(--green);} .tint-green li::before{background:var(--green);}
+  .tint-yellow{background:var(--yellow-tint);border-color:var(--yellow-bd);} .tint-yellow .label{color:var(--yellow);} .tint-yellow li::before{background:var(--yellow);}
+  .tint-coral{background:var(--coral-tint);border-color:var(--coral-bd);} .tint-coral .label{color:var(--coral);} .tint-coral li::before{background:var(--coral);}
+  .tint-blue{background:var(--blue-tint);border-color:var(--blue-bd);} .tint-blue .label{color:var(--blue);} .tint-blue li::before{background:var(--blue);}
+  .tint-purple{background:var(--purple-tint);border-color:var(--purple-bd);} .tint-purple .label{color:var(--purple);} .tint-purple li::before{background:var(--purple);}
+
+  .steps{position:relative;margin-top:10px;padding-left:6px;}
+  .steps::before{content:"";position:absolute;left:28px;top:34px;bottom:34px;width:2px;background:var(--coral-bd);}
+  .step{display:flex;gap:18px;align-items:flex-start;padding:9px 0;position:relative;}
+  .sn{flex:0 0 auto;width:46px;height:46px;border-radius:13px;color:#fff;font-family:"Fraunces",serif;font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;z-index:1;background:linear-gradient(135deg,var(--coral),var(--purple));}
+  .sn.promise{background:linear-gradient(135deg,var(--green),#27966a);}
+  .sc{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 20px;}
+  .sc.promise{background:var(--green-tint);border-color:var(--green-bd);}
+  .sc .label{margin-bottom:4px;color:var(--coral);}
+  .sc.promise .label{color:var(--green);}
+  .sc h4{font-family:"Fraunces",serif;font-weight:600;font-size:18px;margin-bottom:2px;}
+  .sc p{font-size:15px;color:var(--ink-soft);margin:0;}
+
+  .callout{margin:40px 0 8px;border-radius:22px;padding:32px 38px;background:var(--ink);color:#fff;display:flex;gap:22px;align-items:flex-start;}
+  .callout .qmark{font-family:"Fraunces",serif;font-size:56px;line-height:.7;color:var(--yellow);flex:0 0 auto;}
+  .callout p{font-family:"Fraunces",serif;font-weight:500;font-size:clamp(21px,2.8vw,28px);line-height:1.3;}
+  .callout p b{color:var(--yellow);font-weight:700;}
+
+  .note{margin-top:26px;background:var(--yellow-tint);border:1px solid var(--yellow-bd);border-radius:16px;padding:18px 22px;font-size:15.5px;color:var(--ink);}
+  .note b{color:var(--ink);}
+
+  footer{padding:50px 0 80px;text-align:center;}
+  .wordmark{font-family:"Fraunces",serif;font-weight:700;font-size:24px;color:var(--coral);margin-bottom:2px;}
+  footer p{font-size:13.5px;color:var(--ink-soft);}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hbar">
+    <div class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="6" width="18" height="12" rx="2.5" fill="#fff"/>
+        <path d="M3 10h18" stroke="#9C63D1" stroke-width="2"/>
+        <rect x="6" y="13.5" width="5" height="2" rx="1" fill="#FF6F91"/>
+      </svg>
+    </div>
+    <div class="htext">
+      <h1>Set Up Your Stripe Account</h1>
+      <span class="label">Resource · Module 3</span>
+    </div>
+    <span class="label htag">About 15 minutes.</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabrow" id="tabrow">
+    <a href="#before" class="active">Before You Start</a>
+    <a href="#walk">Step by Step</a>
+    <a href="#know">Good to Know</a>
+    <a href="#connect">Connect It Up</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="label">Resource</span>
+    <h2 class="serif">Set up Stripe in about <em>15 minutes.</em></h2>
+    <p>Stripe is the service that takes your buyer's card and puts the money in your bank. It's free to set up, millions of businesses use it, and you only do this once. Here's exactly what to expect so none of it catches you off guard.</p>
+  </section>
+
+  <section class="block" id="before">
+    <div class="sec-head">
+      <span class="label">Before you start</span>
+      <h2 class="serif">Have these <span class="a-blue">ready first.</span></h2>
+      <p>Gather these three things and the setup goes quick. Stripe will ask for them as you go.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card tint-blue">
+        <span class="label">Have ready</span>
+        <h3 class="serif">Your basics</h3>
+        <p>This is all it takes to create the account itself.</p>
+        <ul>
+          <li>An email you actually check</li>
+          <li>A password</li>
+          <li>Your country</li>
+        </ul>
+      </div>
+      <div class="card tint-green">
+        <span class="label">Have ready</span>
+        <h3 class="serif">Your payout details</h3>
+        <p>Where Stripe sends your money, plus a few details to verify you.</p>
+        <ul>
+          <li>Bank account and routing number</li>
+          <li>Your legal name and address</li>
+          <li>Your date of birth</li>
+        </ul>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">Have ready</span>
+        <h3 class="serif">Your ID</h3>
+        <p>Stripe confirms you're really you. Quick, and it keeps your account secure.</p>
+        <ul>
+          <li>A government photo ID</li>
+          <li>Last 4 of your SSN (in the US)</li>
+          <li>Takes about a minute</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="walk">
+    <div class="sec-head">
+      <span class="label">Step by step</span>
+      <h2 class="serif">The whole setup, <span class="a-coral">start to finish.</span></h2>
+      <p>Six steps, in order. Take them one at a time and you'll come out with a working Stripe account.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="sn promise" aria-hidden="true">&#9733;</span>
+        <div class="sc promise"><span class="label">By the end</span><h4 class="serif">A Stripe account ready to connect to Systeme.</h4><p>That's the finish line. Here's how you get there.</p></div>
+      </div>
+      <div class="step"><span class="sn">1</span><div class="sc"><h4 class="serif">Create your account</h4><p>Go to stripe.com and click Sign up. Enter your email, your name, and a password.</p></div></div>
+      <div class="step"><span class="sn">2</span><div class="sc"><h4 class="serif">Verify your email</h4><p>Stripe sends you a confirmation link. Click it to confirm your address.</p></div></div>
+      <div class="step"><span class="sn">3</span><div class="sc"><h4 class="serif">Tell Stripe about you</h4><p>Choose individual (totally fine to start), then add your name, address, and a short line on what you sell, like "digital guides."</p></div></div>
+      <div class="step"><span class="sn">4</span><div class="sc"><h4 class="serif">Add your bank account</h4><p>This is where your money lands. Enter your account and routing numbers.</p></div></div>
+      <div class="step"><span class="sn">5</span><div class="sc"><h4 class="serif">Verify your identity</h4><p>Upload a photo ID and, in the US, the last four of your SSN. This keeps your account secure.</p></div></div>
+      <div class="step"><span class="sn">6</span><div class="sc"><h4 class="serif">You're live</h4><p>Your account is ready. Now connect it to whatever platform you use to sell.</p></div></div>
+    </div>
+  </section>
+
+  <section class="block" id="know">
+    <div class="sec-head">
+      <span class="label">Good to know</span>
+      <h2 class="serif">A few things that <span class="a-purple">trip people up.</span></h2>
+      <p>None are a big deal. Knowing them ahead just saves a little stress.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card tint-coral">
+        <span class="label">Don't worry</span>
+        <h3 class="serif">Individual is fine</h3>
+        <p>You don't need a registered business or an LLC to start. Choose individual or sole proprietor and you're good.</p>
+        <ul>
+          <li>No LLC required</li>
+          <li>Individual works great</li>
+          <li>You can upgrade later</li>
+        </ul>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">Don't worry</span>
+        <h3 class="serif">First payout is slower</h3>
+        <p>Your very first sale may take a few business days to reach your bank while Stripe gets set up. After that it's quick and automatic.</p>
+        <ul>
+          <li>First one takes a few days</li>
+          <li>Then it's automatic</li>
+          <li>Completely normal</li>
+        </ul>
+      </div>
+      <div class="card tint-purple">
+        <span class="label">Handy</span>
+        <h3 class="serif">Practice with test mode</h3>
+        <p>Stripe has a test mode so you can run a pretend sale with no real money. Perfect for checking your setup before you go live.</p>
+        <ul>
+          <li>Practice safely</li>
+          <li>No real charges</li>
+          <li>Then flip to live</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="connect">
+    <div class="sec-head">
+      <span class="label">Connect it up</span>
+      <h2 class="serif">Last step: <span class="a-green">link it up.</span></h2>
+      <p>Here's the good news. Stripe connects to almost every major platform that takes payments, so once it's set up, you just link it to whatever you use to sell.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-green">
+        <span class="label">How it works</span>
+        <h3 class="serif">Connect once, use forever</h3>
+        <p>In whatever platform you sell on, find the payment settings and connect Stripe. A couple of clicks and they're linked. Every product you make from then on uses it automatically.</p>
+        <ul>
+          <li>Find payment settings</li>
+          <li>Connect Stripe, one time</li>
+          <li>Works for every future product</li>
+        </ul>
+      </div>
+      <div class="card tint-purple">
+        <span class="label">You're not locked in</span>
+        <h3 class="serif">Works with most platforms</h3>
+        <p>Stripe plugs into almost every major tool that takes payments, so you can use whatever fits you best, now or later.</p>
+        <ul>
+          <li>Systeme, Kajabi, Podia, Stan</li>
+          <li>Shopify, Thinkific, and more</li>
+          <li>Use what works for you</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="qmark">&ldquo;</span>
+      <p>You only set up Stripe once. Get through these fifteen minutes and the money side is handled, <b>for this product and every one after it.</b></p>
+    </div>
+
+    <div class="note">
+      <b>One heads-up:</b> Stripe's screens can look a little different depending on your country, and they update them now and then. The steps and the information they ask for stay the same, so follow the flow even if a button has moved.
+    </div>
+  </section>
+
+  <footer>
+    <p class="wordmark">Dee Dee Paradis</p>
+    <p>Your First Digital Product · Resource</p>
+  </footer>
+
+</div>
+
+<script>
+  var links = Array.prototype.slice.call(document.querySelectorAll('.tabrow a'));
+  var sections = links.map(function(a){return document.querySelector(a.getAttribute('href'));}).filter(Boolean);
+  function onScroll(){
+    var pos = window.scrollY + 200, current = sections[0];
+    sections.forEach(function(s){ if(s.offsetTop <= pos) current = s; });
+    links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === '#' + current.id); });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+</script>
+</body>
+</html>
