@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Set Up Your Stan Product</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@500;600&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FFF7EC; --paper:#FFFDF8; --card:#FFFFFF;
+    --ink:#34243F; --ink-soft:#6E5F80; --line:#EBE0D4;
+    --blue:#6E8FD6; --blue-tint:#EAF0FB; --blue-bd:#C9D8F4;
+    --green:#2FA56F; --green-tint:#E4F6EE; --green-bd:#BCE6D2;
+    --yellow:#E8A91C; --yellow-tint:#FFF3D4; --yellow-bd:#F3DFA0;
+    --coral:#FF6F91; --coral-tint:#FFE7ED; --coral-bd:#F8C9D6;
+    --purple:#9C63D1; --purple-tint:#F3E9FB; --purple-bd:#E0CBF2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:"Nunito Sans",system-ui,sans-serif;color:var(--ink);font-size:18px;line-height:1.6;background:var(--cream);background-image:linear-gradient(rgba(110,95,128,.05) 1px, transparent 1px),linear-gradient(90deg, rgba(110,95,128,.05) 1px, transparent 1px);background-size:34px 34px;-webkit-font-smoothing:antialiased;}
+  .serif{font-family:"Fraunces",Georgia,serif;}
+  .label{font-family:"IBM Plex Mono",monospace;font-weight:600;letter-spacing:.18em;text-transform:uppercase;font-size:12.5px;color:var(--ink-soft);}
+
+  header{position:sticky;top:0;z-index:50;background:rgba(255,247,236,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .hbar{max-width:1100px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:16px;}
+  .mark{flex:0 0 auto;width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--coral),var(--purple));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(156,99,209,.28);}
+  .htext h1{font-family:"Fraunces",serif;font-weight:600;font-size:22px;line-height:1.1;color:var(--ink);}
+  .htext .label{margin-top:2px;display:block;}
+  .htag{margin-left:auto;color:var(--coral);}
+
+  nav.tabs{position:sticky;top:75px;z-index:49;background:rgba(255,247,236,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .tabrow{max-width:1100px;margin:0 auto;padding:0 28px;display:flex;gap:28px;overflow-x:auto;}
+  .tabrow a{font-family:"IBM Plex Mono",monospace;font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:12px;color:var(--ink-soft);text-decoration:none;padding:15px 0;border-bottom:3px solid transparent;white-space:nowrap;}
+  .tabrow a:hover{color:var(--ink);}
+  .tabrow a.active{color:var(--coral);border-bottom-color:var(--coral);}
+
+  .wrap{max-width:1100px;margin:0 auto;padding:0 28px;}
+  section.block{padding:60px 0 8px;scroll-margin-top:140px;}
+  .sec-head{max-width:740px;margin-bottom:26px;}
+  .sec-head .label{color:var(--coral);}
+  .sec-head h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(28px,4.2vw,42px);line-height:1.08;margin:12px 0 14px;}
+  .sec-head h2 .a-coral{color:var(--coral);} .sec-head h2 .a-purple{color:var(--purple);} .sec-head h2 .a-green{color:var(--green);} .sec-head h2 .a-blue{color:var(--blue);}
+  .sec-head p{font-size:18px;color:var(--ink-soft);max-width:64ch;}
+
+  .hero{padding:58px 0 8px;}
+  .hero .label{color:var(--purple);}
+  .hero h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(36px,5.6vw,60px);line-height:1.05;margin:16px 0 18px;max-width:17ch;}
+  .hero h2 em{font-style:italic;color:var(--coral);}
+  .hero p{font-size:19px;color:var(--ink-soft);max-width:62ch;}
+
+  .grid{display:grid;gap:20px;}
+  .g3{grid-template-columns:repeat(3,1fr);}
+  .g2{grid-template-columns:repeat(2,1fr);}
+  @media (max-width:840px){.g3,.g2{grid-template-columns:1fr;}}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:0 6px 20px rgba(58,42,79,.06);}
+  .card .label{margin-bottom:10px;}
+  .card h3{font-family:"Fraunces",serif;font-weight:600;font-size:22px;line-height:1.15;margin-bottom:10px;}
+  .card p{font-size:16px;color:var(--ink-soft);margin-bottom:12px;}
+  .card ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+  .card li{position:relative;padding-left:24px;font-size:15.5px;font-weight:700;color:var(--ink);}
+  .card li::before{content:"";position:absolute;left:0;top:7px;width:10px;height:10px;border-radius:50%;}
+  .tint-green{background:var(--green-tint);border-color:var(--green-bd);} .tint-green .label{color:var(--green);} .tint-green li::before{background:var(--green);}
+  .tint-yellow{background:var(--yellow-tint);border-color:var(--yellow-bd);} .tint-yellow .label{color:var(--yellow);} .tint-yellow li::before{background:var(--yellow);}
+  .tint-coral{background:var(--coral-tint);border-color:var(--coral-bd);} .tint-coral .label{color:var(--coral);} .tint-coral li::before{background:var(--coral);}
+  .tint-blue{background:var(--blue-tint);border-color:var(--blue-bd);} .tint-blue .label{color:var(--blue);} .tint-blue li::before{background:var(--blue);}
+  .tint-purple{background:var(--purple-tint);border-color:var(--purple-bd);} .tint-purple .label{color:var(--purple);} .tint-purple li::before{background:var(--purple);}
+
+  .steps{position:relative;margin-top:10px;padding-left:6px;}
+  .steps::before{content:"";position:absolute;left:28px;top:34px;bottom:34px;width:2px;background:var(--coral-bd);}
+  .step{display:flex;gap:18px;align-items:flex-start;padding:9px 0;position:relative;}
+  .sn{flex:0 0 auto;width:46px;height:46px;border-radius:13px;color:#fff;font-family:"Fraunces",serif;font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;z-index:1;background:linear-gradient(135deg,var(--coral),var(--purple));}
+  .sn.promise{background:linear-gradient(135deg,var(--green),#27966a);}
+  .sc{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 20px;}
+  .sc.promise{background:var(--green-tint);border-color:var(--green-bd);}
+  .sc .label{margin-bottom:4px;color:var(--coral);}
+  .sc.promise .label{color:var(--green);}
+  .sc h4{font-family:"Fraunces",serif;font-weight:600;font-size:18px;margin-bottom:2px;}
+  .sc p{font-size:15px;color:var(--ink-soft);margin:0;}
+
+  .callout{margin:40px 0 8px;border-radius:22px;padding:32px 38px;background:var(--ink);color:#fff;display:flex;gap:22px;align-items:flex-start;}
+  .callout .qmark{font-family:"Fraunces",serif;font-size:56px;line-height:.7;color:var(--yellow);flex:0 0 auto;}
+  .callout p{font-family:"Fraunces",serif;font-weight:500;font-size:clamp(21px,2.8vw,28px);line-height:1.3;}
+  .callout p b{color:var(--yellow);font-weight:700;}
+
+  .note{margin-top:26px;background:var(--yellow-tint);border:1px solid var(--yellow-bd);border-radius:16px;padding:18px 22px;font-size:15.5px;color:var(--ink);}
+  .note b{color:var(--ink);}
+
+  footer{padding:50px 0 80px;text-align:center;}
+  .wordmark{font-family:"Fraunces",serif;font-weight:700;font-size:24px;color:var(--coral);margin-bottom:2px;}
+  footer p{font-size:13.5px;color:var(--ink-soft);}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hbar">
+    <div class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="6" width="18" height="12" rx="2.5" fill="#fff"/>
+        <path d="M3 10h18" stroke="#9C63D1" stroke-width="2"/>
+        <rect x="6" y="13.5" width="5" height="2" rx="1" fill="#FF6F91"/>
+      </svg>
+    </div>
+    <div class="htext">
+      <h1>Set Up Your Stan Product</h1>
+      <span class="label">Resource · Module 3</span>
+    </div>
+    <span class="label htag">About 10 minutes.</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabrow" id="tabrow">
+    <a href="#before" class="active">Before You Start</a>
+    <a href="#walk">Step by Step</a>
+    <a href="#know">Good to Know</a>
+    <a href="#share">Get Your Link Out There</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="label">Resource</span>
+    <h2 class="serif">Build your product in about <em>10 minutes.</em></h2>
+    <p>This picks up right where Stripe leaves off. Once your account's connected, this is the part where your actual product goes live, the file gets attached, the confirmation email gets turned on, and you walk away with one link you can share anywhere.</p>
+  </section>
+
+  <section class="block" id="before">
+    <div class="sec-head">
+      <span class="label">Before you start</span>
+      <h2 class="serif">Have these <span class="a-blue">ready first.</span></h2>
+      <p>Three things, and you're ready to move fast through this one.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card tint-blue">
+        <span class="label">Have ready</span>
+        <h3 class="serif">Your file</h3>
+        <p>The actual PDF, guide, or download buyers will receive. If what you're selling lives at a link instead of a file, that's fine too, you'll use Redirect to URL instead.</p>
+        <ul>
+          <li>A finished PDF or file</li>
+          <li>Or a link, if that's your format</li>
+        </ul>
+      </div>
+      <div class="card tint-green">
+        <span class="label">Have ready</span>
+        <h3 class="serif">Your product details</h3>
+        <p>The name and price you've already decided on. You'll type these in as you build the product.</p>
+        <ul>
+          <li>Product name</li>
+          <li>Your price</li>
+        </ul>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">Have ready</span>
+        <h3 class="serif">A place to save links</h3>
+        <p>Somewhere you keep track of every link you create, a doc, a notes app, anywhere. You'll need it in the last step.</p>
+        <ul>
+          <li>One spot for all your links</li>
+          <li>So nothing gets lost</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="walk">
+    <div class="sec-head">
+      <span class="label">Step by step</span>
+      <h2 class="serif">From file to <span class="a-coral">live link.</span></h2>
+      <p>Six steps, in order. Follow along inside your own Stan account as you go.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="sn promise" aria-hidden="true">&#9733;</span>
+        <div class="sc promise"><span class="label">By the end</span><h4 class="serif">A published product with one live link, ready to share.</h4><p>That's the finish line. Here's how you get there.</p></div>
+      </div>
+      <div class="step"><span class="sn">1</span><div class="sc"><h4 class="serif">Upload your file</h4><p>Scroll down to the file section and upload your PDF. Selling something that lives at a link instead? Choose Redirect to URL and paste it in there instead.</p></div></div>
+      <div class="step"><span class="sn">2</span><div class="sc"><h4 class="serif">Go to Options</h4><p>This tab is where your delivery and confirmation email live.</p></div></div>
+      <div class="step"><span class="sn">3</span><div class="sc"><h4 class="serif">Turn on your confirmation email</h4><p>Click Create next to Confirmation Email. This is what sends the moment someone buys.</p></div></div>
+      <div class="step"><span class="sn">4</span><div class="sc"><h4 class="serif">Personalize it</h4><p>Leave the purple placeholder alone, that's where their name fills in automatically. Update the subject line to something like "Your order from [your name]." Your file goes out right in that email.</p></div></div>
+      <div class="step"><span class="sn">5</span><div class="sc"><h4 class="serif">Hit Publish</h4><p>That's what takes your product live.</p></div></div>
+      <div class="step"><span class="sn">6</span><div class="sc"><h4 class="serif">Find it and copy your link</h4><p>Scroll down to My Store, find your product by name, and copy its URL. That one link is what you'll share everywhere.</p></div></div>
+    </div>
+  </section>
+
+  <section class="block" id="know">
+    <div class="sec-head">
+      <span class="label">Good to know</span>
+      <h2 class="serif">One honest <span class="a-purple">heads-up.</span></h2>
+      <p>Nothing here will trip you up, but worth knowing going in.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-coral">
+        <span class="label">Save it somewhere safe</span>
+        <h3 class="serif">Don't lose your link</h3>
+        <p>The second you copy that URL, drop it into whatever doc or notes app you use to keep track of your links. You don't want to go hunting for it later.</p>
+        <ul>
+          <li>Copy it immediately</li>
+          <li>One safe place for all your links</li>
+        </ul>
+      </div>
+      <div class="card tint-yellow">
+        <span class="label">Worth knowing</span>
+        <h3 class="serif">Email stays simple here</h3>
+        <p>Stan can send your confirmation email and a couple of follow-ups, but it's not built for full automated sequences. That's exactly fine for getting your first product out the door. It's just something to know if you outgrow it down the road.</p>
+        <ul>
+          <li>Confirmation email, covered</li>
+          <li>A couple of extra emails, fine</li>
+          <li>Big automated sequences, not its strength</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="share">
+    <div class="sec-head">
+      <span class="label">Get your link out there</span>
+      <h2 class="serif">One link. <span class="a-green">Everywhere.</span></h2>
+      <p>This is the whole reason Stan feels fast, once you have that link, there's nowhere it doesn't work.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card tint-green">
+        <span class="label">Put it</span>
+        <h3 class="serif">Anywhere people already are</h3>
+        <p>Your Instagram bio, a post caption, your YouTube description, anywhere someone might be reading and ready to click.</p>
+        <ul>
+          <li>Instagram bio and posts</li>
+          <li>YouTube description</li>
+          <li>Anywhere you've got an audience</li>
+        </ul>
+      </div>
+      <div class="card tint-purple">
+        <span class="label">Why it works</span>
+        <h3 class="serif">No extra steps for them</h3>
+        <p>They click, they land on your checkout, they buy. No funnel to wander through first. That's what makes Stan feel quick for a first product.</p>
+        <ul>
+          <li>Click, land, buy</li>
+          <li>Nothing extra in the way</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="qmark">&ldquo;</span>
+      <p>That one link is your whole business, sitting in a single URL. <b>Put it everywhere, and let it do the work.</b></p>
+    </div>
+  </section>
+
+  <footer>
+    <p class="wordmark">Dee Dee Paradis</p>
+    <p>Your First Digital Product · Resource</p>
+  </footer>
+
+</div>
+
+<script>
+  var links = Array.prototype.slice.call(document.querySelectorAll('.tabrow a'));
+  var sections = links.map(function(a){return document.querySelector(a.getAttribute('href'));}).filter(Boolean);
+  function onScroll(){
+    var pos = window.scrollY + 200, current = sections[0];
+    sections.forEach(function(s){ if(s.offsetTop <= pos) current = s; });
+    links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === '#' + current.id); });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+</script>
+</body>
+</html>
