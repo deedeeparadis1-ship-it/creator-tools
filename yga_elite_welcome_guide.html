@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to the YouTube Growth Accelerator Elite</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --rose: #C4897B; --rose-light: #E8C4BB; --rose-pale: #F5EAE7;
+    --rose-deep: #9B6358; --cream: #FAF7F4; --warm-white: #FFFDFB;
+    --navy: #1B2A4A; --text: #3D3330; --text-muted: #7A6B67;
+    --text-light: #A89C99; --border: #E8D8D4; --gold: #C4A882;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); font-size: 15px; line-height: 1.7; }
+  .hero { background: var(--navy); padding: 72px 40px 64px; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -60px; left: -60px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(196,137,123,0.18) 0%, transparent 70%); pointer-events: none; }
+  .hero::after { content: ''; position: absolute; bottom: -80px; right: -40px; width: 350px; height: 350px; background: radial-gradient(circle, rgba(196,168,130,0.12) 0%, transparent 70%); pointer-events: none; }
+  .hero-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose-light); margin-bottom: 20px; }
+  .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 5vw, 50px); font-weight: 300; color: var(--warm-white); line-height: 1.15; margin-bottom: 16px; }
+  .hero h1 em { font-style: italic; color: var(--rose-light); }
+  .hero-sub { font-size: 15px; color: rgba(255,255,255,0.55); max-width: 480px; margin: 0 auto 32px; font-weight: 300; }
+  .hero-divider { width: 48px; height: 1px; background: var(--rose); margin: 0 auto; opacity: 0.6; }
+  .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 52px 0; }
+  .section + .section { border-top: 1px solid var(--border); }
+  .section-label { font-size: 10px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--rose); margin-bottom: 10px; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; color: var(--navy); line-height: 1.2; margin-bottom: 20px; }
+  .section-title em { font-style: italic; color: var(--rose-deep); }
+  .body-text { color: var(--text-muted); font-weight: 300; margin-bottom: 16px; }
+  .welcome-box { background: var(--navy); border-radius: 16px; padding: 40px; }
+  .welcome-box .quote { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: var(--rose-light); line-height: 1.4; margin-bottom: 20px; }
+  .welcome-box p { color: rgba(255,255,255,0.7); font-weight: 300; font-size: 14px; line-height: 1.8; margin-bottom: 12px; }
+  .welcome-box p:last-child { margin-bottom: 0; }
+  .steps { margin-top: 8px; }
+  .step { display: flex; gap: 20px; margin-bottom: 16px; align-items: flex-start; }
+  .step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--rose); color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 500; flex-shrink: 0; margin-top: 2px; }
+  .step-content { flex: 1; background: var(--warm-white); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; }
+  .step-title { font-size: 15px; font-weight: 500; color: var(--navy); margin-bottom: 8px; }
+  .step-desc { font-size: 13px; color: var(--text-muted); font-weight: 300; line-height: 1.7; margin-bottom: 14px; }
+  .step-desc:last-child { margin-bottom: 0; }
+  .step-link { display: inline-block; background: var(--rose); color: white; font-size: 12px; font-weight: 500; padding: 9px 18px; border-radius: 8px; text-decoration: none; letter-spacing: 0.03em; transition: background 0.2s; }
+  .step-link:hover { background: var(--rose-deep); }
+  .instructions { list-style: none; margin: 10px 0 14px; }
+  .instructions li { font-size: 13px; color: var(--text-muted); font-weight: 300; padding: 5px 0 5px 16px; position: relative; line-height: 1.6; border-bottom: 1px solid var(--border); }
+  .instructions li:last-child { border-bottom: none; }
+  .instructions li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 50%; background: var(--rose-light); }
+  .included-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+  @media (max-width: 520px) { .included-grid { grid-template-columns: 1fr; } .hero { padding: 56px 24px 48px; } }
+  .included-item { background: var(--warm-white); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; gap: 12px; align-items: flex-start; }
+  .included-icon { width: 32px; height: 32px; border-radius: 50%; background: var(--rose-pale); border: 1px solid var(--rose-light); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .included-text h4 { font-size: 13px; font-weight: 500; color: var(--navy); margin-bottom: 3px; }
+  .included-text p { font-size: 12px; color: var(--text-light); font-weight: 300; line-height: 1.5; }
+  .avail-box { background: var(--navy); border-radius: 16px; padding: 32px; margin-top: 8px; }
+  .avail-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .avail-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .avail-label { font-size: 13px; color: rgba(255,255,255,0.55); font-weight: 300; }
+  .avail-val { font-size: 13px; color: var(--rose-light); font-weight: 500; }
+  .roadmap { margin-top: 8px; }
+  .phase-label { font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin: 28px 0 10px; }
+  .phase-label:first-child { margin-top: 0; }
+  .week-item { background: var(--warm-white); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px; overflow: hidden; }
+  .week-header { display: flex; align-items: center; gap: 14px; padding: 16px 18px; cursor: pointer; user-select: none; }
+  .week-header:hover { background: var(--rose-pale); }
+  .week-num { width: 30px; height: 30px; border-radius: 50%; background: var(--rose-pale); border: 1px solid var(--rose-light); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; color: var(--rose-deep); flex-shrink: 0; }
+  .week-title-wrap { flex: 1; }
+  .week-title { font-size: 14px; font-weight: 500; color: var(--navy); }
+  .week-sub { font-size: 12px; color: var(--text-light); font-weight: 300; margin-top: 1px; }
+  .week-chevron { font-size: 11px; color: var(--text-light); transition: transform 0.2s; }
+  .week-chevron.open { transform: rotate(180deg); }
+  .week-body { display: none; padding: 0 18px 16px 62px; }
+  .week-body.open { display: block; }
+  .week-body ul { list-style: none; }
+  .week-body ul li { font-size: 13px; color: var(--text-muted); font-weight: 300; padding: 5px 0 5px 14px; position: relative; line-height: 1.6; border-bottom: 1px solid var(--border); }
+  .week-body ul li:last-child { border-bottom: none; }
+  .week-body ul li::before { content: ''; position: absolute; left: 0; top: 13px; width: 4px; height: 4px; border-radius: 50%; background: var(--rose-light); }
+  .footer { background: var(--navy); padding: 48px 40px; text-align: center; }
+  .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: var(--rose-light); margin-bottom: 8px; }
+  .footer p { font-size: 13px; color: rgba(255,255,255,0.4); font-weight: 300; }
+  .footer-divider { width: 40px; height: 1px; background: var(--rose); margin: 20px auto; opacity: 0.4; }
+  .telegram-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 8px 16px; font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 12px; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .hero h1, .hero-eyebrow, .hero-sub { animation: fadeUp 0.7s ease both; }
+  .hero-eyebrow { animation-delay: 0.1s; } .hero h1 { animation-delay: 0.2s; } .hero-sub { animation-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">Welcome to Your Coaching Program</div>
+  <h1>Let's Get Your<br>Message to the <em>World</em></h1>
+  <p class="hero-sub">Everything you need to get started with your YouTube Growth Accelerator Elite program.</p>
+  <div class="hero-divider"></div>
+</div>
+
+<div class="container">
+
+  <div class="section">
+    <div class="section-label">A Note from Dee Dee</div>
+    <div class="welcome-box">
+      <div class="quote">"You have something important to say. I'm honored to help you say it."</div>
+      <p>Welcome to the YouTube Growth Accelerator Elite. You've made a real commitment to your channel and your message today -- and I don't take that lightly. Over the next 8 weeks we're going to work together every single week to get your channel built, your confidence up, and your content moving in the right direction.</p>
+      <p>This page is your home base. It has everything you need to get started, a clear picture of what's included in your program, and your full 8-week roadmap so you always know what's coming. Bookmark it and come back anytime.</p>
+      <p>Let's get to work.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Your First Steps</div>
+    <div class="section-title">Complete these steps<br>before our <em>first session</em></div>
+    <p class="body-text">Please complete all four steps before our first session. This helps me come fully prepared and ready to focus on you.</p>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Fill Out Your Intake Form</div>
+          <p class="step-desc">This short form gives me everything I need to know about you, your channel, your goals, and what you most want to accomplish in our 8 weeks together. Take about 10 minutes and be as detailed as you'd like -- the more I know, the better I can help you.</p>
+          <a href="https://forms.gle/1S6rwu11hSDPuZiE8" class="step-link" target="_blank">Complete Your Intake Form</a>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Book Your First Coaching Session</div>
+          <p class="step-desc">Use the link below to pick a day and time that works for you. Our sessions are 60 minutes each. After our first call we'll schedule future sessions together at the end of each call -- no back and forth needed.</p>
+          <a href="https://calendly.com/hello-deedeeparadis/yga-coaching-session" class="step-link" target="_blank">Book Your First Session</a>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Download Telegram and Connect with Me</div>
+          <p class="step-desc">Telegram is a free messaging app that gives you direct access to me between our sessions. Here's how to get set up:</p>
+          <ul class="instructions">
+            <li>Go to your phone's app store and search for <strong>Telegram</strong></li>
+            <li>Download and install the app -- it's free</li>
+            <li>Create an account using your phone number</li>
+            <li>Search for <strong>@deedeeparadis</strong> and send me a quick message so I know you're in</li>
+          </ul>
+          <p class="step-desc">Telegram is available Monday through Friday. I'll respond as soon as I can, always within 24 hours.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Join the Confident Creator Circle and Start the 7-Day Challenge</div>
+          <p class="step-desc">As part of your program you have free access to my Skool community. Here's how to get in:</p>
+          <ul class="instructions">
+            <li>Click the button below and join the community -- it's free</li>
+            <li>Once you're in, click the <strong>Classroom</strong> tab at the top</li>
+            <li>Look for <strong>Zero to Creator in 7 Days -- 7 Day YouTube Challenge</strong> and click on it</li>
+            <li>Work through it at your own pace -- it will give you a great foundation as we get started</li>
+          </ul>
+          <a href="https://www.skool.com/content-creator-circle-1570/about" class="step-link" target="_blank">Join the Confident Creator Circle</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Your Program</div>
+    <div class="section-title">What's included in your<br><em>8 weeks</em></div>
+
+    <div class="included-grid">
+      <div class="included-item">
+        <div class="included-icon">📞</div>
+        <div class="included-text">
+          <h4>Weekly 1:1 Coaching Calls</h4>
+          <p>8 x 60-minute sessions -- fully focused on you and your channel every single week</p>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">🎬</div>
+        <div class="included-text">
+          <h4>Loom Video Feedback</h4>
+          <p>Personalized video feedback on your videos and thumbnails as needed between sessions</p>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">📺</div>
+        <div class="included-text">
+          <h4>Deep YouTube Channel Guidance</h4>
+          <p>Real, specific feedback on your channel, your content, and your direction</p>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">💰</div>
+        <div class="included-text">
+          <h4>Customized Monetization Path</h4>
+          <p>A clear plan for turning your channel into real income -- built around your niche</p>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">📊</div>
+        <div class="included-text">
+          <h4>Full Channel Audit at Week 8</h4>
+          <p>A complete review of your channel -- videos, thumbnails, analytics, and growth</p>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">✉️</div>
+        <div class="included-text">
+          <h4>Direct Email Access</h4>
+          <p>Reach me by email anytime -- I respond within 24 hours, Monday through Friday</p>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">💬</div>
+        <div class="included-text">
+          <h4>Telegram Access</h4>
+          <p>Direct messaging Monday through Friday for quick questions and between-session support</p>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">🎓</div>
+        <div class="included-text">
+          <h4>Access to the Confident Creator Circle</h4>
+          <p>Free access to my Skool community including the 7-Day YouTube Challenge</p>
+        </div>
+      </div>
+      <div class="included-item" style="grid-column: 1 / -1;">
+        <div class="included-icon">🔄</div>
+        <div class="included-text">
+          <h4>Option to Continue</h4>
+          <p>Ongoing bi-weekly calls available after week 8 at $250/month if you want to keep going</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">How to Reach Me</div>
+    <div class="section-title">You're never just<br><em>waiting</em> for the next call</div>
+    <div class="avail-box">
+      <div class="avail-row">
+        <span class="avail-label">Email</span>
+        <span class="avail-val">Response within 24 hours, Mon-Fri</span>
+      </div>
+      <div class="avail-row">
+        <span class="avail-label">Telegram (@deedeeparadis)</span>
+        <span class="avail-val">Response ASAP, within 24 hours, Mon-Fri</span>
+      </div>
+      <div class="avail-row">
+        <span class="avail-label">Weekends</span>
+        <span class="avail-val">Not available Saturday or Sunday</span>
+      </div>
+      <div class="avail-row">
+        <span class="avail-label">Session scheduling</span>
+        <span class="avail-val">We'll book each call together at the end of the previous one</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">The 8-Week Roadmap</div>
+    <div class="section-title">A guide, not a<br><em>rigid schedule</em></div>
+    <p class="body-text">This roadmap keeps us moving forward with purpose. But it's flexible -- if something needs attention before we planned for it, just let me know ahead of our call so I can prepare. Your progress drives the schedule, not the other way around.</p>
+
+    <div class="roadmap">
+
+      <div class="phase-label">Phase 1 -- Foundation</div>
+
+      <div class="week-item">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-num">1</div>
+          <div class="week-title-wrap">
+            <div class="week-title">Clarity and Channel Setup</div>
+            <div class="week-sub">Your message, your audience, your foundation</div>
+          </div>
+          <span class="week-chevron">▼</span>
+        </div>
+        <div class="week-body">
+          <ul>
+            <li>Define your message, your audience, and what success looks like for you</li>
+            <li>Audit your channel together -- banner, about section, profile photo, everything a new viewer sees first</li>
+            <li>Set a realistic posting goal and talk through what consistency looks like for you</li>
+            <li>Review any content you've already created so nothing goes to waste</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="week-item">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-num">2</div>
+          <div class="week-title-wrap">
+            <div class="week-title">Content Strategy and Filming</div>
+            <div class="week-sub">What to talk about and how to show up on camera</div>
+          </div>
+          <span class="week-chevron">▼</span>
+        </div>
+        <div class="week-body">
+          <ul>
+            <li>Build your content plan -- what topics, what format, how long</li>
+            <li>Work on camera comfort and natural delivery</li>
+            <li>Talk through your filming setup and answer any outstanding tech questions</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase-label">Phase 2 -- Skills Building</div>
+
+      <div class="week-item">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-num">3</div>
+          <div class="week-title-wrap">
+            <div class="week-title">Editing and Publishing</div>
+            <div class="week-sub">Getting comfortable with "good enough"</div>
+          </div>
+          <span class="week-chevron">▼</span>
+        </div>
+        <div class="week-body">
+          <ul>
+            <li>By week 3 you should have your first video -- or a few -- recorded and edited. We'll review them together and I'll tell you exactly what to fix and what to leave alone</li>
+            <li>Learn the 80/20 rule of editing -- what viewers actually care about and what they don't</li>
+            <li>Walk through how to upload properly -- title, description, tags, end screens, everything</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="week-item">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-num">4</div>
+          <div class="week-title-wrap">
+            <div class="week-title">Thumbnails</div>
+            <div class="week-sub">What makes people click -- and how to create it</div>
+          </div>
+          <span class="week-chevron">▼</span>
+        </div>
+        <div class="week-body">
+          <ul>
+            <li>Learn what makes a thumbnail work -- font, color, photo, text</li>
+            <li>Walk through Canva basics and build your first thumbnails together</li>
+            <li>Feedback on your thumbnails via Loom as needed</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="week-item">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-num">5</div>
+          <div class="week-title-wrap">
+            <div class="week-title">Editing Confidence and Content Flow</div>
+            <div class="week-sub">Building your rhythm</div>
+          </div>
+          <span class="week-chevron">▼</span>
+        </div>
+        <div class="week-body">
+          <ul>
+            <li>Review your editing habits -- is your confidence growing?</li>
+            <li>Check in on your content flow -- are you posting consistently?</li>
+            <li>Make sure you're building a real, sustainable posting rhythm</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="week-item">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-num">6</div>
+          <div class="week-title-wrap">
+            <div class="week-title">Thumbnails and Branding</div>
+            <div class="week-sub">Making your channel look like you</div>
+          </div>
+          <span class="week-chevron">▼</span>
+        </div>
+        <div class="week-body">
+          <ul>
+            <li>Review your thumbnails -- are they consistent and clickable?</li>
+            <li>Talk through your channel branding -- does it reflect who you are?</li>
+            <li>By now you should feel confident creating thumbnails independently</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase-label">Phase 3 -- Momentum</div>
+
+      <div class="week-item">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-num">7</div>
+          <div class="week-title-wrap">
+            <div class="week-title">Audience and Income</div>
+            <div class="week-sub">Planting the seeds for monetization</div>
+          </div>
+          <span class="week-chevron">▼</span>
+        </div>
+        <div class="week-body">
+          <ul>
+            <li>Look at your analytics together -- what's getting clicks, what's not</li>
+            <li>Talk through YouTube Partner Program requirements and what you're working toward</li>
+            <li>Explore monetization options that fit your niche -- memberships, Super Thanks, and more</li>
+            <li>Talk about how to engage your viewers and build a real community</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase-label">Phase 4 -- Review and Decision</div>
+
+      <div class="week-item">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-num">8</div>
+          <div class="week-title-wrap">
+            <div class="week-title">Full Channel Audit</div>
+            <div class="week-sub">Celebrate, evaluate, decide what's next</div>
+          </div>
+          <span class="week-chevron">▼</span>
+        </div>
+        <div class="week-body">
+          <ul>
+            <li>Step back and look at everything -- thumbnails, videos, analytics, posting habits, growth</li>
+            <li>Celebrate how far you've come -- eight weeks ago you were just getting started</li>
+            <li>Look honestly at what still needs work and what you've got on your own</li>
+            <li>Decide together whether you want to continue with ongoing bi-weekly support at $250/month</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="footer-name">Dee Dee Paradis</div>
+  <p>YouTube Creator and Coach for Creators Over 40</p>
+  <div class="footer-divider"></div>
+  <p>Questions? Reach me on Telegram or email -- I've got you.</p>
+  <div class="telegram-badge">💬 Telegram: @deedeeparadis</div>
+</div>
+
+<script>
+function toggleWeek(header) {
+  const body = header.nextElementSibling;
+  const chevron = header.querySelector('.week-chevron');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+</script>
+
+</body>
+</html>
