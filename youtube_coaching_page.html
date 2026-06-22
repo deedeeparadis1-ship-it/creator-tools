@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube Coaching with Dee Dee Paradis</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --rose: #C4897B;
+    --rose-light: #E8C4BB;
+    --rose-pale: #F5EAE7;
+    --rose-deep: #9B6358;
+    --cream: #FAF7F4;
+    --warm-white: #FFFDFB;
+    --navy: #1B2A4A;
+    --text: #3D3330;
+    --text-muted: #7A6B67;
+    --text-light: #A89C99;
+    --border: #E8D8D4;
+    --gold: #C4A882;
+    --gold-light: #F0E6D6;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--navy);
+    padding: 80px 40px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(196,137,123,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; right: -40px;
+    width: 360px; height: 360px;
+    background: radial-gradient(circle, rgba(196,168,130,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rose-light);
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(34px, 6vw, 58px);
+    font-weight: 300;
+    color: var(--warm-white);
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--rose-light);
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,0.6);
+    max-width: 520px;
+    margin: 0 auto 36px;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .hero-cred {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 30px;
+    padding: 8px 20px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+    margin-bottom: 8px;
+  }
+
+  .hero-cred span { color: var(--rose-light); font-weight: 500; }
+
+  .hero-divider {
+    width: 48px;
+    height: 1px;
+    background: var(--rose);
+    margin: 28px auto 0;
+    opacity: 0.5;
+  }
+
+  /* LAYOUT */
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .section {
+    padding: 60px 0;
+  }
+
+  .section + .section {
+    border-top: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--rose-deep);
+  }
+
+  .body-text {
+    color: var(--text-muted);
+    font-weight: 300;
+    margin-bottom: 16px;
+    max-width: 660px;
+  }
+
+  /* PAIN POINTS */
+  .pain-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 32px;
+  }
+
+  @media (max-width: 560px) {
+    .pain-grid { grid-template-columns: 1fr; }
+    .hero { padding: 60px 24px 56px; }
+    .packages { grid-template-columns: 1fr; }
+  }
+
+  .pain-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pain-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--rose);
+    border-radius: 3px 0 0 3px;
+  }
+
+  .pain-emoji {
+    font-size: 24px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .pain-problem {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .pain-solution {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .pain-solution strong {
+    color: var(--rose-deep);
+    font-weight: 500;
+  }
+
+  /* PACKAGES */
+  .packages {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 8px;
+  }
+
+  .package-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 32px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s;
+  }
+
+  .package-card:hover {
+    box-shadow: 0 8px 32px rgba(196,137,123,0.12);
+  }
+
+  .package-card.featured {
+    border-color: var(--rose);
+    background: linear-gradient(145deg, #FFFDFB 0%, #FDF2EF 100%);
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: -12px;
+    left: 28px;
+    background: var(--rose);
+    color: white;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+  }
+
+  .package-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .package-freq {
+    font-size: 11px;
+    color: var(--text-light);
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+
+  .package-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 300;
+    color: var(--rose-deep);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .package-price-note {
+    font-size: 11px;
+    color: var(--text-light);
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+
+  .package-divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 20px;
+  }
+
+  .package-includes {
+    list-style: none;
+    flex: 1;
+    margin-bottom: 24px;
+  }
+
+  .package-includes li {
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 300;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+  }
+
+  .package-includes li:last-child { border-bottom: none; }
+
+  .check {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--rose-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--rose-deep);
+    font-size: 10px;
+    margin-top: 1px;
+  }
+
+  .btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin-top: auto;
+  }
+
+  .btn-primary {
+    background: var(--rose);
+    color: white;
+    border: 1px solid var(--rose);
+  }
+
+  .btn-primary:hover { background: var(--rose-deep); border-color: var(--rose-deep); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--rose-deep);
+    border: 1px solid var(--rose-light);
+  }
+
+  .btn-outline:hover { background: var(--rose-pale); border-color: var(--rose); }
+
+  /* VIP TEASER */
+  .vip-teaser {
+    background: var(--navy);
+    border-radius: 20px;
+    padding: 48px;
+    margin-top: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vip-teaser::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, rgba(196,137,123,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .vip-eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .vip-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--warm-white);
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .vip-title em {
+    font-style: italic;
+    color: var(--rose-light);
+  }
+
+  .vip-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+    line-height: 1.8;
+    margin-bottom: 28px;
+    max-width: 560px;
+  }
+
+  .vip-highlights {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 560px) {
+    .vip-highlights { grid-template-columns: 1fr; }
+    .packages { grid-template-columns: 1fr; }
+    .vip-teaser { padding: 32px 24px; }
+  }
+
+  .vip-highlight {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+  }
+
+  .vip-highlight-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .vip-highlight-text {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .vip-highlight-text strong {
+    color: var(--rose-light);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 2px;
+    font-size: 13px;
+  }
+
+  .btn-gold {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 14px 32px;
+    border-radius: 10px;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: all 0.2s;
+  }
+
+  .btn-gold:hover { background: #D4B892; }
+
+  /* WHO THIS IS FOR */
+  .for-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .for-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 16px;
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .for-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  /* CREDIBILITY */
+  .cred-wrapper {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 32px;
+    align-items: center;
+    margin-top: 8px;
+  }
+
+  @media (max-width: 640px) {
+    .cred-wrapper { grid-template-columns: 1fr; }
+    .cred-photo { max-width: 260px; margin: 0 auto; }
+  }
+
+  .cred-photo {
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    border: 3px solid var(--rose-light);
+  }
+
+  .cred-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .cred-box {
+    background: var(--navy);
+    border-radius: 16px;
+    padding: 36px;
+  }
+
+  .cred-box .quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--rose-light);
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  .cred-box p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+    line-height: 1.8;
+  }
+
+  .cred-stats {
+    display: flex;
+    gap: 28px;
+    margin: 24px 0;
+    flex-wrap: wrap;
+  }
+
+  .cred-stat {
+    text-align: left;
+  }
+
+  .cred-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--rose-light);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .cred-stat-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--navy);
+    padding: 52px 40px;
+    text-align: center;
+  }
+
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--rose-light);
+    margin-bottom: 8px;
+  }
+
+  .footer p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 300;
+  }
+
+  .footer-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--rose);
+    margin: 20px auto;
+    opacity: 0.4;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero h1, .hero-eyebrow, .hero-sub, .hero-cred {
+    animation: fadeUp 0.7s ease both;
+  }
+  .hero-eyebrow { animation-delay: 0.1s; }
+  .hero h1 { animation-delay: 0.2s; }
+  .hero-sub { animation-delay: 0.3s; }
+  .hero-cred { animation-delay: 0.4s; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">YouTube Coaching for Creators Over 40</div>
+  <h1>Your voice matters.<br>Let's make sure<br>the world <em>hears it.</em></h1>
+  <p class="hero-sub">Real coaching. Real results. No tech stress, no fear, no guessing -- just a clear path to a YouTube channel you're proud of.</p>
+  <div class="hero-cred">Monetized my first channel in <span>5 months</span> · My second in <span>13 weeks</span></div>
+  <div class="hero-divider"></div>
+</div>
+
+<div class="container">
+
+  <!-- PAIN POINTS -->
+  <div class="section">
+    <div class="section-label">Sound Familiar?</div>
+    <div class="section-title">You know you have something<br>to say. So what's <em>stopping you?</em></div>
+    <p class="body-text">You're not alone. These are the five things I hear from almost every creator over 40 who comes to me for help.</p>
+
+    <div class="pain-grid">
+
+      <div class="pain-card">
+        <span class="pain-emoji">😰</span>
+        <div class="pain-problem">The tech feels completely overwhelming</div>
+        <div class="pain-solution">Cameras, editing software, thumbnails, uploads -- it's a lot. <strong>We simplify it together, one step at a time,</strong> so you always know exactly what to do next.</div>
+      </div>
+
+      <div class="pain-card">
+        <span class="pain-emoji">💰</span>
+        <div class="pain-problem">You have no idea how to actually make money</div>
+        <div class="pain-solution">Monetization isn't a mystery. <strong>We'll build a clear, customized plan</strong> for turning your channel into real income -- on your timeline, in your niche.</div>
+      </div>
+
+      <div class="pain-card">
+        <span class="pain-emoji">🎥</span>
+        <div class="pain-problem">You're terrified of the camera</div>
+        <div class="pain-solution">Almost everyone is at first. <strong>We work on your confidence, your delivery, and your comfort</strong> until hitting record feels natural -- not scary.</div>
+      </div>
+
+      <div class="pain-card">
+        <span class="pain-emoji">🤔</span>
+        <div class="pain-problem">You don't know what to talk about</div>
+        <div class="pain-solution">You know more than you think. <strong>We'll build a content strategy around your expertise and your story</strong> so you never stare at a blank screen again.</div>
+      </div>
+
+      <div class="pain-card" style="grid-column: 1 / -1;">
+        <span class="pain-emoji">👀</span>
+        <div class="pain-problem">You're worried nobody will watch</div>
+        <div class="pain-solution">That fear is real -- and it's also beatable. <strong>We'll get your channel in front of the right people</strong> and build an audience that actually cares about what you have to say.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WHO THIS IS FOR -->
+  <div class="section">
+    <div class="section-label">Is This You?</div>
+    <div class="section-title">This coaching is built for<br>creators <em>just like you</em></div>
+
+    <div class="for-grid">
+      <div class="for-item"><span class="for-icon">✦</span>You're over 40 and ready to finally start that YouTube channel</div>
+      <div class="for-item"><span class="for-icon">✦</span>You have a story, an expertise, or a message you're dying to share</div>
+      <div class="for-item"><span class="for-icon">✦</span>You've been thinking about this for months -- or years -- and you're done waiting</div>
+      <div class="for-item"><span class="for-icon">✦</span>You want real guidance, not just another course you never finish</div>
+      <div class="for-item"><span class="for-icon">✦</span>You're serious about building something that could actually make you money</div>
+      <div class="for-item"><span class="for-icon">✦</span>You want someone in your corner who actually gets it</div>
+    </div>
+  </div>
+
+  <!-- CREDIBILITY -->
+  <div class="section">
+    <div class="section-label">Why Dee Dee</div>
+    <div class="section-title">I've been exactly<br>where <em>you are</em></div>
+    <div class="cred-wrapper">
+      <div class="cred-photo">
+        <img src="deedee_photo.jpg" alt="Dee Dee Paradis" />
+      </div>
+      <div class="cred-box">
+        <div class="quote">"I started my first YouTube channel over 40 -- with the same fears, the same tech headaches, and the same doubt. I figured it out. Now I help others do the same."</div>
+        <div class="cred-stats">
+          <div class="cred-stat">
+            <div class="cred-stat-num">5 mo</div>
+            <div class="cred-stat-label">To monetize channel one</div>
+          </div>
+          <div class="cred-stat">
+            <div class="cred-stat-num">13 wk</div>
+            <div class="cred-stat-label">To monetize channel two</div>
+          </div>
+        </div>
+        <p>I teach four pillars: content, tech, confidence, and income. Everything I coach is something I've lived. No fluff, no filler -- just real, practical guidance from someone who's done it.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PACKAGES -->
+  <div class="section">
+    <div class="section-label">Choose Your Program</div>
+    <div class="section-title">Two ways to work<br>with <em>Dee Dee</em></div>
+    <p class="body-text">Both programs are 8 weeks and built around getting you real results. The difference is how much access you get and how deep we go.</p>
+
+    <div class="packages">
+
+      <!-- $497 -->
+      <div class="package-card">
+        <div class="package-name">YouTube Growth<br>Accelerator</div>
+        <div class="package-freq">Every other week · 8 weeks</div>
+        <div class="package-price">$497</div>
+        <div class="package-price-note">4 x 60-minute coaching calls</div>
+        <div class="package-divider"></div>
+        <ul class="package-includes">
+          <li><span class="check">✓</span> 4 x 1:1 coaching calls (60 min each)</li>
+          <li><span class="check">✓</span> Ongoing email access Mon-Fri</li>
+          <li><span class="check">✓</span> Deep YouTube channel guidance</li>
+          <li><span class="check">✓</span> Customized monetization path</li>
+          <li><span class="check">✓</span> Access to the Confident Creator Circle Skool Community</li>
+        </ul>
+        <a href="https://buy.stripe.com/5kQ8wP9zG6N2eqrfdDa7C00" class="btn btn-outline">Get Started for $497</a>
+      </div>
+
+      <!-- $897 -->
+      <div class="package-card featured">
+        <div class="featured-badge">Most Popular</div>
+        <div class="package-name">YouTube Growth<br>Accelerator Elite</div>
+        <div class="package-freq">Every week · 8 weeks</div>
+        <div class="package-price">$897</div>
+        <div class="package-price-note">8 x 60-minute coaching calls</div>
+        <div class="package-divider"></div>
+        <ul class="package-includes">
+          <li><span class="check">✓</span> 8 x 1:1 coaching calls (60 min each)</li>
+          <li><span class="check">✓</span> Email and Telegram access Mon-Fri</li>
+          <li><span class="check">✓</span> Deep YouTube channel guidance</li>
+          <li><span class="check">✓</span> Customized monetization path</li>
+          <li><span class="check">✓</span> Access to the Confident Creator Circle Skool Community</li>
+          <li><span class="check">✓</span> Loom video feedback between sessions as needed</li>
+        </ul>
+        <a href="https://buy.stripe.com/fZu3cv5jq0oE5TV9Tja7C01" class="btn btn-primary">Get Started for $897</a>
+      </div>
+
+    </div>
+
+    <!-- VIP TEASER -->
+    <div class="vip-teaser">
+      <div class="vip-eyebrow">Looking for Something More?</div>
+      <div class="vip-title">VIP YouTube Growth Accelerator<br><em>Personalized Program</em></div>
+      <p class="vip-desc">For creators who want a fully custom, high-touch experience built entirely around them. This isn't a program -- it's a partnership. 12 weeks of dedicated, personalized coaching with everything you need to go from zero to a channel you're proud of.</p>
+
+      <div class="vip-highlights">
+        <div class="vip-highlight">
+          <span class="vip-highlight-icon">📞</span>
+          <div class="vip-highlight-text">
+            <strong>Weekly 1:1 Calls for 12 Weeks</strong>
+            Deep, focused sessions built entirely around your goals
+          </div>
+        </div>
+        <div class="vip-highlight">
+          <span class="vip-highlight-icon">💬</span>
+          <div class="vip-highlight-text">
+            <strong>Direct Email and Telegram Access</strong>
+            Mon-Fri access to Dee Dee between every session
+          </div>
+        </div>
+        <div class="vip-highlight">
+          <span class="vip-highlight-icon">🗺️</span>
+          <div class="vip-highlight-text">
+            <strong>Flexible 12-Week Roadmap</strong>
+            A personalized plan that moves at your pace
+          </div>
+        </div>
+        <div class="vip-highlight">
+          <span class="vip-highlight-icon">💰</span>
+          <div class="vip-highlight-text">
+            <strong>Full Channel Monetization Plan</strong>
+            A clear path to income built around your niche
+          </div>
+        </div>
+        <div class="vip-highlight">
+          <span class="vip-highlight-icon">📊</span>
+          <div class="vip-highlight-text">
+            <strong>Full Channel Audit at Week 12</strong>
+            A complete review of everything you've built
+          </div>
+        </div>
+        <div class="vip-highlight">
+          <span class="vip-highlight-icon">🔄</span>
+          <div class="vip-highlight-text">
+            <strong>Option to Continue at $500/month</strong>
+            Bi-weekly calls and ongoing support after week 12
+          </div>
+        </div>
+      </div>
+
+      <a href="https://calendly.com/hello-deedeeparadis/yga-coaching-session" class="btn-gold" target="_blank">Book a Free Discovery Call to Learn More</a>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-name">Dee Dee Paradis</div>
+  <p>YouTube Creator and Coach for Creators Over 40</p>
+  <div class="footer-divider"></div>
+  <p>Questions? Reach out -- I'd love to hear from you.</p>
+</div>
+
+</body>
+</html>
