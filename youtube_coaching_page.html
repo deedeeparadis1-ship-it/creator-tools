@@ -96,7 +96,7 @@
   }
 
   /* LAYOUT */
-  .container { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
   .section { padding: 64px 0; }
   .section + .section { border-top: 1px solid var(--border); }
 
@@ -456,13 +456,26 @@
     border-radius: 2px;
   }
 
-  @media (max-width: 620px) {
+  @media (max-width: 768px) {
+    .container { padding: 0 24px; }
     .pain-grid { grid-template-columns: 1fr; }
     .two-list-grid { grid-template-columns: 1fr; }
     .cred-wrapper { grid-template-columns: 1fr; }
     .cred-photo { max-width: 220px; margin: 0 auto; }
     .packages { grid-template-columns: 1fr; }
     .hero { padding: 64px 24px 56px; }
+  }
+
+  @media (min-width: 769px) {
+    .section-title { font-size: 40px; }
+    .body-text { font-size: 16px; }
+    .pain-problem { font-size: 16px; }
+    .pain-solution { font-size: 14px; }
+    .package-name { font-size: 26px; }
+    .package-includes li { font-size: 14px; }
+    .check-list li { font-size: 14px; }
+    .cred-content .quote { font-size: 22px; }
+    .cred-content p { font-size: 14px; }
   }
 
   @keyframes fadeUp {
